@@ -15,6 +15,7 @@ Thumbs.db
 *.sln[.docstates]
 *.vcxproj
 *.vcxproj.filters
+*.opensdf
 *.txt
 *.tlb
 *.tlh
