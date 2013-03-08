@@ -34,4 +34,4 @@ _ReSharper*/
 *.vssscc
 $tf*/
 TrainingDataSet/
-test/
+Test/
