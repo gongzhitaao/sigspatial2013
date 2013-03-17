@@ -1,32 +1,11 @@
 #pragma once
 
-#include <streambuf>
-#include <utility>
+#include <sstream>
 #include <vector>
-using namespace std;
 
-typedef pair<double, double> Coord;
-typedef vector<Coord> Ring;
+#include <asm-xml.h>
 
-struct Point
-{
-    int id, seq;
-    Coord coord;
-};
-
-struct Polygon
-{
-    int id, seq;
-    Ring outer;
-    vector<Ring> inner;
-};
-
-const int RAW_XML_SIZE = 8 * 1024 * 1024;
-
-char xmlstr[RAW_XML_SIZE];
-char buffer[RAW_XML_SIZE];
-
-const char pointSchema[] = "\
+const char PointSchema[] = "\
 <schema>\
   <document name=\"gml:Point\">\
     <attribute name=\"srsName\" ignore=\"yes\"/>\
@@ -39,7 +18,7 @@ const char pointSchema[] = "\
   </document>\
 </schema>";
 
-const char polygonSchema[] = "\
+const char PolygonSchema[] = "\
 <schema>\
   <document name=\"gml:Polygon\">\
     <attribute name=\"srsName\" ignore=\"yes\"/>\
@@ -64,3 +43,33 @@ const char polygonSchema[] = "\
     </element>\
   </document>\
 </schema>";
+
+class GMLNaiveParser
+{
+public:
+    GMLNaiveParser(void);
+    ~GMLNaiveParser(void);
+
+    bool point(const char *s, double &x, double &y);
+    bool polygon(const char *s,
+                 std::vector<double> &ox, std::vector<double> &oy,
+                 std::vector<std::vector<double> > &ix, std::vector<std::vector<double> > &iy);
+
+private:
+    inline void fill_stream(AXAttribute *attr)
+    {  _ss.rdbuf()->sputn(attr->begin, attr->limit - attr->begin); }
+
+private:
+    enum { ChunkSize = 32 * 1024 * 1024 };
+
+    AXParseContext _context;
+    AXClassContext _classContext;
+    AXElementClass *_pointClass;
+    AXElementClass *_polyClass;
+
+    std::stringstream _ss;
+ 
+    char _ch;
+    double _x, _y;
+    std::vector<double> _tmpx, _tmpy;
+};
