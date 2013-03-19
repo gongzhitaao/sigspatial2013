@@ -4,6 +4,7 @@
 
 #include <random>
 #include <string>
+#include <vector>
 
 class Generator
 {
@@ -13,11 +14,15 @@ public:
 
     std::string make_gml_point(std::string &s, double x, double y);
     std::string make_gml_poly(std::string &s,
-        vector<double> &ox, vector<double> &oy,
-        vector<vector<double> > &ix, vector<vector<double> > &iy);
+        std::vector<double> &ox, std::vector<double> &oy,
+        std::vector<std::vector<double> > &ix, std::vector<std::vector<double> > &iy);
+
+    void fill_vec_real_n(std::vector<double> &v, int n);
 
 private:
     const std::string _ptbeg, _ptend;
-    const std::string _polybeg, _obeg, _oend, _ibeg, _iend;
+    const std::string _obeg, _oend, _ibeg, _rbeg, _rend, _iend;
+
+    std::mt19937 _eng;
 };
 
