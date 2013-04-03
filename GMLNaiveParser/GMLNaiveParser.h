@@ -44,6 +44,31 @@ const char PolygonSchema[] = "\
   </document>\
 </schema>";
 
+struct Points
+{
+    std::vector<double> x, y;
+    std::vector<int> id, seq;
+};
+
+struct Polygon
+{
+    std::vector<double> ox, oy;
+    std::vector<std::vector<double> > ix, iy;
+
+    double oxx[2], oyy[2];
+    std::vector<double> ixa, ixb, iya, iyb;
+
+    int id, seq;
+
+    bool might_contain(double x, double y) {
+        return oxx[0] < x && x < oxx[1] && oyy[0] < y && y < oyy[1];
+    }
+
+    bool might_not_contain(double x, double y, int i) {
+        return ixa[i] < x && x < ixb[i] && iya[i] < y && y < iyb[i];
+    }
+};
+
 class GMLNaiveParser
 {
 public:
@@ -51,9 +76,7 @@ public:
     ~GMLNaiveParser(void);
 
     bool point(const char *s, double &x, double &y);
-    bool polygon(const char *s,
-                 std::vector<double> &ox, std::vector<double> &oy,
-                 std::vector<std::vector<double> > &ix, std::vector<std::vector<double> > &iy);
+    bool polygon(const char *s, Polygon &poly);
 
 private:
     inline void fill_stream(AXAttribute *attr)
@@ -71,5 +94,4 @@ private:
  
     char _ch;
     double _x, _y;
-    std::vector<double> _tmpx, _tmpy;
 };
