@@ -56,7 +56,7 @@ TEST(core, Version2)
     string out0("D:\\Documents\\Visual Studio 2012\\Projects\\SigSpatial2013\\TrainingDataSet\\standard_output\\polys10_points500_INSIDE_out");
     string out1("D:\\Documents\\Visual Studio 2012\\Projects\\SigSpatial2013\\TrainingDataSet\\test_output\\polys10_points500_INSIDE_out");
 
-    //version2(point_input, poly_input, out1);
+    version2(point_input, poly_input, out1);
 
     ifstream f0(out0);
     set<foo> s0;
@@ -68,24 +68,11 @@ TEST(core, Version2)
 
     ifstream f1(out1);
     set<foo> s1;
-    while (f1 >> f.i[0] >> ch >> f.i[1] >> ch >> ch >> f.i[2] >> ch >> f.i[3])
+    while (f1 >> f.i[0] >> ch >> f.i[1] >> ch >> f.i[2] >> ch >> f.i[3])
         s1.insert(f);
     f1.close();
 
-    // ASSERT_EQ(s0.size(), s1.size()) << "size not match";
+    //ASSERT_EQ(s0.size(), s1.size()) << "size not match";
     for (set<foo>::iterator i = s1.begin(); i != s1.end(); ++i)
         ASSERT_TRUE(s0.end() != s0.find(*i)) << *i << endl;
-}
-
-TEST(core, pip)
-{
-    // square
-    //double xx[] = {0, 1, 1, 0};
-    //double yy[] = {0, 0, 1, 1};
-
-    double xx[] = {0, 1, 1, 0, .5, .2, 0};
-    double yy[] = {0, 0, 1, 1, .5, .5, 0};
-    vector<double> rx(begin(xx), end(xx)), ry(begin(yy), end(yy));
-    EXPECT_FALSE(pip(-1.31800368974221E7, 3995712.25191062, rx, ry));
-    EXPECT_TRUE(pip(.5, .500000000001, rx, ry));
 }

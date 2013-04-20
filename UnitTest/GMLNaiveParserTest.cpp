@@ -21,11 +21,11 @@ TEST(parser, PointParserTest)
     Generator _gtr;
 
     string s;
-    double xx, yy;
+    Point p;
     for (int i = 0; i < TEST_CASES; ++i) {
         double x(unif(eng)), y(unif(eng));
-        _gnp.point(_gtr.make_gml_point(s, x, y).c_str(), xx, yy);
-        ASSERT_DOUBLE_EQ(x, xx) << "x differs at index " << i;
-        ASSERT_DOUBLE_EQ(y, yy) << "y differs at index " << i;
+        _gnp.point(_gtr.make_gml_point(s, x, y).c_str(), p);
+        ASSERT_DOUBLE_EQ(x, p.x) << "x differs at index " << i;
+        ASSERT_DOUBLE_EQ(y, p.y) << "y differs at index " << i;
     }
 }

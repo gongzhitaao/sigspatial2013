@@ -5,6 +5,8 @@
 
 #include <asm-xml.h>
 
+#include "../common.h"
+
 const char PointSchema[] = "\
 <schema>\
   <document name=\"gml:Point\">\
@@ -44,38 +46,13 @@ const char PolygonSchema[] = "\
   </document>\
 </schema>";
 
-struct Points
-{
-    std::vector<double> x, y;
-    std::vector<int> id, seq;
-};
-
-struct Polygon
-{
-    std::vector<double> ox, oy;
-    std::vector<std::vector<double> > ix, iy;
-
-    double oxx[2], oyy[2];
-    std::vector<double> ixa, ixb, iya, iyb;
-
-    int id, seq;
-
-    bool might_contain(double x, double y) {
-        return oxx[0] < x && x < oxx[1] && oyy[0] < y && y < oyy[1];
-    }
-
-    bool might_not_contain(double x, double y, int i) {
-        return ixa[i] < x && x < ixb[i] && iya[i] < y && y < iyb[i];
-    }
-};
-
 class GMLNaiveParser
 {
 public:
     GMLNaiveParser(void);
     ~GMLNaiveParser(void);
 
-    bool point(const char *s, double &x, double &y);
+    bool point(const char *s, Point &pt);
     bool polygon(const char *s, Polygon &poly);
 
 private:
