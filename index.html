@@ -20,6 +20,8 @@
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="http://static.gongzhitaao.org/reveal.js/lib/css/zenburn.css">
 
+    <link ref="stylesheet" href="/assets/css/sigspatial2013.css" />
+
     <!-- If the query includes 'print-pdf', use the PDF print sheet -->
     <script>
         document.write('<link rel="stylesheet" href="http://static.gongzhitaao.org/reveal.js/css/print/' + (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') + '.css" type="text/css" media="print">');
@@ -102,7 +104,7 @@
                     </div>
                 </section>
                 <section>
-                    <h2>Why <font color="#ff0066">not</font> r-tree ?</h2>
+                    <h2>Why <font color="#ff0066">not</font>r-tree ?</h2>
                     <div>
                         <br />
                     </div>
@@ -115,14 +117,27 @@
                         </ol>
                     </div>
                 </section>
-                <section>
+                <section id="bst-2d">
                     <h2>Spatial Binary Search Tree</h2>
                 </section>
                 <section>
                     <h2>Analysis</h2>
                     <div>
+                        <br />
+                    </div>
+                    <div>
                         <ol>
-                            <li>Complexity</li>
+                            <li>Complexity<br />
+                                $O(N\log^2 N + M \times n \times (\log N + K))$
+                               <ul>
+                                   <li>$N$ - Number of points</li>
+                                   <li>$M$ - Number of polygons</li>
+                                   <li>$K$ - Maximum number of vertices each polygon</li>
+                                   <li>$n$ - Number of potential points</li>
+                               </ul>
+
+
+                            </li>
                             <li>Array-based Implementation</li>
                         </ol>
                     </div>
@@ -143,6 +158,13 @@
 
     <script src="http://static.gongzhitaao.org/jquery/jquery-1.9.1.min.js"></script>
     <script src="http://static.gongzhitaao.org/d3/d3.min.js"></script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     <script>
 

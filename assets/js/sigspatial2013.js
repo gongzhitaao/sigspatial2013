@@ -1,4 +1,4 @@
-(function ($, d3) {
+(function ($, d3, undefined) {
 
     function pip() {
         var vis = d3.select("#pip").append("svg").attr("width", 600).attr("height", 600);
@@ -171,10 +171,173 @@
             .attr("fill-opacity", 0);
     }
 
+    var test_point = [];
+
+    function bst_2d() {
+        var vis = d3.select("#bst-2d svg");
+        if (null == vis[0][0]) {
+            vis = d3.select("#bst-2d").append("svg")
+                        .attr("width", 500).attr("height", 500);
+            $("#bst-2d svg").click(function (e) {
+                build();
+            });
+        }
+
+        var scalex = d3.scale.linear().domain([-30, 30]).range([0, 500]);
+        var scaley = d3.scale.linear().domain([-30, 30]).range([500, 0]);
+
+        test_point = [];
+        for (var i = 0; i < 128; ++i)
+            test_point.push({
+                x: Math.floor(Math.random() * 50 - 25),
+                y: Math.floor(Math.random() * 50 - 25)
+            });
+
+        vis.selectAll("*").remove();
+        vis.selectAll("circle").data(test_point)
+            .enter().append("svg:circle")
+            .attr("cx", function (d) { return scalex(d.x); })
+            .attr("cy", function (d) { return scaley(d.y); })
+            .attr("r", 3).attr("stroke", "yellow").attr("fill", "yellow");
+    }
+
+    var builds = 1;
+    var sortx = true;
+    var opacity = .1;
+
+    function build() {
+        var vis = d3.select("#bst-2d svg");
+        var scalex = d3.scale.linear().domain([-30, 30]).range([0, 500]);
+        var scaley = d3.scale.linear().domain([-30, 30]).range([500, 0]);
+
+        if (builds >= 128) {
+            builds = 1;
+            opacity = .1;
+            sortx = true;
+
+            bst_2d();
+
+            return;
+        }
+
+        var n = 128 / builds;
+
+        if (sortx) {
+            sortx = false;
+            for (var i = 0; i < builds; ++i) {
+
+                var a = test_point.slice(i * n, i * n + n)
+                        .sort(function (a, b) { return a.x - b.x; });
+
+                for (var j = 0; j < n; ++j)
+                    test_point[i * n + j] = a[j];
+
+                if (builds > 1)
+                    vis.selectAll("#rect" + (builds / 2))
+                        .attr("opacity", opacity += .1)
+                        .attr("stroke-width", 1);
+
+                var y = yminmax(a.slice(0, n / 2));
+                vis.append("rect")
+                    .attr("id", "rect" + builds)
+                    .attr("x", scalex(a[0].x))
+                    .attr("y", scaley(y.b))
+                    .attr("width", scalex(a[n / 2 - 1].x) - scalex(a[0].x))
+                    .attr("height", scaley(y.a) - scaley(y.b))
+                    .attr("stroke", "lightgreen").attr("fill", "none")
+                    .attr("stroke-width", 2);
+
+                y = yminmax(a.slice(n / 2, n));
+                vis.append("rect")
+                    .attr("id", "rect" + builds)
+                    .attr("x", scalex(a[n / 2].x))
+                    .attr("y", scaley(y.b))
+                    .attr("width", scalex(a[n - 1].x) - scalex(a[n / 2].x))
+                    .attr("height", scaley(y.a) - scaley(y.b))
+                    .attr("stroke", "lightgreen").attr("fill", "none")
+                    .attr("stroke-width", 2);
+            }
+        } else {
+            sortx = true;
+            for (var i = 0; i < builds; ++i) {
+
+                var a = test_point.slice(i * n, i * n + n)
+                        .sort(function (a, b) { return a.y - b.y; });
+
+                for (var j = 0; j < n; ++j)
+                    test_point[i * n + j] = a[j];
+
+                vis.selectAll("#rect" + (builds / 2))
+                    .attr("opacity", opacity += .1)
+                    .attr("stroke-width", 1);
+
+                var x = xminmax(a.slice(0, n / 2));
+                vis.append("rect")
+                    .attr("id", "rect" + builds)
+                    .attr("x", scalex(x.a))
+                    .attr("y", scaley(a[n / 2 - 1].y))
+                    .attr("width", scalex(x.b) - scalex(x.a))
+                    .attr("height", scaley(a[0].y) - scaley(a[n / 2 - 1].y))
+                    .attr("stroke", "lightgreen").attr("fill", "none")
+                    .attr("stroke-width", 2);
+
+                x = xminmax(a.slice(n / 2, n));
+                vis.append("rect")
+                    .attr("id", "rect" + builds)
+                    .attr("x", scalex(x.a))
+                    .attr("y", scaley(a[n - 1].y))
+                    .attr("width", scalex(x.b) - scalex(x.a))
+                    .attr("height", scaley(a[n / 2].y) - scaley(a[n - 1].y))
+                    .attr("stroke", "lightgreen").attr("fill", "none")
+                    .attr("stroke-width", 2);
+            }
+        }
+
+        builds *= 2;
+
+        //var y0 = yminmax(test_point.slice(0, 50));
+        //var y1 = yminmax(test_point.slice(50, 100));
+
+        //vis.append("rect")
+        //    .attr("x", scalex(test_point[0].x))
+        //    .attr("y", scaley(y0.b))
+        //    .attr("width", scalex(test_point[49].x) - scalex(test_point[0].x))
+        //    .attr("height", scaley(y0.a) - scaley(y0.b))
+        //    .attr("stroke", "lightgreen").attr("fill", "none");
+
+        //vis.append("rect")
+        //    .attr("x", scalex(test_point[50].x))
+        //    .attr("y", scaley(y1.b))
+        //    .attr("width", scalex(test_point[99].x) - scalex(test_point[50].x))
+        //    .attr("height", scaley(y1.a) - scaley(y1.b))
+        //    .attr("stroke", "lightgreen").attr("fill", "none");
+    }
+
+    function xminmax(pts) {
+        var a = Number.POSITIVE_INFINITY;
+        var b = Number.NEGATIVE_INFINITY;
+        for (var i = 0; i < pts.length; ++i) {
+            if (pts[i].x < a) a = pts[i].x;
+            if (pts[i].x > b) b = pts[i].x;
+        }
+        return { a: a, b: b };
+    }
+
+    function yminmax(pts) {
+        var a = Number.POSITIVE_INFINITY;
+        var b = Number.NEGATIVE_INFINITY;
+        for (var i = 0; i < pts.length; ++i) {
+            if (pts[i].y < a) a = pts[i].y;
+            if (pts[i].y > b) b = pts[i].y;
+        }
+        return { a: a, b: b };
+    }
+
     $(document).ready(function () {
         pip();
         pip_sol();
         pnp();
         pnp_sol();
+        bst_2d();
     });
 })(jQuery, d3);
