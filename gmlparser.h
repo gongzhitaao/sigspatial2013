@@ -1,11 +1,12 @@
-#pragma once
+#ifndef _SIG_GMLPARSER_H_
+#define _SIG_GMLPARSER_H_
 
 #include <sstream>
 #include <vector>
 
-#include <asm-xml.h>
+#include "asm-xml.h"
 
-#include "../common.h"
+#include "common.h"
 
 const char PointSchema[] = "\
 <schema>\
@@ -46,20 +47,20 @@ const char PolygonSchema[] = "\
   </document>\
 </schema>";
 
-class GMLNaiveParser
+class GMLParser
 {
-public:
-    GMLNaiveParser(void);
-    ~GMLNaiveParser(void);
+ public:
+    GMLParser(void);
+    ~GMLParser(void);
 
     bool point(const char *s, Point &pt);
     bool polygon(const char *s, Polygon &poly);
 
-private:
+ private:
     inline void fill_stream(AXAttribute *attr)
     {  _ss.rdbuf()->sputn(attr->begin, attr->limit - attr->begin); }
 
-private:
+ private:
     enum { ChunkSize = 32 * 1024 * 1024 };
 
     AXParseContext _context;
@@ -68,7 +69,9 @@ private:
     AXElementClass *_polyClass;
 
     std::stringstream _ss;
- 
+
     char _ch;
     double _x, _y;
 };
+
+#endif /* _SIG_GMLPARSER_H_ */

@@ -1,4 +1,9 @@
-#pragma
+#ifndef _SIG_FLOATINGPOINT_H_
+#define _SIG_FLOATINGPOINT_H_
+
+#pragma once
+
+#include <limits>
 
 template <size_t size>
 class TypeWithSize {
@@ -209,3 +214,5 @@ class FloatingPoint {
 
   FloatingPointUnion u_;
 };
+
+#endif /* _SIG_FLOATINGPOINT_H_ */

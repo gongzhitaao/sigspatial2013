@@ -7,7 +7,7 @@ struct Point
     int id, seq;
     double coord[2];
 
-    Point (int a, int b, double c, double d)
+    Point (int a = 0, int b = 0, double c = 0, double d = 0)
         : id(a), seq(b) { coord[0] = c, coord[1] = d; }
 };
 
