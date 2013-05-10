@@ -53,8 +53,9 @@ class GMLParser
     GMLParser(void);
     ~GMLParser(void);
 
-    bool point(const char *s, Point &pt);
-    bool polygon(const char *s, Polygon &poly);
+    bool point(const char *s, double &x, double &y);
+    bool polygon(const char *s,
+                 Ring &outer_ring, std::vector<Ring> &inner_rings);
 
  private:
     inline void fill_stream(AXAttribute *attr)

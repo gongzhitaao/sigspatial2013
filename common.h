@@ -1,31 +1,29 @@
+#ifndef _SIG_COMMON_H_
+#define _SIG_COMMON_H_
+
 #pragma once
 
 #include <vector>
 
-struct Point
-{
-    int id, seq;
-    double coord[2];
+// cgal for range tree
+#include <CGAL/Cartesian.h>
 
-    Point (int a = 0, int b = 0, double c = 0, double d = 0)
-        : id(a), seq(b) { coord[0] = c, coord[1] = d; }
+typedef CGAL::Cartesian<double> K;
+typedef K::Point_2 Point_2;
+
+struct Ring
+{
+    std::vector<Point_2> ring;
+    double xa, xb, ya, yb;
 };
 
 struct Polygon
 {
-    std::vector<double> ox, oy;
-    std::vector<std::vector<double> > ix, iy;
-
-    double oxx[2], oyy[2];
-    std::vector<double> ixa, ixb, iya, iyb;
-
-    int id, seq;
-
-    bool might_contain(double x, double y) {
-        return oxx[0] < x && x < oxx[1] && oyy[0] < y && y < oyy[1];
-    }
-
-    bool might_not_contain(double x, double y, int i) {
-        return ixa[i] < x && x < ixb[i] && iya[i] < y && y < iyb[i];
-    }
+    Ring outer_ring;
+    std::vector<Ring> inner_rings;
 };
+
+typedef std::pair<int, int> ID;
+typedef std::pair<ID, ID> Result;
+
+#endif /* _SIG_COMMON_H_ */
