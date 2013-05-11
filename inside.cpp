@@ -75,9 +75,9 @@ int most_recent_polygon(const PolygonSeq &ps, int seq)
     return b-1;
 }
 
-void ver2(const std::string &fpt,
-          const std::string &fpoly,
-          const std::string &o)
+void inside(const std::string &fpt,
+            const std::string &fpoly,
+            const std::string &o)
 {
     typedef CGAL::Range_tree_map_traits_2<K, std::pair<int,int> > Traits;
     typedef CGAL::Range_tree_2<Traits> Range_tree_2_type;
@@ -108,7 +108,7 @@ void ver2(const std::string &fpt,
                 gnp.polygon(xmlstr.c_str(),
                             poly.outer_ring, poly.inner_rings);
 
-                if (id >= polys.size()) {
+                if (id > polys.size()) {
                     PolygonSeq ps;
                     ps.seq.push_back(seq);
                     ps.polys.push_back(poly);
@@ -150,57 +150,57 @@ void ver2(const std::string &fpt,
     tbb::concurrent_vector<Result> results;
 
     // for each polygon id
-    tbb::parallel_for((size_t)0, polys.size(), (size_t)1,
-                      [&] (size_t i) {
-                          // for (size_t i = 0; i < polys.size(); ++i) {
+    tbb::parallel_for((size_t)0, polys.size(), (size_t)1, [&] (size_t i) {
 
-                          PolygonSeq &ps = polys[i];
+            // for (size_t i = 0; i < polys.size(); ++i) {
 
-                          // for each polygon sequence of the same id
-                          for (size_t j = 0; j < ps.seq.size(); ++j) {
+            PolygonSeq &ps = polys[i];
 
-                              Polygon &p = ps.polys[j];
-                              Ring &outer = p.outer_ring;
-                              Interval win(Interval(K::Point_2(outer.xa, outer.xb),
-                                                    K::Point_2(outer.ya, outer.yb)));
+            // for each polygon sequence of the same id
+            for (size_t j = 0; j < ps.seq.size(); ++j) {
 
-                              std::vector<Key> res;
-                              tree.window_query(win, std::back_inserter(res));
+                Polygon &p = ps.polys[j];
+                Ring &outer = p.outer_ring;
+                Interval win(Interval(K::Point_2(outer.xa, outer.xb),
+                                      K::Point_2(outer.ya, outer.yb)));
 
-                              for (size_t k = 0; k < res.size(); ++k) {
+                std::vector<Key> res;
+                tree.window_query(win, std::back_inserter(res));
 
-                                  Key &key = res[k];
+                for (size_t k = 0; k < res.size(); ++k) {
 
-                                  if (most_recent_polygon(ps, key.second.second) != j)
-                                      continue;
+                    Key &key = res[k];
 
-                                  if (CGAL::ON_BOUNDED_SIDE ==
-                                      CGAL::bounded_side_2(p.outer_ring.ring.begin(),
-                                                           p.outer_ring.ring.end(),
-                                                           key.first, K())) {
+                    if (most_recent_polygon(ps, key.second.second) != j)
+                        continue;
 
-                                      bool f = true;
-                                      for (size_t m = 0; m < p.inner_rings.size(); ++m) {
-                                          Ring &inner = p.inner_rings[m];
-                                          if (!(CGAL::ON_UNBOUNDED_SIDE ==
-                                                CGAL::bounded_side_2(inner.ring.begin(),
-                                                                     inner.ring.end(),
-                                                                     key.first, K()))) {
-                                              f = false;
-                                              break;
-                                          }
-                                      }
+                    if (CGAL::ON_BOUNDED_SIDE ==
+                        CGAL::bounded_side_2(p.outer_ring.ring.begin(),
+                                             p.outer_ring.ring.end(),
+                                             key.first, K())) {
 
-                                      if (f) {
-                                          ID a = std::make_pair(key.second.first,
-                                                                key.second.second);
-                                          ID b = std::make_pair(i+1, ps.seq[j]);
-                                          results.push_back(std::make_pair(a, b));
-                                      }
-                                  }
-                              }
-                          } // for each polygon seq
-                      }); // for each polygon id
+                        bool f = true;
+                        for (size_t m = 0; m < p.inner_rings.size(); ++m) {
+                            Ring &inner = p.inner_rings[m];
+                            if (!(CGAL::ON_UNBOUNDED_SIDE ==
+                                  CGAL::bounded_side_2(inner.ring.begin(),
+                                                       inner.ring.end(),
+                                                       key.first, K()))) {
+                                f = false;
+                                break;
+                            }
+                        }
+
+                        if (f) {
+                            ID a = std::make_pair(key.second.first,
+                                                  key.second.second);
+                            ID b = std::make_pair(i+1, ps.seq[j]);
+                            results.push_back(std::make_pair(a, b));
+                        }
+                    }
+                }
+            } // for each polygon seq
+        }); // for each polygon id
 
     std::ofstream fo(o);
     for (size_t i = 0; i < results.size(); ++i) {

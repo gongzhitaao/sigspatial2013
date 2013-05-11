@@ -41,32 +41,38 @@ std::ostream &operator << (std::ostream &o, const item &i)
 }
 
 
-TEST(core, ver2)
+TEST(core, insidev2)
 {
-    std::string point_input("../in/points500.txt");
-    std::string poly_input("../in/poly10.txt");
-    std::string out0("../in/polys10_points500_INSIDE_out");
-    std::string out1("../out/polys10_points500_INSIDE_out");
+    const int MAX_PATH = 128;
+    const int POINTS = 1000;
+    const int POLYS = 10;
 
-    ver2(point_input, poly_input, out1);
-    std::cout << "helo" << std::endl;
+    char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
+        out0_file[MAX_PATH], out1_file[MAX_PATH];
+
+    snprintf(point_input_file, MAX_PATH, "../in/points%d.txt", POINTS);
+    snprintf(poly_input_file, MAX_PATH, "../in/poly%d.txt", POLYS);
+    snprintf(out0_file, MAX_PATH,
+             "../in/polys%d_points%d_INSIDE_out", POINTS, POLYS);
+    snprintf(out1_file, MAX_PATH,
+             "../out/polys%d_points%d_INSIDE_out", POINTS, POLYS);
+
+    inside(point_input_file, poly_input_file, out1_file);
 
     item f;
     char ch;
 
     std::set<item> s0;
-    std::ifstream f0(out0);
+    std::ifstream f0(out0_file);
     while (f0 >> f.i[0] >> ch >> f.i[1] >>
            ch >> f.i[2] >> ch >> f.i[3]) s0.insert(f);
     f0.close();
 
     std::set<item> s1;
-    std::ifstream f1(out1);
+    std::ifstream f1(out1_file);
     while (f1 >> f.i[0] >> ch >> f.i[1] >>
            ch >> f.i[2] >> ch >> f.i[3]) s1.insert(f);
     f1.close();
-
-    // ASSERT_EQ(s0.size(), s1.size()) << "even size not match" << std::endl;
 
     for (std::set<item>::iterator i = s1.begin(); i != s1.end(); ++i)
         ASSERT_TRUE(s0.end() != s0.find(*i))

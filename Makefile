@@ -1,8 +1,8 @@
-# Time-stamp: <2013-05-10 20:15:10 CDT gongzhitaao>
+# Time-stamp: <2013-05-11 15:12:13 CDT gongzhitaao>
 
 OBJ_DIR=obj
 TEST_DIR=test/
-OBJS=$(addprefix $(OBJ_DIR)/,gmlparser.o core.o)
+OBJS=$(addprefix $(OBJ_DIR)/,gmlparser.o inside.o)
 TEST_CASE=$(shell ls $(TEST_DIR))
 
 CXXFLAGS=-frounding-math -Wall -std=c++11 -g

@@ -1,1 +1,0 @@
-g++ -c -o obj/core.o core.cpp -O3 -frounding-math -Wall -std=c++11
