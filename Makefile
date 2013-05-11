@@ -1,24 +1,30 @@
+# Time-stamp: <2013-05-10 20:15:10 CDT gongzhitaao>
 
 OBJ_DIR=obj
+TEST_DIR=test/
 OBJS=$(addprefix $(OBJ_DIR)/,gmlparser.o core.o)
+TEST_CASE=$(shell ls $(TEST_DIR))
 
 CXXFLAGS=-frounding-math -Wall -std=c++11 -g
 LDLIBS=-lCGAL_Core -lCGAL -lboost_thread-mt -ltbb
 
-.PHONY : all clean main core.test pip.test
+.PHONY : all clean main
 
 all : main
 
 main : main.cpp $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ main.cpp $(OBJS) asm-xml.o $(LDLIBS)
 
-core.test : test/core.cpp $(OBJS)
-	$(CXX) $(CXXFLAGS) -o a.out test/core.cpp \
-	$(OBJS) asm-xml.o $(LDLIBS) -lgtest -lgtest_main
+define test_template
+$(1).test : $(2) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o a.out $(2) \
+		$(OBJS) asm-xml.o $(LDLIBS) -lgtest -lgtest_main
+endef
 
-pip.test : test/pip.cpp $(OBJS)
-	$(CXX) $(CXXFLAGS) -o a.out test/pip.cpp \
-	$(OBJS) asm-xml.o $(LDLIBS) -lgtest -lgtest_main
+$(foreach t,$(TEST_CASE),\
+	$(eval $(call test_template,\
+				$(patsubst %.cpp,%,$(t)),\
+				$(addprefix $(TEST_DIR),$(t)))))
 
 $(OBJ_DIR)/%.o : %.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)

@@ -49,6 +49,7 @@ TEST(core, ver2)
     std::string out1("../out/polys10_points500_INSIDE_out");
 
     ver2(point_input, poly_input, out1);
+    std::cout << "helo" << std::endl;
 
     item f;
     char ch;
@@ -68,5 +69,8 @@ TEST(core, ver2)
     // ASSERT_EQ(s0.size(), s1.size()) << "even size not match" << std::endl;
 
     for (std::set<item>::iterator i = s1.begin(); i != s1.end(); ++i)
-        ASSERT_TRUE(s0.end() != s0.find(*i)) << *i << std::endl;
+        ASSERT_TRUE(s0.end() != s0.find(*i))
+            << '\n' << *i << ':'
+            << "\nexpected size: " << s0.size()
+            << "\nactual size: " << s1.size() << std::endl;
 }

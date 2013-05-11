@@ -23,6 +23,12 @@ struct Polygon
     std::vector<Ring> inner_rings;
 };
 
+struct PolygonSeq
+{
+    std::vector<int> seq;
+    std::vector<Polygon> polys;
+};
+
 typedef std::pair<int, int> ID;
 typedef std::pair<ID, ID> Result;
 
