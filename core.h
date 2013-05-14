@@ -6,10 +6,6 @@
 #include <string>
 #include <vector>
 
-bool pip(double x, double y,
-         const std::vector<double> &rx,
-         const std::vector<double> &ry);
-
 void inside(const std::string &fpt,
             const std::string &fpoly,
             const std::string &fo);

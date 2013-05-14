@@ -1,33 +1,47 @@
-# Time-stamp: <2013-05-11 15:12:13 CDT gongzhitaao>
+# Time-stamp: <2013-05-13 20:34:17 CDT gongzhitaao>
 
 OBJ_DIR=obj
-TEST_DIR=test/
-OBJS=$(addprefix $(OBJ_DIR)/,gmlparser.o inside.o)
-TEST_CASE=$(shell ls $(TEST_DIR))
+TEST_DIR=test
+SRC=$(filter-out main.cpp,$(shell ls *.cpp))
+OBJS=$(addprefix $(OBJ_DIR)/,$(patsubst %.cpp,%.o,$(SRC)))
 
-CXXFLAGS=-frounding-math -Wall -std=c++11 -g
+CORE_TEST=inside winthin parser asmxml
+OTHER_TEST=bst pip
+
+CXXFLAGS=-frounding-math -Wall -std=c++11
 LDLIBS=-lCGAL_Core -lCGAL -lboost_thread-mt -ltbb
+GTEST=-lgtest -lgtest_main
 
 .PHONY : all clean main
 
 all : main
 
 main : main.cpp $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ main.cpp $(OBJS) asm-xml.o $(LDLIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(OBJS) asm-xml.o $(LDLIBS)
 
-define test_template
+test : a.out
+	valgrind --tool=memcheck \
+		--track-origins=yes --leak-check=full --log-file=report ./a.out
+
+define core.test
 $(1).test : $(2) $(OBJS)
 	$(CXX) $(CXXFLAGS) -o a.out $(2) \
-		$(OBJS) asm-xml.o $(LDLIBS) -lgtest -lgtest_main
+		$(OBJS) asm-xml.o $(LDLIBS) $(GTEST)
 endef
 
-$(foreach t,$(TEST_CASE),\
-	$(eval $(call test_template,\
-				$(patsubst %.cpp,%,$(t)),\
-				$(addprefix $(TEST_DIR),$(t)))))
+define other.test
+$(1).test : $(2)
+	$(CXX) $(CXXFLAGS) -o a.out $(2) -pthread $(GTEST)
+endef
+
+$(foreach t,$(CORE_TEST),\
+	$(eval $(call core.test,$(t),$(addprefix $(TEST_DIR)/,$(t).cpp))))
+
+$(foreach t,$(OTHER_TEST),\
+	$(eval $(call other.test,$(t),$(addprefix $(TEST_DIR)/,$(t).cpp))))
 
 $(OBJ_DIR)/%.o : %.cpp
-	$(CXX) -c -o $@ $< $(CXXFLAGS)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJS) : | $(OBJ_DIR)
 

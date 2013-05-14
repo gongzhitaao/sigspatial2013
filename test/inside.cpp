@@ -44,7 +44,7 @@ std::ostream &operator << (std::ostream &o, const item &i)
 TEST(core, insidev2)
 {
     const int MAX_PATH = 128;
-    const int POINTS = 1000;
+    const int POINTS = 500;
     const int POLYS = 10;
 
     char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
@@ -53,9 +53,9 @@ TEST(core, insidev2)
     snprintf(point_input_file, MAX_PATH, "../in/points%d.txt", POINTS);
     snprintf(poly_input_file, MAX_PATH, "../in/poly%d.txt", POLYS);
     snprintf(out0_file, MAX_PATH,
-             "../in/polys%d_points%d_INSIDE_out", POINTS, POLYS);
+             "../in/polys%d_points%d_INSIDE_out", POLYS, POINTS);
     snprintf(out1_file, MAX_PATH,
-             "../out/polys%d_points%d_INSIDE_out", POINTS, POLYS);
+             "../out/polys%d_points%d_INSIDE_out", POLYS, POINTS);
 
     inside(point_input_file, poly_input_file, out1_file);
 

@@ -23,7 +23,7 @@ int bst(const std::vector<int> &a, int k)
     return b-1;
 }
 
-TEST(core, pip)
+TEST(bst, random)
 {
     int size = 20;
     std::vector<int> a(size);
