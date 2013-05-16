@@ -6,20 +6,11 @@
 #include <string>
 #include <vector>
 
+#include <boost/lexical_cast.hpp>
+
 #include "../gmlparser.h"
 
 const int TEST_CASES = 100;
-
-char *make_gml_point(char *s, double x, double y)
-{
-    sprintf(s,
-            "<gml:Point srsName=\"EPSG:54004"
-            "xmlns:gml=\"http://www.opengis.net/gml\">"
-            "<gml:coordinates decimal=\".\" cs=\",\" ts=\" \">"
-            "%f,%f</gml:coordinates></gml:Point>",
-            x, y);
-    return s;
-}
 
 TEST(parser, PointParserTest)
 {
@@ -32,15 +23,8 @@ TEST(parser, PointParserTest)
     char pt[256];
     for (int i = 0; i < TEST_CASES; ++i) {
         double x(unif(eng)), y(unif(eng)), xx, yy;
-        std::cout << "heo" << std::endl;
-
         _gnp.point(make_gml_point(pt, x, y), xx, yy);
-        std::cout << "world" << std::endl;
         ASSERT_DOUBLE_EQ(x, xx) << "x differs at index " << i;
         ASSERT_DOUBLE_EQ(y, yy) << "y differs at index " << i;
     }
-}
-
-TEST(parser, leak)
-{
 }

@@ -1,14 +1,14 @@
-# Time-stamp: <2013-05-13 20:34:17 CDT gongzhitaao>
+# Time-stamp: <2013-05-15 15:22:18 CDT gongzhitaao>
 
 OBJ_DIR=obj
 TEST_DIR=test
 SRC=$(filter-out main.cpp,$(shell ls *.cpp))
 OBJS=$(addprefix $(OBJ_DIR)/,$(patsubst %.cpp,%.o,$(SRC)))
 
-CORE_TEST=inside winthin parser asmxml
-OTHER_TEST=bst pip
+CORE_TEST=inside winthin parser asmxml memory
+OTHER_TEST=bst pip general
 
-CXXFLAGS=-frounding-math -Wall -std=c++11
+CXXFLAGS=-frounding-math -Wall -std=c++11 -g -O0
 LDLIBS=-lCGAL_Core -lCGAL -lboost_thread-mt -ltbb
 GTEST=-lgtest -lgtest_main
 
@@ -19,9 +19,13 @@ all : main
 main : main.cpp $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $< $(OBJS) asm-xml.o $(LDLIBS)
 
-test : a.out
+test.leak : a.out
 	valgrind --tool=memcheck \
 		--track-origins=yes --leak-check=full --log-file=report ./a.out
+
+test.usage : a.out
+	valgrind --tool=massif \
+		--massif-out-file=report --time-unit=B --stacks=yes ./a.out
 
 define core.test
 $(1).test : $(2) $(OBJS)

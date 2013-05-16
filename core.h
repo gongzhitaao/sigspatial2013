@@ -4,7 +4,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
 void inside(const std::string &fpt,
             const std::string &fpoly,

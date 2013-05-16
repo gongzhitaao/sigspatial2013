@@ -25,8 +25,9 @@
 #include <CGAL/Range_tree_k.h>
 
 #include "common.h"
-#include "FloatingPoint.h"
 #include "gmlparser.h"
+
+#include "test/testclock.h"
 
 // bool pip(double x, double y,
 //          const std::vector<double> &rx, const std::vector<double> &ry)
@@ -88,6 +89,10 @@ void inside(const std::string &fpt,
     std::vector<Key> pts;
     std::vector<PolygonSeq> polys;
 
+    float pinvoke, rdpoly, rdpt, build, pip, fileio, tot;
+
+    Clock clock;
+
     tbb::parallel_invoke([&] {
 
             /* read in polygon */
@@ -122,6 +127,8 @@ void inside(const std::string &fpt,
             }
             fin_poly.close();
 
+            rdpoly = clock.elapsed();
+            tot += rdpoly;
         },
         [&] {
 
@@ -144,11 +151,21 @@ void inside(const std::string &fpt,
             }
             fin_point.close();
 
+            rdpt = clock.elapsed();
+            tot += rdpt;
+
         });
 
+    pinvoke = clock.elapsed();
+
+    clock.reset();
     Range_tree_2_type tree(pts.begin(), pts.end());
+    build = clock.elapsed();
+    tot += build;
+
     tbb::concurrent_vector<Result> results;
 
+    clock.reset();
     // for each polygon id
     tbb::parallel_for((size_t)0, polys.size(), (size_t)1, [&] (size_t i) {
 
@@ -201,7 +218,10 @@ void inside(const std::string &fpt,
                 }
             } // for each polygon seq
         }); // for each polygon id
+    pip = clock.elapsed();
+    tot += pip;
 
+    clock.reset();
     std::ofstream fo(o);
     for (size_t i = 0; i < results.size(); ++i) {
         Result &r = results[i];
@@ -209,4 +229,22 @@ void inside(const std::string &fpt,
            << r.second.first << ':' << r.second.second << std::endl;
     }
     fo.close();
+    fileio = clock.elapsed();
+    tot += fileio;
+
+    char buf[512];
+    snprintf(buf, 512,
+             "Parallel_invoke: %f (%f)\n"
+             "Polgons read: %f (%f)\n"
+             "Points Read: %f (%f)\n"
+             "tree build: %f (%f)\n"
+             "Pip query: %f (%f)\n"
+             "Write to file: %f (%f)\n",
+             pinvoke, pinvoke/tot*100,
+             rdpoly, rdpoly/tot*100,
+             rdpt, rdpt/tot*100,
+             build, build/tot*100,
+             pip, pip/tot*100,
+             fileio, fileio/tot*100);
+    // std::cout << buf << std::endl;
 }
