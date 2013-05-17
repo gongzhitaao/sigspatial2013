@@ -33,9 +33,9 @@ TEST(asmxml, leak)
     std::ifstream fin("../in/points500.cpp");
     std::string line;
 
-    // while (getline(fin, line)) {
-    //     AXElement* root = ax_parse(&context, line.c_str(), rootClass, 1);
-    // }
+    while (getline(fin, line)) {
+        AXElement* root = ax_parse(&context, line.c_str(), rootClass, 1);
+    }
 
     fin.close();
 

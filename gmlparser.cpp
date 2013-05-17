@@ -1,7 +1,5 @@
 #include "gmlparser.h"
 
-#include <limits>
-
 GMLParser::GMLParser(void)
 {
     ax_initialize((void*)malloc, (void*)free);
@@ -22,10 +20,12 @@ GMLParser::~GMLParser(void)
 bool GMLParser::point(const char *s, double &x, double &y)
 {
     AXElement *_gmlpoint = ax_parse(&_context, s, _pointClass, 1);
-    fill_stream(&ax_getElement(_gmlpoint, 0)->attributes[0]);
-    _ss >> x >> _ch >> y;
-    _ss.str("");
-    _ss.clear();
+    AXAttribute *attr = &ax_getElement(_gmlpoint, 0)->attributes[0];
+
+    char *p = const_cast<char *>(attr->begin);
+    x = strtod(p, &p);
+    y = strtod(++p, &p);
+
     return !_context.errorCode;
 }
 
@@ -35,45 +35,60 @@ bool GMLParser::polygon(const char *s,
 {
     AXElement *_gmlpoly = ax_parse(&_context, s, _polyClass, 1);
 
-    fill_stream(&ax_getElement(ax_getElement(ax_getElement(_gmlpoly, 0), 0), 0)->attributes[0]);
+    AXAttribute *attr =
+        &ax_getElement(ax_getElement(ax_getElement(_gmlpoly, 0), 0), 0)->attributes[0];
 
-    outer_ring.xa = outer_ring.ya = std::numeric_limits<double>::max();
-    outer_ring.xb = outer_ring.yb = std::numeric_limits<double>::min();
-    while (_ss >> _x >> _ch >> _y) {
-        if (_x < outer_ring.xa) outer_ring.xa = _x;
-        if (_x > outer_ring.xb) outer_ring.xb = _x;
-        if (_y < outer_ring.ya) outer_ring.ya = _y;
-        if (_y > outer_ring.yb) outer_ring.yb = _y;
-        outer_ring.ring.push_back(Point_2(_x, _y));
+    char *p = const_cast<char *>(attr->begin);
+    char *e = const_cast<char *>(attr->limit);
+    trim_right(e);
+
+    outer_ring.xa = outer_ring.xb = strtod(p, &p);
+    outer_ring.ya = outer_ring.yb = strtod(++p, &p);
+
+    while (p != e) {
+        double x = strtod(p, &p);
+        double y = strtod(++p, &p);
+
+        if (x < outer_ring.xa) outer_ring.xa = x;
+        if (x > outer_ring.xb) outer_ring.xb = x;
+        if (y < outer_ring.ya) outer_ring.ya = y;
+        if (y > outer_ring.yb) outer_ring.yb = y;
+
+        outer_ring.ring.push_back(Point_2(x, y));
     }
 
-    _ss.str("");
-    _ss.clear();
-
     AXElement *_rings = ax_getElement(_gmlpoly, 1);
-    if (!_rings) return true;
+    if (!_rings) return !_context.errorCode;
 
     _rings = _rings->firstChild;
+
     while (_rings) {
-        fill_stream(&ax_getElement(_rings, 0)->attributes[0]);
+        AXAttribute * attr = &ax_getElement(_rings, 0)->attributes[0];
+        char *p = const_cast<char *>(attr->begin);
+        char *e = const_cast<char *>(attr->limit);
+        trim_right(e);
 
         Ring ring;
 
-        while (_ss >> _x >> _ch >> _y) {
-            if (_x < ring.xa) ring.xa = _x;
-            if (_x > ring.xb) ring.xb = _x;
-            if (_y < ring.ya) ring.ya = _y;
-            if (_y > ring.yb) ring.yb = _y;
-            ring.ring.push_back(Point_2(_x, _y));
+        ring.xa = ring.xb = strtod(p, &p);
+        ring.ya = ring.yb = strtod(++p, &p);
+
+        while (p != e) {
+            double x = strtod(p, &p);
+            double y = strtod(++p, &p);
+
+            if (x < ring.xa) ring.xa = x;
+            if (x > ring.xb) ring.xb = x;
+            if (y < ring.ya) ring.ya = y;
+            if (y > ring.yb) ring.yb = y;
+
+            ring.ring.push_back(Point_2(x, y));
         }
 
         inner_rings.push_back(ring);
 
-        _ss.str("");
-        _ss.clear();
-
         _rings = _rings->nextSibling;
     }
 
-    return true;
+    return !_context.errorCode;
 }

@@ -1,4 +1,4 @@
-# Time-stamp: <2013-05-15 15:22:18 CDT gongzhitaao>
+# Time-stamp: <2013-05-16 21:41:38 CDT gongzhitaao>
 
 OBJ_DIR=obj
 TEST_DIR=test
@@ -6,10 +6,10 @@ SRC=$(filter-out main.cpp,$(shell ls *.cpp))
 OBJS=$(addprefix $(OBJ_DIR)/,$(patsubst %.cpp,%.o,$(SRC)))
 
 CORE_TEST=inside winthin parser asmxml memory
-OTHER_TEST=bst pip general
+OTHER_TEST=bst pip general stress tbb
 
 CXXFLAGS=-frounding-math -Wall -std=c++11 -g -O0
-LDLIBS=-lCGAL_Core -lCGAL -lboost_thread-mt -ltbb
+LDLIBS=-lCGAL_Core -lCGAL -ltbb -pthread
 GTEST=-lgtest -lgtest_main
 
 .PHONY : all clean main
@@ -35,7 +35,7 @@ endef
 
 define other.test
 $(1).test : $(2)
-	$(CXX) $(CXXFLAGS) -o a.out $(2) -pthread $(GTEST)
+	$(CXX) $(CXXFLAGS) -o a.out $(2) -ltbb -pthread $(GTEST)
 endef
 
 $(foreach t,$(CORE_TEST),\

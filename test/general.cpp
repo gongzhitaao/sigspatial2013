@@ -1,22 +1,26 @@
 #include <gtest/gtest.h>
 
-#include <algorithm>
-#include <chrono>
-#include <random>
+#include <string>
+#include <sstream>
 
-#include <boost/lexical_cast.hpp>
-
-const int TEST_CASE = 100;
-
-char *foo()
-{
-    char a[12];
-    snprintf(a, 12, "helo world");
-    return a;
-}
+#include <boost/algorithm/string.hpp>
 
 TEST(general, foo)
 {
-    char *ch = foo();
-    std::cout << ch << std::endl;
+    char ch[] = "  12.,38 13,-39    ";
+    char *p = ch;
+
+    char *e = std::end(ch);
+    --e;
+    while (0 == (int)*e || isspace(*e)) {
+        std::cout << *e << ' '  << (int)*e << std::endl;;
+        --e;
+    }
+    ++e;
+
+    while (p != e) {
+        std::cout << strtod(p, &p) << std::endl;
+        std::cout << strtod(++p, &p) << std::endl;
+    }
+
 }

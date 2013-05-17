@@ -1,7 +1,6 @@
 #ifndef _SIG_GMLPARSER_H_
 #define _SIG_GMLPARSER_H_
 
-#include <sstream>
 #include <vector>
 
 #include "asm-xml.h"
@@ -49,7 +48,7 @@ const char PolygonSchema[] = "\
 
 class GMLParser
 {
- public:
+public:
     GMLParser(void);
     ~GMLParser(void);
 
@@ -57,22 +56,21 @@ class GMLParser
     bool polygon(const char *s,
                  Ring &outer_ring, std::vector<Ring> &inner_rings);
 
- private:
-    inline void fill_stream(AXAttribute *attr)
-    {  _ss.rdbuf()->sputn(attr->begin, attr->limit - attr->begin); }
+private:
+    void trim_right(char *&e)
+    {
+        --e;
+        while (0 == (int)*e || isspace(*e)) --e;
+        ++e;
+    }
 
- private:
+private:
     enum { ChunkSize = 32 * 1024 * 1024 };
 
     AXParseContext _context;
     AXClassContext _classContext;
     AXElementClass *_pointClass;
     AXElementClass *_polyClass;
-
-    std::stringstream _ss;
-
-    char _ch;
-    double _x, _y;
 };
 
 #endif /* _SIG_GMLPARSER_H_ */

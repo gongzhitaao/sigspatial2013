@@ -5,7 +5,10 @@
 
 #include <string>
 
+std::string make_gml_point(double x, double y);
+
 std::string make_point(int id, int seq, double x, double y);
+
 
 /*
  * Author:  David Robert Nadeau

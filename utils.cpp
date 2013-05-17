@@ -30,6 +30,19 @@
 #error "Cannot define getPeakRSS( ) or getCurrentRSS( ) for an unknown OS."
 #endif
 
+std::string make_gml_point(double x, double y)
+{
+    char s[256];
+    snprintf(s, 256,
+             "<gml:Point srsName=\"EPSG:54004\" "
+             "xmlns:gml=\"http://www.opengis.net/gml\">"
+             "<gml:coordinates decimal=\".\" cs=\",\" ts=\" \">"
+             "%s,%s</gml:coordinates></gml:Point>",
+             boost::lexical_cast<std::string>(x).c_str(),
+             boost::lexical_cast<std::string>(y).c_str());
+    return std::string(s);
+}
+
 std::string make_point(int id, int seq, double x, double y)
 {
     char s[256];

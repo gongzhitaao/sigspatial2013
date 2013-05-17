@@ -48,19 +48,6 @@
 //     return w;
 // }
 
-// bool inside(double x, double y, Polygon &poly)
-// {
-//     if (!poly.might_contain(x, y) ||
-//         !pip(x, y, poly.ox, poly.oy)) return false;
-
-//     for (size_t i = 0; i < poly.ix.size(); ++i)
-//         if (poly.might_not_contain(x, y, i) &&
-//             pip(x, y, poly.ix[i], poly.iy[i]))
-//             return false;
-
-//     return true;
-// }
-
 int most_recent_polygon(const PolygonSeq &ps, int seq)
 {
     int b = 0, m = 0, e = ps.seq.size() - 1;
@@ -89,83 +76,70 @@ void inside(const std::string &fpt,
     std::vector<Key> pts;
     std::vector<PolygonSeq> polys;
 
-    float pinvoke, rdpoly, rdpt, build, pip, fileio, tot;
+    // tbb::parallel_invoke([&]
+    {
 
-    Clock clock;
+        /* read in polygon */
 
-    tbb::parallel_invoke([&] {
+        std::string xmlstr;
+        GMLParser gnp;
+        char ch;
+        int id, seq;
 
-            /* read in polygon */
+        // std::ifstream fin_poly(fpoly);
+        // while (fin_poly >> ch) {
+        //     Polygon poly;
 
-            std::string xmlstr;
-            GMLParser gnp;
-            char ch;
-            int id, seq;
+        //     while (':' != ch) fin_poly >> ch;
+        //     fin_poly >> id >> ch >> seq >> ch;
 
-            std::ifstream fin_poly(fpoly);
-            while (fin_poly >> ch) {
-                Polygon poly;
+        //     getline(fin_poly, xmlstr);
+        //     gnp.polygon(xmlstr.c_str(),
+        //                 poly.outer_ring, poly.inner_rings);
 
-                while (':' != ch) fin_poly >> ch;
-                fin_poly >> id >> ch >> seq >> ch;
+        //     if (id > polys.size()) {
+        //         PolygonSeq ps;
+        //         ps.seq.push_back(seq);
+        //         ps.polys.push_back(poly);
+        //         polys.push_back(ps);
+        //     } else {
+        //         PolygonSeq &ps = polys[id-1];
+        //         ps.seq.push_back(seq);
+        //         ps.polys.push_back(poly);
+        //     }
 
-                getline(fin_poly, xmlstr);
-                gnp.polygon(xmlstr.c_str(),
-                            poly.outer_ring, poly.inner_rings);
+        // }
+        // fin_poly.close();
 
-                if (id > polys.size()) {
-                    PolygonSeq ps;
-                    ps.seq.push_back(seq);
-                    ps.polys.push_back(poly);
-                    polys.push_back(ps);
-                } else {
-                    PolygonSeq &ps = polys[id-1];
-                    ps.seq.push_back(seq);
-                    ps.polys.push_back(poly);
-                }
+    };
+    // [&]
+    {
 
-            }
-            fin_poly.close();
+        /* read in point */
 
-            rdpoly = clock.elapsed();
-            tot += rdpoly;
-        },
-        [&] {
+        std::string xmlstr;
+        GMLParser gnp;
+        char ch;
+        double x, y;
+        int id, seq;
 
-            /* read in point */
+        std::ifstream fin_point(fpt);
+        while (fin_point >> ch) {
+            while (':' != ch) fin_point >> ch;
+            fin_point >> id >> ch >> seq >> ch;
+            getline(fin_point, xmlstr);
+            gnp.point(xmlstr.c_str(), x, y);
+            pts.push_back(Key(K::Point_2(x, y),
+                              std::make_pair(id, seq)));
+        }
+        fin_point.close();
 
-            std::string xmlstr;
-            GMLParser gnp;
-            char ch;
-            double x, y;
-            int id, seq;
+    }// );
 
-            std::ifstream fin_point(fpt);
-            while (fin_point >> ch) {
-                while (':' != ch) fin_point >> ch;
-                fin_point >> id >> ch >> seq >> ch;
-                getline(fin_point, xmlstr);
-                gnp.point(xmlstr.c_str(), x, y);
-                pts.push_back(Key(K::Point_2(x, y),
-                                  std::make_pair(id, seq)));
-            }
-            fin_point.close();
-
-            rdpt = clock.elapsed();
-            tot += rdpt;
-
-        });
-
-    pinvoke = clock.elapsed();
-
-    clock.reset();
     Range_tree_2_type tree(pts.begin(), pts.end());
-    build = clock.elapsed();
-    tot += build;
 
     tbb::concurrent_vector<Result> results;
 
-    clock.reset();
     // for each polygon id
     tbb::parallel_for((size_t)0, polys.size(), (size_t)1, [&] (size_t i) {
 
@@ -218,10 +192,7 @@ void inside(const std::string &fpt,
                 }
             } // for each polygon seq
         }); // for each polygon id
-    pip = clock.elapsed();
-    tot += pip;
 
-    clock.reset();
     std::ofstream fo(o);
     for (size_t i = 0; i < results.size(); ++i) {
         Result &r = results[i];
@@ -229,22 +200,4 @@ void inside(const std::string &fpt,
            << r.second.first << ':' << r.second.second << std::endl;
     }
     fo.close();
-    fileio = clock.elapsed();
-    tot += fileio;
-
-    char buf[512];
-    snprintf(buf, 512,
-             "Parallel_invoke: %f (%f)\n"
-             "Polgons read: %f (%f)\n"
-             "Points Read: %f (%f)\n"
-             "tree build: %f (%f)\n"
-             "Pip query: %f (%f)\n"
-             "Write to file: %f (%f)\n",
-             pinvoke, pinvoke/tot*100,
-             rdpoly, rdpoly/tot*100,
-             rdpt, rdpt/tot*100,
-             build, build/tot*100,
-             pip, pip/tot*100,
-             fileio, fileio/tot*100);
-    // std::cout << buf << std::endl;
 }
