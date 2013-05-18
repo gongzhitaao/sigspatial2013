@@ -45,13 +45,13 @@ std::ostream &operator << (std::ostream &o, const item &i)
 TEST(core, insidev2)
 {
     const int MAX_PATH = 128;
-    const int POINTS = 1;
-    const int POLYS = 10;
+    const int POINTS = 1000;
+    const int POLYS = 15;
 
     char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
         out0_file[MAX_PATH], out1_file[MAX_PATH];
 
-    snprintf(point_input_file, MAX_PATH, "../test/points%d.txt", POINTS);
+    snprintf(point_input_file, MAX_PATH, "../in/points%d.txt", POINTS);
     snprintf(poly_input_file, MAX_PATH, "../in/poly%d.txt", POLYS);
     snprintf(out0_file, MAX_PATH,
              "../in/polys%d_points%d_INSIDE_out", POLYS, POINTS);
@@ -60,24 +60,24 @@ TEST(core, insidev2)
 
     inside(point_input_file, poly_input_file, out1_file);
 
-    // item f;
-    // char ch;
+    item f;
+    char ch;
 
-    // std::set<item> s0;
-    // std::ifstream f0(out0_file);
-    // while (f0 >> f.i[0] >> ch >> f.i[1] >>
-    //        ch >> f.i[2] >> ch >> f.i[3]) s0.insert(f);
-    // f0.close();
+    std::set<item> s0;
+    std::ifstream f0(out0_file);
+    while (f0 >> f.i[0] >> ch >> f.i[1] >>
+           ch >> f.i[2] >> ch >> f.i[3]) s0.insert(f);
+    f0.close();
 
-    // std::set<item> s1;
-    // std::ifstream f1(out1_file);
-    // while (f1 >> f.i[0] >> ch >> f.i[1] >>
-    //        ch >> f.i[2] >> ch >> f.i[3]) s1.insert(f);
-    // f1.close();
+    std::set<item> s1;
+    std::ifstream f1(out1_file);
+    while (f1 >> f.i[0] >> ch >> f.i[1] >>
+           ch >> f.i[2] >> ch >> f.i[3]) s1.insert(f);
+    f1.close();
 
-    // for (std::set<item>::iterator i = s1.begin(); i != s1.end(); ++i)
-    //     ASSERT_TRUE(s0.end() != s0.find(*i))
-    //         << '\n' << *i << ':'
-    //         << "\nexpected size: " << s0.size()
-    //         << "\nactual size: " << s1.size() << std::endl;
+    for (std::set<item>::iterator i = s1.begin(); i != s1.end(); ++i)
+        ASSERT_TRUE(s0.end() != s0.find(*i))
+            << '\n' << *i << ':'
+            << "\nexpected size: " << s0.size()
+            << "\nactual size: " << s1.size() << std::endl;
 }
