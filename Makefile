@@ -1,14 +1,14 @@
-# Time-stamp: <2013-05-16 21:41:38 CDT gongzhitaao>
+# Time-stamp: <2013-05-27 20:36:34 CDT gongzhitaao>
 
 OBJ_DIR=obj
 TEST_DIR=test
 SRC=$(filter-out main.cpp,$(shell ls *.cpp))
 OBJS=$(addprefix $(OBJ_DIR)/,$(patsubst %.cpp,%.o,$(SRC)))
 
-CORE_TEST=inside winthin parser asmxml memory
+CORE_TEST=inside within parser asmxml memory
 OTHER_TEST=bst pip general stress tbb
 
-CXXFLAGS=-frounding-math -Wall -std=c++11 -g -O0
+CXXFLAGS=-frounding-math -Wall -std=c++11 -O2
 LDLIBS=-lCGAL_Core -lCGAL -ltbb -pthread
 GTEST=-lgtest -lgtest_main
 

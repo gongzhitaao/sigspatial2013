@@ -7,7 +7,9 @@
 
 #include "common.h"
 
-const char PointSchema[] = "\
+namespace SigSpatial2013 {
+
+    const char PointSchema[] = "\
 <schema>\
   <document name=\"gml:Point\">\
     <attribute name=\"srsName\" ignore=\"yes\"/>\
@@ -20,7 +22,7 @@ const char PointSchema[] = "\
   </document>\
 </schema>";
 
-const char PolygonSchema[] = "\
+    const char PolygonSchema[] = "\
 <schema>\
   <document name=\"gml:Polygon\">\
     <attribute name=\"srsName\" ignore=\"yes\"/>\
@@ -46,31 +48,33 @@ const char PolygonSchema[] = "\
   </document>\
 </schema>";
 
-class GMLParser
-{
-public:
-    GMLParser(void);
-    ~GMLParser(void);
-
-    bool point(const char *s, double &x, double &y);
-    bool polygon(const char *s,
-                 Ring &outer_ring, std::vector<Ring> &inner_rings);
-
-private:
-    void trim_right(char *&e)
+    class GMLParser
     {
-        --e;
-        while (0 == (int)*e || isspace(*e)) --e;
-        ++e;
-    }
+    public:
+        GMLParser(void);
+        ~GMLParser(void);
 
-private:
-    enum { ChunkSize = 32 * 1024 * 1024 };
+        bool point(const char *s, double &x, double &y);
+        bool polygon(const char *s,
+                     Ring &outer_ring, std::vector<Ring> &inner_rings);
 
-    AXParseContext _context;
-    AXClassContext _classContext;
-    AXElementClass *_pointClass;
-    AXElementClass *_polyClass;
-};
+    private:
+        void trim_right(char *&e)
+        {
+            --e;
+            while (0 == (int)*e || isspace(*e)) --e;
+            ++e;
+        }
+
+    private:
+        enum { ChunkSize = 32 * 1024 * 1024 };
+
+        AXParseContext _context;
+        AXClassContext _classContext;
+        AXElementClass *_pointClass;
+        AXElementClass *_polyClass;
+    };
+
+}
 
 #endif /* _SIG_GMLPARSER_H_ */

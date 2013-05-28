@@ -1,11 +1,9 @@
 #include <gtest/gtest.h>
 
-#include <chrono>
-#include <fstream>
 #include <iostream>
 #include <iterator>
+#include <fstream>
 #include <set>
-#include <string>
 
 #include "../core.h"
 
@@ -42,11 +40,12 @@ std::ostream &operator << (std::ostream &o, const item &i)
 }
 
 
-TEST(core, insidev2)
+TEST(core, within)
 {
     const int MAX_PATH = 128;
     const int POINTS = 1000;
-    const int POLYS = 15;
+    const int POLYS = 10;
+    const int DISTANCE = 1000;
 
     char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
         out0_file[MAX_PATH], out1_file[MAX_PATH];
@@ -54,11 +53,13 @@ TEST(core, insidev2)
     snprintf(point_input_file, MAX_PATH, "../in/points%d.txt", POINTS);
     snprintf(poly_input_file, MAX_PATH, "../in/poly%d.txt", POLYS);
     snprintf(out0_file, MAX_PATH,
-             "../in/polys%d_points%d_INSIDE_out", POLYS, POINTS);
+             "../in/polys%d_points%d_WITHIN_%d_out",
+             POLYS, POINTS, DISTANCE);
     snprintf(out1_file, MAX_PATH,
-             "../out/polys%d_points%d_INSIDE_out", POLYS, POINTS);
+             "../out/polys%d_points%d_WITHIN_%d_out",
+             POLYS, POINTS, DISTANCE);
 
-    inside(point_input_file, poly_input_file, out1_file);
+    within(DISTANCE, point_input_file, poly_input_file, out1_file);
 
     item f;
     char ch;
@@ -77,9 +78,12 @@ TEST(core, insidev2)
 
     for (std::set<item>::iterator i = s1.begin(); i != s1.end(); ++i)
         ASSERT_TRUE(s0.end() != s0.find(*i))
-            << '\n' << *i << ':'
+            << '\n' << *i
             << "\nexpected size: " << s0.size()
             << "\nactual size: " << s1.size() << std::endl;
 
-    ASSERT_TRUE(s0.size() == s1.size()) << "\nsome points missing!";
+    ASSERT_TRUE(s0.size() == s1.size())
+        << "\nsome points missing!"
+        << "\nexpected size: " << s0.size()
+        << "\nactual size: " << s1.size() << std::endl;
 }
