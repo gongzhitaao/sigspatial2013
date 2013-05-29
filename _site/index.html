@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+
+    <script src="http://static.gongzhitaao.org/jquery/jquery-1.9.1.min.js"></script>
+    <script src="http://static.gongzhitaao.org/d3/d3.min.js"></script>
+    <script src="/sigspatial2013/assets/js/viz.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/sigspatial2013/assets/css/sigspatial2013.css" />
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="span3">
+
+        <h2>Polygon</h2>
+
+        <table>
+          <tr>
+            <td>ID</td><td><input type="number" name="polyid"/></td>
+          </tr>
+          <tr>
+            <td>SEQ</td><td><input type="number" name="polyseq"/></td>
+          </tr>
+          <tr>
+            <td>FILE</td><td>
+              <select id="polyfile">
+                <option value="10">poly10.txt</option>
+                <option value="15">poly15.txt</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+
+        <h2>Point</h2>
+
+        <table>
+          <tr>
+            <td>ID</td><td><input type="number" name="ptid"/></td>
+          </tr>
+          <tr>
+            <td>SEQ</td><td><input type="number" name="ptseq"/></td>
+          </tr>
+          <tr>
+            <td>FILE</td><td>
+              <select id="ptfile">
+                <option value="500">points500.txt</option>
+                <option value="1000">points1000.txt</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+
+        <button type="button" id="foo1">Visualize</button>
+
+        <hr/>
+
+        <h2>Polygon</h2>
+        GMLDATA:<br/><textarea id="polygml"></textarea>
+
+        <h2>Point</h2>
+        <table>
+          <tr>
+            <td>X</td><td><input type="number" name="x"/></td>
+          </tr>
+          <tr>
+            <td>Y</td><td><input type="number" name="y"/></td>
+          </tr>
+        </table>
+
+        <button type="button" id="foo2">Visulalize</button>
+
+      </div>
+
+      <div id="svg" class="span9">
+      </div>
+
+    </div>
+
+  </body>
+</html>

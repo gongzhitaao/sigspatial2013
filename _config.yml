@@ -1,0 +1,9 @@
+safe: true
+auto: true
+server: true
+baseurl: false
+
+pygments: true
+pygments: true
+
+exclude: ["gh-pages", "Makefile"]
