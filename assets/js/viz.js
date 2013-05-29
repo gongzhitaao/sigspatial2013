@@ -63,15 +63,13 @@
         var ptid = $('input[name=ptid]').val().toString();
         var ptseq = $('input[name=ptseq]').val().toString();
 
-        var xml = $('Point',
-                    $.parseXML(g_points[ipt][ptid][ptseq]));
+        var xml = $($.parseXML(g_points[ipt][ptid][ptseq]));
 
-        var xy = xml.find('coordinates').text().split(/,/).map(parseFloat);
+        var xy = xml.text().split(/,/).map(parseFloat);
         x = xy[0];
         y = xy[1];
 
-        xml = $('Polygon',
-                $.parseXML(g_polys[ipoly][polyid][polyseq]));
+        xml = $($.parseXML(g_polys[ipoly][polyid][polyseq]));
 
         foo(xml);
     }
@@ -83,8 +81,7 @@
 
         console.log(x, y);
 
-        var xml = $('Polygon',
-                    $.parseXML($('#polygml').val()));
+        var xml = $($.parseXML($('#polygml').val()));
 
         foo(xml);
     }
@@ -94,7 +91,7 @@
         ymin = ymax = y;
 
         var polys = [];
-        xml.find('coordinates').each(function() {
+        xml.find('gml\\:coordinates,coordinates').each(function() {
 
             var coords = $(this).text().split(/\s+/);
             var poly = [];
