@@ -1,3 +1,6 @@
+---
+---
+{% include config %}
 
 (function($, d3, undefined){
 
@@ -37,13 +40,13 @@
         $('input[name=ptseq]').attr('value', 501);
 
         var p1 = {}, p2 = {};
-        init_poly(p1, '/sigspatial2013/data/poly10.txt');
-        init_poly(p2, '/sigspatial2013/data/poly15.txt');
+        init_poly(p1, '{{ BASE_PATH }}/data/poly10.txt');
+        init_poly(p2, '{{ BASE_PATH }}/data/poly15.txt');
         g_polys = {'10': p1, '15': p2 };
 
         var pt1 = {}, pt2 = {};
-        init_pt(pt1, '/sigspatial2013/data/points500.txt');
-        init_pt(pt2, '/sigspatial2013/data/points1000.txt');
+        init_pt(pt1, '{{ BASE_PATH }}/data/points500.txt');
+        init_pt(pt2, '{{ BASE_PATH }}/data/points1000.txt');
         g_points = {'500': pt1, '1000': pt2};
 
         $('#polyfile').change(function(){
@@ -131,7 +134,7 @@
             y0 = height, y1 = 0;
             w = height/(ymax-ymin)*(xmax-xmin);
             m = (width-w)/2;
-            x0 = m, x1 = w-m;
+            x0 = m, x1 = w+m;
         } else {
             x0 = 0, x1 = width;
             y0 = height, y1 = 0;
@@ -156,8 +159,10 @@
             .attr('stroke', 'blue')
             .attr('fill', '#eee');
 
+        console.log(scaleX(xmin), scaleX(xmax));
+
         svg.append('circle')
-            .attr('r', scaleX(1000)-scaleX(0))
+            .attr('r', scaleX(1000+x)-scaleX(x))
             .attr('cx', scaleX(x))
             .attr('cy', scaleY(y))
             .attr('fill', '#aaa')

@@ -1,0 +1,12 @@
+{% capture envcache %}
+
+{% if site.baseurl %}
+   {% assign BASE_PATH = site.baseurl %}
+{% else %}
+   {% assign BASE_PATH = nil %}
+{% endif %}
+
+{% capture ASSET_PATH %}{{ BASE_PATH }}/assets/{% endcapture %}
+
+{% endcapture %}
+{% assign envcache = nil %}
