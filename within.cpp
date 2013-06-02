@@ -45,7 +45,6 @@ namespace SigSpatial2013 {
 
         void operator () (size_t i) const
         {
-
             // Use squared distance, avoid the expensive sqrt
             double d2 = n_ * n_;
 
