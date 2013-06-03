@@ -1,4 +1,4 @@
-# Time-stamp: <2013-05-27 20:36:34 CDT gongzhitaao>
+# Time-stamp: <2013-06-02 23:32:10 CDT gongzhitaao>
 
 OBJ_DIR=obj
 TEST_DIR=test
@@ -53,4 +53,4 @@ $(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)
 
 clean :
-	rm -rf main a.out $(OBJ_DIR)
+	rm -rf main a.out $(OBJ_DIR) *.log

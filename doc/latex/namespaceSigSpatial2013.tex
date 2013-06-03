@@ -1,0 +1,255 @@
+\hypertarget{namespaceSigSpatial2013}{\section{Sig\-Spatial2013 Namespace Reference}
+\label{namespaceSigSpatial2013}\index{Sig\-Spatial2013@{Sig\-Spatial2013}}
+}
+
+
+commom.\-h Common definitions used internally.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structSigSpatial2013_1_1Ring}{Ring}
+\begin{DoxyCompactList}\small\item\em Contains vertices of simple polygon without holes and it's bounding M\-B\-R. \end{DoxyCompactList}\item 
+struct \hyperlink{structSigSpatial2013_1_1Polygon}{Polygon}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structSigSpatial2013_1_1Polygon}{Polygon} with or without holes. \end{DoxyCompactList}\item 
+struct \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq}
+\begin{DoxyCompactList}\small\item\em Polygons with the same I\-D but different sequence number. \end{DoxyCompactList}\item 
+class \hyperlink{classSigSpatial2013_1_1GMLParser}{G\-M\-L\-Parser}
+\item 
+struct \hyperlink{structSigSpatial2013_1_1pip}{pip}
+\item 
+struct \hyperlink{structSigSpatial2013_1_1within__n}{within\-\_\-n}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespaceSigSpatial2013_ac8dd3c84f0c3e96c95be4d4e6cf4325c}{typedef C\-G\-A\-L\-::\-Cartesian$<$ double $>$ \hyperlink{namespaceSigSpatial2013_ac8dd3c84f0c3e96c95be4d4e6cf4325c}{K}}\label{namespaceSigSpatial2013_ac8dd3c84f0c3e96c95be4d4e6cf4325c}
+
+\begin{DoxyCompactList}\small\item\em C\-G\-A\-L Kernel. \end{DoxyCompactList}\item 
+\hypertarget{namespaceSigSpatial2013_a4d50a6d98aab2aa905654c8c2e3e3c58}{typedef K\-::\-Point\-\_\-2 \hyperlink{namespaceSigSpatial2013_a4d50a6d98aab2aa905654c8c2e3e3c58}{Point\-\_\-2}}\label{namespaceSigSpatial2013_a4d50a6d98aab2aa905654c8c2e3e3c58}
+
+\begin{DoxyCompactList}\small\item\em C\-G\-A\-L 2d point. \end{DoxyCompactList}\item 
+\hypertarget{namespaceSigSpatial2013_a1f1ea2e2cdbee6d560fd28d9332b4a9e}{typedef \\*
+C\-G\-A\-L\-::\-Range\-\_\-tree\-\_\-map\-\_\-traits\-\_\-2\\*
+$<$ \hyperlink{namespaceSigSpatial2013_ac8dd3c84f0c3e96c95be4d4e6cf4325c}{K}, std\-::pair$<$ int, int $>$ $>$ \hyperlink{namespaceSigSpatial2013_a1f1ea2e2cdbee6d560fd28d9332b4a9e}{Traits}}\label{namespaceSigSpatial2013_a1f1ea2e2cdbee6d560fd28d9332b4a9e}
+
+\begin{DoxyCompactList}\small\item\em Associative data contains in each tree node, i.\-e., I\-D and sequence number. \end{DoxyCompactList}\item 
+\hypertarget{namespaceSigSpatial2013_a1f24a632c09e5f10b138ef0096857e43}{typedef C\-G\-A\-L\-::\-Range\-\_\-tree\-\_\-2\\*
+$<$ \hyperlink{namespaceSigSpatial2013_a1f1ea2e2cdbee6d560fd28d9332b4a9e}{Traits} $>$ \hyperlink{namespaceSigSpatial2013_a1f24a632c09e5f10b138ef0096857e43}{Range\-\_\-tree\-\_\-2\-\_\-type}}\label{namespaceSigSpatial2013_a1f24a632c09e5f10b138ef0096857e43}
+
+\begin{DoxyCompactList}\small\item\em Range tree type. \end{DoxyCompactList}\item 
+\hypertarget{namespaceSigSpatial2013_af9823bd0b551eb301830d664ba571a15}{typedef Traits\-::\-Key \hyperlink{namespaceSigSpatial2013_af9823bd0b551eb301830d664ba571a15}{Key}}\label{namespaceSigSpatial2013_af9823bd0b551eb301830d664ba571a15}
+
+\begin{DoxyCompactList}\small\item\em Tree node structure. \end{DoxyCompactList}\item 
+\hypertarget{namespaceSigSpatial2013_aac40440b3bd8f75ef62e075b8958fece}{typedef Traits\-::\-Interval \hyperlink{namespaceSigSpatial2013_aac40440b3bd8f75ef62e075b8958fece}{Interval}}\label{namespaceSigSpatial2013_aac40440b3bd8f75ef62e075b8958fece}
+
+\begin{DoxyCompactList}\small\item\em Query window type. \end{DoxyCompactList}\item 
+\hypertarget{namespaceSigSpatial2013_a69c1e827245441b25a541c97b741b97c}{typedef std\-::pair$<$ int, int $>$ \hyperlink{namespaceSigSpatial2013_a69c1e827245441b25a541c97b741b97c}{I\-D}}\label{namespaceSigSpatial2013_a69c1e827245441b25a541c97b741b97c}
+
+\begin{DoxyCompactList}\small\item\em The pair $<$I\-D,S\-E\-Q$>$ identifies a point or a polygon. \end{DoxyCompactList}\item 
+\hypertarget{namespaceSigSpatial2013_af3568b84c52aee7ab5aa8f15fb019d7f}{typedef std\-::pair$<$ \hyperlink{namespaceSigSpatial2013_a69c1e827245441b25a541c97b741b97c}{I\-D}, \hyperlink{namespaceSigSpatial2013_a69c1e827245441b25a541c97b741b97c}{I\-D} $>$ \hyperlink{namespaceSigSpatial2013_af3568b84c52aee7ab5aa8f15fb019d7f}{Result}}\label{namespaceSigSpatial2013_af3568b84c52aee7ab5aa8f15fb019d7f}
+
+\begin{DoxyCompactList}\small\item\em Result output to a file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+size\-\_\-t \hyperlink{namespaceSigSpatial2013_a317bfe5f97ff810889aab1765f916f49}{most\-\_\-recent\-\_\-polygon} (const \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} \&ps, int seq)
+\begin{DoxyCompactList}\small\item\em Find the sequence number of the most recent polygon w.\-r.\-t a point. \end{DoxyCompactList}\item 
+void \hyperlink{namespaceSigSpatial2013_ae6c95a87661a6bfca2decf6e7120508d}{read\-\_\-polygon} (const std\-::string \&fpoly, std\-::vector$<$ \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} $>$ \&v)
+\begin{DoxyCompactList}\small\item\em Read from polygons files into vectors of \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} structure. \end{DoxyCompactList}\item 
+\hypertarget{namespaceSigSpatial2013_abe57a3ac7481f0bf62658917a4d0642e}{bool \hyperlink{namespaceSigSpatial2013_abe57a3ac7481f0bf62658917a4d0642e}{read\-\_\-point} (std\-::ifstream \&f, std\-::vector$<$ \hyperlink{namespaceSigSpatial2013_af9823bd0b551eb301830d664ba571a15}{Key} $>$ \&v)}\label{namespaceSigSpatial2013_abe57a3ac7481f0bf62658917a4d0642e}
+
+\begin{DoxyCompactList}\small\item\em Read from point file into vectors of Key. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const size\-\_\-t \hyperlink{namespaceSigSpatial2013_a1d63766b99e35a7acbb9e1bffbcc9057}{P\-O\-I\-N\-T\-\_\-\-S\-I\-Z\-E} = 1e4
+\item 
+const double \hyperlink{namespaceSigSpatial2013_aea5a48169353413e1f56a7e3f3f70a96}{M\-A\-R\-G\-I\-N} = 0.\-01
+\item 
+const char {\bfseries Point\-Schema} \mbox{[}$\,$\mbox{]}
+\item 
+const char {\bfseries Polygon\-Schema} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+commom.\-h Common definitions used internally. \hyperlink{within_8cpp_source}{within.\-cpp}\-: solution for the W\-I\-N\-T\-H\-I\-N\-\_\-n problem 
+
+\subsection{Function Documentation}
+\hypertarget{namespaceSigSpatial2013_a317bfe5f97ff810889aab1765f916f49}{\index{Sig\-Spatial2013@{Sig\-Spatial2013}!most\-\_\-recent\-\_\-polygon@{most\-\_\-recent\-\_\-polygon}}
+\index{most\-\_\-recent\-\_\-polygon@{most\-\_\-recent\-\_\-polygon}!SigSpatial2013@{Sig\-Spatial2013}}
+\subsubsection[{most\-\_\-recent\-\_\-polygon}]{\setlength{\rightskip}{0pt plus 5cm}std\-::size\-\_\-t Sig\-Spatial2013\-::most\-\_\-recent\-\_\-polygon (
+\begin{DoxyParamCaption}
+\item[{const Polygon\-Seq \&}]{ps, }
+\item[{int}]{seq}
+\end{DoxyParamCaption}
+)}}\label{namespaceSigSpatial2013_a317bfe5f97ff810889aab1765f916f49}
+
+
+Find the sequence number of the most recent polygon w.\-r.\-t a point. 
+
+According the the spec, the most recent polygon w.\-r.\-t a point is the polygon with maximum sequence number smaller than the point's sequence number.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ps} & \hyperlink{structSigSpatial2013_1_1Polygon}{Polygon} Sequence \\
+\hline
+{\em seq} & Sequence number of the point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Sequence number of the most recent polygon w.\-r.\-t \#seq 
+\end{DoxyReturn}
+
+
+Definition at line 12 of file common.\-cpp.
+
+
+\begin{DoxyCode}
+13     \{
+14         \textcolor{keywordtype}{size\_t} b = 0, m = 0, e = ps.seq.size() - 1;
+15 
+16         \textcolor{keywordflow}{if} (seq >= ps.seq[e]) \textcolor{keywordflow}{return} e;
+17 
+18         \textcolor{keywordflow}{while} (b < e) \{
+19             m = (b+e)/2;
+20             \textcolor{keywordflow}{if} (ps.seq[m] > seq) e = m;
+21             \textcolor{keywordflow}{else} b = m + 1;
+22         \}
+23 
+24         \textcolor{keywordflow}{return} b-1;
+25     \}
+\end{DoxyCode}
+\hypertarget{namespaceSigSpatial2013_ae6c95a87661a6bfca2decf6e7120508d}{\index{Sig\-Spatial2013@{Sig\-Spatial2013}!read\-\_\-polygon@{read\-\_\-polygon}}
+\index{read\-\_\-polygon@{read\-\_\-polygon}!SigSpatial2013@{Sig\-Spatial2013}}
+\subsubsection[{read\-\_\-polygon}]{\setlength{\rightskip}{0pt plus 5cm}void Sig\-Spatial2013\-::read\-\_\-polygon (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{fpoly, }
+\item[{std\-::vector$<$ Polygon\-Seq $>$ \&}]{v}
+\end{DoxyParamCaption}
+)}}\label{namespaceSigSpatial2013_ae6c95a87661a6bfca2decf6e7120508d}
+
+
+Read from polygons files into vectors of \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fpoly} & \hyperlink{structSigSpatial2013_1_1Polygon}{Polygon} definition file \\
+\hline
+{\em v} & Vectors of \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 27 of file common.\-cpp.
+
+
+\begin{DoxyCode}
+29     \{
+30         std::string xmlstr;
+31         GMLParser gnp;
+32         \textcolor{keywordtype}{char} ch;
+33         \textcolor{keywordtype}{size\_t} id, seq;
+34 
+35         std::ifstream fin\_poly(fpoly);
+36         \textcolor{keywordflow}{while} (fin\_poly >> ch) \{
+37             Polygon poly;
+38 
+39             \textcolor{keywordflow}{while} (\textcolor{charliteral}{':'} != ch) fin\_poly >> ch;
+40             fin\_poly >> \textcolor{keywordtype}{id} >> ch >> seq >> ch;
+41 
+42             getline(fin\_poly, xmlstr);
+43             gnp.polygon(xmlstr.c\_str(),
+44                         poly.outer\_ring, poly.inner\_rings);
+45 
+46             \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} > v.size()) \{
+47                 PolygonSeq ps;
+48                 ps.seq.push\_back(seq);
+49                 ps.polys.push\_back(poly);
+50                 v.push\_back(ps);
+51             \} \textcolor{keywordflow}{else} \{
+52                 PolygonSeq &ps = v[\textcolor{keywordtype}{id}-1];
+53                 ps.seq.push\_back(seq);
+54                 ps.polys.push\_back(poly);
+55             \}
+56 
+57         \}
+58         fin\_poly.close();
+59     \}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespaceSigSpatial2013_aea5a48169353413e1f56a7e3f3f70a96}{\index{Sig\-Spatial2013@{Sig\-Spatial2013}!M\-A\-R\-G\-I\-N@{M\-A\-R\-G\-I\-N}}
+\index{M\-A\-R\-G\-I\-N@{M\-A\-R\-G\-I\-N}!SigSpatial2013@{Sig\-Spatial2013}}
+\subsubsection[{M\-A\-R\-G\-I\-N}]{\setlength{\rightskip}{0pt plus 5cm}const double Sig\-Spatial2013\-::\-M\-A\-R\-G\-I\-N = 0.\-01}}\label{namespaceSigSpatial2013_aea5a48169353413e1f56a7e3f3f70a96}
+Extend the query window by M\-A\-R\-G\-I\-N in the W\-I\-T\-H\-I\-N\-\_\-\-N test to include the points on the boundary. In the spec, the precision is two digits after decimal. 
+
+Definition at line 95 of file common.\-h.
+
+\hypertarget{namespaceSigSpatial2013_a1d63766b99e35a7acbb9e1bffbcc9057}{\index{Sig\-Spatial2013@{Sig\-Spatial2013}!P\-O\-I\-N\-T\-\_\-\-S\-I\-Z\-E@{P\-O\-I\-N\-T\-\_\-\-S\-I\-Z\-E}}
+\index{P\-O\-I\-N\-T\-\_\-\-S\-I\-Z\-E@{P\-O\-I\-N\-T\-\_\-\-S\-I\-Z\-E}!SigSpatial2013@{Sig\-Spatial2013}}
+\subsubsection[{P\-O\-I\-N\-T\-\_\-\-S\-I\-Z\-E}]{\setlength{\rightskip}{0pt plus 5cm}const size\-\_\-t Sig\-Spatial2013\-::\-P\-O\-I\-N\-T\-\_\-\-S\-I\-Z\-E = 1e4}}\label{namespaceSigSpatial2013_a1d63766b99e35a7acbb9e1bffbcc9057}
+The number of points read in at once. Because of the memory constraints, it's impratical to read in all the points at once. And also, it's faster not to do so. 
+
+Definition at line 84 of file common.\-h.
+
+\hypertarget{namespaceSigSpatial2013_a40970b19a17f8bf52c4dad47be296e71}{\index{Sig\-Spatial2013@{Sig\-Spatial2013}!Point\-Schema@{Point\-Schema}}
+\index{Point\-Schema@{Point\-Schema}!SigSpatial2013@{Sig\-Spatial2013}}
+\subsubsection[{Point\-Schema}]{\setlength{\rightskip}{0pt plus 5cm}const char Sig\-Spatial2013\-::\-Point\-Schema\mbox{[}$\,$\mbox{]}}}\label{namespaceSigSpatial2013_a40970b19a17f8bf52c4dad47be296e71}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"\(\backslash\)}
+\textcolor{stringliteral}{<schema>\(\backslash\)}
+\textcolor{stringliteral}{  <document name=\(\backslash\)"gml:Point\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{    <attribute name=\(\backslash\)"srsName\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{    <attribute name=\(\backslash\)"xmlns:gml\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{    <element name=\(\backslash\)"gml:coordinates\(\backslash\)" type=\(\backslash\)"text\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{      <attribute name=\(\backslash\)"decimal\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{      <attribute name=\(\backslash\)"cs\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{      <attribute name=\(\backslash\)"ts\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{    </element>\(\backslash\)}
+\textcolor{stringliteral}{  </document>\(\backslash\)}
+\textcolor{stringliteral}{</schema>"}
+\end{DoxyCode}
+
+
+Definition at line 12 of file gmlparser.\-h.
+
+\hypertarget{namespaceSigSpatial2013_ad5f605834dcd0b8d7262e7fdc75215f9}{\index{Sig\-Spatial2013@{Sig\-Spatial2013}!Polygon\-Schema@{Polygon\-Schema}}
+\index{Polygon\-Schema@{Polygon\-Schema}!SigSpatial2013@{Sig\-Spatial2013}}
+\subsubsection[{Polygon\-Schema}]{\setlength{\rightskip}{0pt plus 5cm}const char Sig\-Spatial2013\-::\-Polygon\-Schema\mbox{[}$\,$\mbox{]}}}\label{namespaceSigSpatial2013_ad5f605834dcd0b8d7262e7fdc75215f9}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"\(\backslash\)}
+\textcolor{stringliteral}{<schema>\(\backslash\)}
+\textcolor{stringliteral}{  <document name=\(\backslash\)"gml:Polygon\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{    <attribute name=\(\backslash\)"srsName\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{    <attribute name=\(\backslash\)"xmlns:gml\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{    <element name=\(\backslash\)"gml:outerBoundaryIs\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{      <element name=\(\backslash\)"gml:LinearRing\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{        <element name=\(\backslash\)"gml:coordinates\(\backslash\)" type=\(\backslash\)"text\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{          <attribute name=\(\backslash\)"decimal\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{          <attribute name=\(\backslash\)"cs\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{          <attribute name=\(\backslash\)"ts\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{        </element>\(\backslash\)}
+\textcolor{stringliteral}{      </element>\(\backslash\)}
+\textcolor{stringliteral}{    </element>\(\backslash\)}
+\textcolor{stringliteral}{    <element name=\(\backslash\)"gml:innerBoundaryIs\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{      <collection name=\(\backslash\)"gml:LinearRing\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{        <element name=\(\backslash\)"gml:coordinates\(\backslash\)" type=\(\backslash\)"text\(\backslash\)">\(\backslash\)}
+\textcolor{stringliteral}{          <attribute name=\(\backslash\)"decimal\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{          <attribute name=\(\backslash\)"cs\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{          <attribute name=\(\backslash\)"ts\(\backslash\)" ignore=\(\backslash\)"yes\(\backslash\)"/>\(\backslash\)}
+\textcolor{stringliteral}{        </element>\(\backslash\)}
+\textcolor{stringliteral}{      </collection>\(\backslash\)}
+\textcolor{stringliteral}{    </element>\(\backslash\)}
+\textcolor{stringliteral}{  </document>\(\backslash\)}
+\textcolor{stringliteral}{</schema>"}
+\end{DoxyCode}
+
+
+Definition at line 25 of file gmlparser.\-h.
+
