@@ -1,5 +1,10 @@
-// inside.cpp
+/*!
+  \file   inside.cpp
+  \author Zhitao Gong <me@gongzhitaao.org>
+  \date   Mon Jun  3 17:52:43 2013
 
+  \brief  Code for INSIDE predicate checking.
+*/
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -34,12 +39,23 @@
 
 namespace SigSpatial2013 {
 
+    /*! \brief Functor for point in polygon (pip) detection.
+     */
     struct pip
     {
-        Range_tree_2_type &t_;
-        std::vector<PolygonSeq> &v_;
+        Range_tree_2_type &t_;  //!< range tree containing point to test
+        std::vector<PolygonSeq> &v_; //!< polygons to test against
+        /*! \brief Contains all point and polygon pairs that satifies
+          the INSIDE predicate.
+        */
         tbb::concurrent_vector<Result> &r_;
 
+        /*! \brief Constructor.
+
+          \param t range tree
+          \param v polygons
+          \param r result
+        */
         pip(Range_tree_2_type &t,
             std::vector<PolygonSeq> &v,
             tbb::concurrent_vector<Result> &r)
@@ -132,8 +148,7 @@ void inside(const std::string &fpt,
         Range_tree_2_type tree(v.begin(), v.end());
 
         tbb::concurrent_vector<Result> results;
-        tbb::parallel_for((size_t)0, polys.size(), (size_t)1,
-                          pip(tree, polys, results));
+        tbb::parallel_for((size_t)0, polys.size(), (size_t)1, pip(tree, polys, results));
 
         for (size_t i = 0; i < results.size(); ++i) {
             Result &r = results[i];

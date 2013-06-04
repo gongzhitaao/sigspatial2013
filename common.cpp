@@ -1,5 +1,3 @@
-//! commom.cpp
-
 #include "common.h"
 
 #include <fstream>

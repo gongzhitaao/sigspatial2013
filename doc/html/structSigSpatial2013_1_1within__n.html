@@ -52,7 +52,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -100,7 +99,7 @@ $(document).ready(function(){initNavTree('structSigSpatial2013_1_1within__n.html
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -118,14 +117,17 @@ $(document).ready(function(){initNavTree('structSigSpatial2013_1_1within__n.html
 <div class="title">SigSpatial2013::within_n Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Functor for WITHIN_n predicate checking.  
+</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad11ca1ba7328173d83ffe4fb6264e6ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad11ca1ba7328173d83ffe4fb6264e6ef"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>within_n</b> (<a class="el" href="namespaceSigSpatial2013.html#a1f24a632c09e5f10b138ef0096857e43">Range_tree_2_type</a> &amp;t, std::vector&lt; <a class="el" href="structSigSpatial2013_1_1PolygonSeq.html">PolygonSeq</a> &gt; &amp;v, tbb::concurrent_vector&lt; <a class="el" href="namespaceSigSpatial2013.html#af3568b84c52aee7ab5aa8f15fb019d7f">Result</a> &gt; &amp;r, double n)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>within_n</b> (Range_tree_2_type &amp;t, std::vector&lt; <a class="el" href="structSigSpatial2013_1_1PolygonSeq.html">PolygonSeq</a> &gt; &amp;v, tbb::concurrent_vector&lt; Result &gt; &amp;r, double n)</td></tr>
 <tr class="separator:ad11ca1ba7328173d83ffe4fb6264e6ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ddb1790f7e5549a46926caaf3d25ed0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1within__n.html#a9ddb1790f7e5549a46926caaf3d25ed0">within_n_of_boundary</a> (const <a class="el" href="namespaceSigSpatial2013.html#a4d50a6d98aab2aa905654c8c2e3e3c58">Point_2</a> &amp;p, const std::vector&lt; <a class="el" href="namespaceSigSpatial2013.html#a4d50a6d98aab2aa905654c8c2e3e3c58">Point_2</a> &gt; &amp;v, double d2) const </td></tr>
-<tr class="memdesc:a9ddb1790f7e5549a46926caaf3d25ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true when the point, p, is within n units of distance of the polygon represented by its bounding vertices.  <a href="#a9ddb1790f7e5549a46926caaf3d25ed0">More...</a><br/></td></tr>
+<tr class="memitem:a9ddb1790f7e5549a46926caaf3d25ed0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1within__n.html#a9ddb1790f7e5549a46926caaf3d25ed0">within_n_of_boundary</a> (const Point_2 &amp;p, const std::vector&lt; Point_2 &gt; &amp;v, double d2) const </td></tr>
+<tr class="memdesc:a9ddb1790f7e5549a46926caaf3d25ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true when the point #p is within n units of distance of the polygon represented by its bounding vertices.  <a href="#a9ddb1790f7e5549a46926caaf3d25ed0">More...</a><br/></td></tr>
 <tr class="separator:a9ddb1790f7e5549a46926caaf3d25ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acdd3583e4b798bed14929fb40746d4a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acdd3583e4b798bed14929fb40746d4a5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (size_t i) const </td></tr>
@@ -134,15 +136,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (size_
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a233b38ad524ac2e88ca3c7af8bbb6ee7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a233b38ad524ac2e88ca3c7af8bbb6ee7"></a>
-<a class="el" href="namespaceSigSpatial2013.html#a1f24a632c09e5f10b138ef0096857e43">Range_tree_2_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1within__n.html#a233b38ad524ac2e88ca3c7af8bbb6ee7">t_</a></td></tr>
-<tr class="memdesc:a233b38ad524ac2e88ca3c7af8bbb6ee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">range tree constructed on POINT_SIZE point <br/></td></tr>
+Range_tree_2_type &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1within__n.html#a233b38ad524ac2e88ca3c7af8bbb6ee7">t_</a></td></tr>
+<tr class="memdesc:a233b38ad524ac2e88ca3c7af8bbb6ee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">range tree constructed on ::POINT_SIZE point <br/></td></tr>
 <tr class="separator:a233b38ad524ac2e88ca3c7af8bbb6ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f04a4fd6f5a228294cb213668ec4f6d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f04a4fd6f5a228294cb213668ec4f6d"></a>
 std::vector&lt; <a class="el" href="structSigSpatial2013_1_1PolygonSeq.html">PolygonSeq</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1within__n.html#a6f04a4fd6f5a228294cb213668ec4f6d">v_</a></td></tr>
 <tr class="memdesc:a6f04a4fd6f5a228294cb213668ec4f6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">polygons with the same id but different sequence number <br/></td></tr>
 <tr class="separator:a6f04a4fd6f5a228294cb213668ec4f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f5003bec01e527b3e76291a98fe3919"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f5003bec01e527b3e76291a98fe3919"></a>
-tbb::concurrent_vector&lt; <a class="el" href="namespaceSigSpatial2013.html#af3568b84c52aee7ab5aa8f15fb019d7f">Result</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1within__n.html#a7f5003bec01e527b3e76291a98fe3919">r_</a></td></tr>
+tbb::concurrent_vector&lt; Result &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1within__n.html#a7f5003bec01e527b3e76291a98fe3919">r_</a></td></tr>
 <tr class="memdesc:a7f5003bec01e527b3e76291a98fe3919"><td class="mdescLeft">&#160;</td><td class="mdescRight">result <br/></td></tr>
 <tr class="separator:a7f5003bec01e527b3e76291a98fe3919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba7117da29bbd059bd15eebee8fdddb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba7117da29bbd059bd15eebee8fdddb8"></a>
@@ -152,7 +154,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="within_8cpp_source.html#l00014">14</a> of file <a class="el" href="within_8cpp_source.html">within.cpp</a>.</p>
+<p>Definition at line <a class="el" href="within_8cpp_source.html#l00021">21</a> of file <a class="el" href="within_8cpp_source.html">within.cpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a9ddb1790f7e5549a46926caaf3d25ed0"></a>
 <div class="memitem">
@@ -164,13 +166,13 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
         <tr>
           <td class="memname">bool SigSpatial2013::within_n::within_n_of_boundary </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespaceSigSpatial2013.html#a4d50a6d98aab2aa905654c8c2e3e3c58">Point_2</a> &amp;&#160;</td>
+          <td class="paramtype">const Point_2 &amp;&#160;</td>
           <td class="paramname"><em>p</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="namespaceSigSpatial2013.html#a4d50a6d98aab2aa905654c8c2e3e3c58">Point_2</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::vector&lt; Point_2 &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em>, </td>
         </tr>
         <tr>
@@ -191,14 +193,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return true when the point, p, is within n units of distance of the polygon represented by its bounding vertices. </p>
-<pre class="fragment">       \detail Loop through all the vertices, return true
-       immediately once a distance is smaller than d2.  Note that
-       the ponit could be inside or outside the polygon.  This
-       function only determines wethers it's within n units
-       distance of the boundary.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>Loop through all the vertices, return true immediately once a distance is smaller than #d2. Note that the ponit could be inside or outside the polygon. This function only determines wethers it's within n units distance of the boundary.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>point to test </td></tr>
     <tr><td class="paramname">v</td><td>vectors of the boundary vertices </td></tr>
@@ -206,20 +202,20 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true iff the <code>p</code> is within <code>n</code> units distance of boundary of <code>v</code> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if point #p is within #n units distance of boundary. </dd></dl>
 
-<p>Definition at line <a class="el" href="within_8cpp_source.html#l00043">43</a> of file <a class="el" href="within_8cpp_source.html">within.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 1; i &lt; v.size(); ++i) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                <span class="keywordflow">if</span> (CGAL::squared_distance(p, K::Segment_2(v[i-1], v[i])) &lt; d2) {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keywordflow">return</span> CGAL::squared_distance(p, K::Segment_2(v[0], v.back())) &lt; d2;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        }</div>
+<p>Definition at line <a class="el" href="within_8cpp_source.html#l00057">57</a> of file <a class="el" href="within_8cpp_source.html">within.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 1; i &lt; v.size(); ++i) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">if</span> (CGAL::squared_distance(p, K::Segment_2(v[i-1], v[i])) &lt; d2) {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">return</span> CGAL::squared_distance(p, K::Segment_2(v[0], v.back())) &lt; d2;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -231,8 +227,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceSigSpatial2013.html">SigSpatial2013</a></li><li class="navelem"><a class="el" href="structSigSpatial2013_1_1within__n.html">within_n</a></li>
-    <li class="footer">Generated on Sun Jun 2 2013 23:28:05 for SIG Spatial Cup 2013 - Geo-fencing by
+    <li class="navelem"><b>SigSpatial2013</b></li><li class="navelem"><a class="el" href="structSigSpatial2013_1_1within__n.html">within_n</a></li>
+    <li class="footer">Generated on Mon Jun 3 2013 18:01:05 for SIG Spatial Cup 2013 - Geo-fencing by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,29 +1,42 @@
 \hypertarget{classSigSpatial2013_1_1GMLParser}{\section{Sig\-Spatial2013\-:\-:G\-M\-L\-Parser Class Reference}
 \label{classSigSpatial2013_1_1GMLParser}\index{Sig\-Spatial2013\-::\-G\-M\-L\-Parser@{Sig\-Spatial2013\-::\-G\-M\-L\-Parser}}
 }
+
+
+Simple \href{http://www.opengeospatial.org/standards/gml}{\tt G\-M\-L} parser based on \href{http://tibleiz.net/asm-xml/}{\tt Asm\-Xml}.  
+
+
+
+
+{\ttfamily \#include $<$gmlparser.\-h$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classSigSpatial2013_1_1GMLParser_a4d8bb7775390292c88846443207c44a6}{bool {\bfseries point} (const char $\ast$s, double \&x, double \&y)}\label{classSigSpatial2013_1_1GMLParser_a4d8bb7775390292c88846443207c44a6}
+\hypertarget{classSigSpatial2013_1_1GMLParser_a90ea2688da6f3ade2045bafea31a54e3}{\hyperlink{classSigSpatial2013_1_1GMLParser_a90ea2688da6f3ade2045bafea31a54e3}{G\-M\-L\-Parser} (void)}\label{classSigSpatial2013_1_1GMLParser_a90ea2688da6f3ade2045bafea31a54e3}
 
-\item 
-\hypertarget{classSigSpatial2013_1_1GMLParser_a44dc46fca44950badfad489e790060be}{bool {\bfseries polygon} (const char $\ast$s, \hyperlink{structSigSpatial2013_1_1Ring}{Ring} \&outer\-\_\-ring, std\-::vector$<$ \hyperlink{structSigSpatial2013_1_1Ring}{Ring} $>$ \&inner\-\_\-rings)}\label{classSigSpatial2013_1_1GMLParser_a44dc46fca44950badfad489e790060be}
+\begin{DoxyCompactList}\small\item\em ctor. Initialize the Asm\-Xml parser here. \end{DoxyCompactList}\item 
+\hypertarget{classSigSpatial2013_1_1GMLParser_a3b8887ec6b57d30fb3382c0b6e1a8627}{\hyperlink{classSigSpatial2013_1_1GMLParser_a3b8887ec6b57d30fb3382c0b6e1a8627}{$\sim$\-G\-M\-L\-Parser} (void)}\label{classSigSpatial2013_1_1GMLParser_a3b8887ec6b57d30fb3382c0b6e1a8627}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em dtor. Free resources of Asm\-Xml parser. \end{DoxyCompactList}\item 
+bool \hyperlink{classSigSpatial2013_1_1GMLParser_a4d8bb7775390292c88846443207c44a6}{point} (const char $\ast$s, double \&x, double \&y)
+\begin{DoxyCompactList}\small\item\em Parse G\-M\-L point syntax. \end{DoxyCompactList}\item 
+bool \hyperlink{classSigSpatial2013_1_1GMLParser_a44dc46fca44950badfad489e790060be}{polygon} (const char $\ast$s, \hyperlink{structSigSpatial2013_1_1Ring}{Ring} \&outer\-\_\-ring, std\-::vector$<$ \hyperlink{structSigSpatial2013_1_1Ring}{Ring} $>$ \&inner\-\_\-rings)
+\begin{DoxyCompactList}\small\item\em Parse G\-M\-L polygon syntax. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \{ {\bfseries Chunk\-Size} = 32 $\ast$ 1024 $\ast$ 1024
+enum \{ {\bfseries Chunk\-Size} = 64 $\ast$ 1024 $\ast$ 1024
  \}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em buffer size for Asm\-Xml parser. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classSigSpatial2013_1_1GMLParser_a57eafa968caebbba840d6a58a2c562dc}{void {\bfseries trim\-\_\-right} (char $\ast$\&e)}\label{classSigSpatial2013_1_1GMLParser_a57eafa968caebbba840d6a58a2c562dc}
-
-\end{DoxyCompactItemize}
+void \hyperlink{classSigSpatial2013_1_1GMLParser_a57eafa968caebbba840d6a58a2c562dc}{trim\-\_\-right} (char $\ast$\&e)
+\begin{DoxyCompactList}\small\item\em Remove trailing spaces. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
-\begin{DoxyCompactItemize}
+\begin{Indent}{\bf Asm\-Xml Variables}\par
+{\em Internal variables used by Asm\-Xml parser }\begin{DoxyCompactItemize}
 \item 
 \hypertarget{classSigSpatial2013_1_1GMLParser_aa69cab81d25d69d5285a38ff98239596}{A\-X\-Parse\-Context {\bfseries \-\_\-context}}\label{classSigSpatial2013_1_1GMLParser_aa69cab81d25d69d5285a38ff98239596}
 
@@ -37,16 +50,170 @@ enum \{ {\bfseries Chunk\-Size} = 32 $\ast$ 1024 $\ast$ 1024
 \hypertarget{classSigSpatial2013_1_1GMLParser_a267244fa4122657b4a113f9d29378321}{A\-X\-Element\-Class $\ast$ {\bfseries \-\_\-poly\-Class}}\label{classSigSpatial2013_1_1GMLParser_a267244fa4122657b4a113f9d29378321}
 
 \end{DoxyCompactItemize}
+\end{Indent}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 51 of file gmlparser.\-h.
+Definition at line 75 of file gmlparser.\-h.
 
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classSigSpatial2013_1_1GMLParser_a4d8bb7775390292c88846443207c44a6}{\index{Sig\-Spatial2013\-::\-G\-M\-L\-Parser@{Sig\-Spatial2013\-::\-G\-M\-L\-Parser}!point@{point}}
+\index{point@{point}!SigSpatial2013::GMLParser@{Sig\-Spatial2013\-::\-G\-M\-L\-Parser}}
+\subsubsection[{point}]{\setlength{\rightskip}{0pt plus 5cm}bool Sig\-Spatial2013\-::\-G\-M\-L\-Parser\-::point (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s, }
+\item[{double \&}]{x, }
+\item[{double \&}]{y}
+\end{DoxyParamCaption}
+)}}\label{classSigSpatial2013_1_1GMLParser_a4d8bb7775390292c88846443207c44a6}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em s} & a valid G\-M\-L point string \\
+\hline
+\mbox{\tt out}  & {\em x} & x coordinate \\
+\hline
+\mbox{\tt out}  & {\em y} & y coordinate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if everything is O\-K. 
+\end{DoxyReturn}
+
+
+Definition at line 22 of file gmlparser.\-cpp.
+
+
+\begin{DoxyCode}
+23     \{
+24         AXElement *\_gmlpoint = ax\_parse(&\_context, s, \_pointClass, 1);
+25         AXAttribute *attr = &ax\_getElement(\_gmlpoint, 0)->attributes[0];
+26 
+27         \textcolor{keywordtype}{char} *p = \textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{char} *\textcolor{keyword}{>}(attr->begin);
+28         x = strtod(p, &p);
+29         y = strtod(++p, &p);
+30 
+31         \textcolor{keywordflow}{return} !\_context.errorCode;
+32     \}
+\end{DoxyCode}
+\hypertarget{classSigSpatial2013_1_1GMLParser_a44dc46fca44950badfad489e790060be}{\index{Sig\-Spatial2013\-::\-G\-M\-L\-Parser@{Sig\-Spatial2013\-::\-G\-M\-L\-Parser}!polygon@{polygon}}
+\index{polygon@{polygon}!SigSpatial2013::GMLParser@{Sig\-Spatial2013\-::\-G\-M\-L\-Parser}}
+\subsubsection[{polygon}]{\setlength{\rightskip}{0pt plus 5cm}bool Sig\-Spatial2013\-::\-G\-M\-L\-Parser\-::polygon (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s, }
+\item[{{\bf Ring} \&}]{outer\-\_\-ring, }
+\item[{std\-::vector$<$ {\bf Ring} $>$ \&}]{inner\-\_\-rings}
+\end{DoxyParamCaption}
+)}}\label{classSigSpatial2013_1_1GMLParser_a44dc46fca44950badfad489e790060be}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em s} & a valid G\-M\-L polygon string \\
+\hline
+\mbox{\tt out}  & {\em outer\-\_\-ring} & outer boundary of the polygon \\
+\hline
+\mbox{\tt out}  & {\em inner\-\_\-rings} & boundaries for holes inside the polygon\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if everything is O\-K. 
+\end{DoxyReturn}
+
+
+Definition at line 34 of file gmlparser.\-cpp.
+
+
+\begin{DoxyCode}
+37     \{
+38         AXElement *\_gmlpoly = ax\_parse(&\_context, s, \_polyClass, 1);
+39 
+40         AXAttribute *attr =
+41             &ax\_getElement(ax\_getElement(ax\_getElement(\_gmlpoly, 0), 0), 0)->attributes[0];
+42 
+43         \textcolor{keywordtype}{char} *p = \textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{char} *\textcolor{keyword}{>}(attr->begin);
+44         \textcolor{keywordtype}{char} *e = \textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{char} *\textcolor{keyword}{>}(attr->limit);
+45         \hyperlink{classSigSpatial2013_1_1GMLParser_a57eafa968caebbba840d6a58a2c562dc}{trim\_right}(e);
+46 
+47         outer\_ring.xa = outer\_ring.xb = strtod(p, &p);
+48         outer\_ring.ya = outer\_ring.yb = strtod(++p, &p);
+49 
+50         \textcolor{keywordflow}{while} (p != e) \{
+51             \textcolor{keywordtype}{double} x = strtod(p, &p);
+52             \textcolor{keywordtype}{double} y = strtod(++p, &p);
+53 
+54             \textcolor{keywordflow}{if} (x < outer\_ring.xa) outer\_ring.xa = x;
+55             \textcolor{keywordflow}{if} (x > outer\_ring.xb) outer\_ring.xb = x;
+56             \textcolor{keywordflow}{if} (y < outer\_ring.ya) outer\_ring.ya = y;
+57             \textcolor{keywordflow}{if} (y > outer\_ring.yb) outer\_ring.yb = y;
+58 
+59             outer\_ring.ring.push\_back(Point\_2(x, y));
+60         \}
+61 
+62         AXElement *\_rings = ax\_getElement(\_gmlpoly, 1);
+63         \textcolor{keywordflow}{if} (!\_rings) \textcolor{keywordflow}{return} !\_context.errorCode;
+64 
+65         \_rings = \_rings->firstChild;
+66 
+67         \textcolor{keywordflow}{while} (\_rings) \{
+68             AXAttribute * attr = &ax\_getElement(\_rings, 0)->attributes[0];
+69             \textcolor{keywordtype}{char} *p = \textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{char} *\textcolor{keyword}{>}(attr->begin);
+70             \textcolor{keywordtype}{char} *e = \textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{char} *\textcolor{keyword}{>}(attr->limit);
+71             \hyperlink{classSigSpatial2013_1_1GMLParser_a57eafa968caebbba840d6a58a2c562dc}{trim\_right}(e);
+72 
+73             Ring ring;
+74 
+75             ring.xa = ring.xb = strtod(p, &p);
+76             ring.ya = ring.yb = strtod(++p, &p);
+77 
+78             \textcolor{keywordflow}{while} (p != e) \{
+79                 \textcolor{keywordtype}{double} x = strtod(p, &p);
+80                 \textcolor{keywordtype}{double} y = strtod(++p, &p);
+81 
+82                 \textcolor{keywordflow}{if} (x < ring.xa) ring.xa = x;
+83                 \textcolor{keywordflow}{if} (x > ring.xb) ring.xb = x;
+84                 \textcolor{keywordflow}{if} (y < ring.ya) ring.ya = y;
+85                 \textcolor{keywordflow}{if} (y > ring.yb) ring.yb = y;
+86 
+87                 ring.ring.push\_back(Point\_2(x, y));
+88             \}
+89 
+90             inner\_rings.push\_back(ring);
+91 
+92             \_rings = \_rings->nextSibling;
+93         \}
+94 
+95         \textcolor{keywordflow}{return} !\_context.errorCode;
+96     \}
+\end{DoxyCode}
+\hypertarget{classSigSpatial2013_1_1GMLParser_a57eafa968caebbba840d6a58a2c562dc}{\index{Sig\-Spatial2013\-::\-G\-M\-L\-Parser@{Sig\-Spatial2013\-::\-G\-M\-L\-Parser}!trim\-\_\-right@{trim\-\_\-right}}
+\index{trim\-\_\-right@{trim\-\_\-right}!SigSpatial2013::GMLParser@{Sig\-Spatial2013\-::\-G\-M\-L\-Parser}}
+\subsubsection[{trim\-\_\-right}]{\setlength{\rightskip}{0pt plus 5cm}void Sig\-Spatial2013\-::\-G\-M\-L\-Parser\-::trim\-\_\-right (
+\begin{DoxyParamCaption}
+\item[{char $\ast$\&}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classSigSpatial2013_1_1GMLParser_a57eafa968caebbba840d6a58a2c562dc}
+
+\begin{DoxyParams}{Parameters}
+{\em e} & pointer to the last character in a string. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 112 of file gmlparser.\-h.
+
+
+\begin{DoxyCode}
+113         \{
+114             --e;
+115             \textcolor{keywordflow}{while} (0 == (\textcolor{keywordtype}{int})*e || isspace(*e)) --e;
+116             ++e;
+117         \}
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-gmlparser.\-h\item 
+\hyperlink{gmlparser_8h}{gmlparser.\-h}\item 
 gmlparser.\-cpp\end{DoxyCompactItemize}

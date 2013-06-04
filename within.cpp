@@ -1,5 +1,10 @@
-//! within.cpp: solution for the WINTHIN_n problem
+/*!
+  \file   within.cpp
+  \author Zhitao Gong <me@gongzhitaao.org>
+  \date   Mon Jun  3 17:53:10 2013
 
+  \brief  Code for WITHIN_n predicate checking.
+*/
 #include "common.h"
 
 #include <fstream>
@@ -11,10 +16,19 @@
 
 namespace SigSpatial2013 {
 
+    /*! \brief Functor for WITHIN_n predicate checking
+     */
     struct within_n
     {
-        Range_tree_2_type &t_;  //!< range tree constructed on POINT_SIZE point
-        std::vector<PolygonSeq> &v_; //!< polygons with the same id but different sequence number
+        /*! \brief range tree constructed on ::POINT_SIZE point
+         */
+        Range_tree_2_type &t_;
+
+        /*! \brief polygons with the same id but different sequence
+          number
+        */
+        std::vector<PolygonSeq> &v_;
+
         tbb::concurrent_vector<Result> &r_; //!< result
 
         double n_;              //!< distance
@@ -25,21 +39,21 @@ namespace SigSpatial2013 {
                  double n)
             : t_(t), v_(v), r_(r), n_(n) { }
 
-        /*! \brief Return true when the point, p, is within n units of
-         *         distance of the polygon represented by its bounding
-         *         vertices.
-         *
-         *  \detail Loop through all the vertices, return true
-         *  immediately once a distance is smaller than d2.  Note that
-         *  the ponit could be inside or outside the polygon.  This
-         *  function only determines wethers it's within n units
-         *  distance of the boundary.
-         *
-         * \param p point to test
-         * \param v vectors of the boundary vertices
-         * \param d2 squared distance
-         * \return true iff the `p` is within `n` units distance of boundary of `v`
-         */
+        /*! \brief Return true when the point #p is within n units of
+          distance of the polygon represented by its bounding
+          vertices.
+
+          \details Loop through all the vertices, return true
+          immediately once a distance is smaller than #d2.  Note that
+          the ponit could be inside or outside the polygon.  This
+          function only determines wethers it's within n units
+          distance of the boundary.
+
+          \param p point to test
+          \param v vectors of the boundary vertices
+          \param d2 squared distance
+          \return true if point #p is within #n units distance of boundary.
+        */
         bool within_n_of_boundary(const Point_2 &p,
                                   const std::vector<Point_2> &v,
                                   double d2) const
@@ -74,8 +88,8 @@ namespace SigSpatial2013 {
                 // plus a small margin.  The margin, MARGIN, here is
                 // required to include those points on the boundary
                 // of the query windown.
-                Interval win(Interval(K::Point_2(outer.xa-n_-MARGIN, outer.xb+n_+MARGIN),
-                                      K::Point_2(outer.ya-n_-MARGIN, outer.yb+n_+MARGIN)));
+                Interval win(Interval(K::Point_2(outer.xa-n_, outer.xb+n_),
+                                      K::Point_2(outer.ya-n_, outer.yb+n_)));
 
                 // The actual query is handled by the CGAL.
                 std::vector<Key> res;

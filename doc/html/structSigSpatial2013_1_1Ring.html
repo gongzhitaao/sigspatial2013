@@ -52,7 +52,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -100,7 +99,7 @@ $(document).ready(function(){initNavTree('structSigSpatial2013_1_1Ring.html','')
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -119,14 +118,14 @@ $(document).ready(function(){initNavTree('structSigSpatial2013_1_1Ring.html','')
 <div class="contents">
 
 <p>Contains vertices of simple polygon without holes and it's bounding MBR.  
- <a href="structSigSpatial2013_1_1Ring.html#details">More...</a></p>
+</p>
 
 <p><code>#include &lt;<a class="el" href="common_8h_source.html">common.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a10e38ba5e6a6d2a1f6a2b1ac1d942e31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10e38ba5e6a6d2a1f6a2b1ac1d942e31"></a>
-std::vector&lt; <a class="el" href="namespaceSigSpatial2013.html#a4d50a6d98aab2aa905654c8c2e3e3c58">Point_2</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1Ring.html#a10e38ba5e6a6d2a1f6a2b1ac1d942e31">ring</a></td></tr>
+std::vector&lt; Point_2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSigSpatial2013_1_1Ring.html#a10e38ba5e6a6d2a1f6a2b1ac1d942e31">ring</a></td></tr>
 <tr class="memdesc:a10e38ba5e6a6d2a1f6a2b1ac1d942e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boundary vertices. <br/></td></tr>
 <tr class="separator:a10e38ba5e6a6d2a1f6a2b1ac1d942e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6a8cc573c74df27505e2782e9056b9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6a8cc573c74df27505e2782e9056b9e"></a>
@@ -147,9 +146,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <tr class="separator:a6b2f395698fc3585027ddacf363518a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains vertices of simple polygon without holes and it's bounding MBR. </p>
-
-<p>Definition at line <a class="el" href="common_8h_source.html#l00030">30</a> of file <a class="el" href="common_8h_source.html">common.h</a>.</p>
+<div class="textblock">
+<p>Definition at line <a class="el" href="common_8h_source.html#l00039">39</a> of file <a class="el" href="common_8h_source.html">common.h</a>.</p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="common_8h_source.html">common.h</a></li>
 </ul>
@@ -158,8 +156,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceSigSpatial2013.html">SigSpatial2013</a></li><li class="navelem"><a class="el" href="structSigSpatial2013_1_1Ring.html">Ring</a></li>
-    <li class="footer">Generated on Sun Jun 2 2013 23:28:05 for SIG Spatial Cup 2013 - Geo-fencing by
+    <li class="navelem"><b>SigSpatial2013</b></li><li class="navelem"><a class="el" href="structSigSpatial2013_1_1Ring.html">Ring</a></li>
+    <li class="footer">Generated on Mon Jun 3 2013 18:01:05 for SIG Spatial Cup 2013 - Geo-fencing by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

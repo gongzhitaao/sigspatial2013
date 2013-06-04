@@ -39,12 +39,11 @@ std::ostream &operator << (std::ostream &o, const item &i)
     return o;
 }
 
-
 TEST(core, within)
 {
     const int MAX_PATH = 128;
     const int POINTS = 1000;
-    const int POLYS = 10;
+    const int POLYS = 15;
     const int DISTANCE = 1000;
 
     char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
