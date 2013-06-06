@@ -2,7 +2,7 @@
 ---
 {% include config %}
 
-(function($, d3, undefined){
+(function($, d3, Server, undefined){
 
     var svg;
     var width;
@@ -311,6 +311,18 @@
     $(document).ready(function(){
 
         init();
+
+        var server = {
+            _conf: {
+                method: 'GET',
+                remote: "http://localhost:8080/sigspatial2013/rpc"
+            }
+        };
+
+        InstallFunction(server, 'point');
+        server.point(0, 501, function(d){
+            console.log(d);
+        });
 
     });
 
