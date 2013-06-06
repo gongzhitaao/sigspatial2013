@@ -6,7 +6,7 @@
    {% assign BASE_PATH = nil %}
 {% endif %}
 
-{% capture ASSET_PATH %}{{ BASE_PATH }}/assets/{% endcapture %}
+{% capture ASSET_PATH %}{{ BASE_PATH }}/assets{% endcapture %}
 
 {% endcapture %}
 {% assign envcache = nil %}

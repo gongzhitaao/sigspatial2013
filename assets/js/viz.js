@@ -312,18 +312,6 @@
 
         init();
 
-        var server = {
-            _conf: {
-                method: 'GET',
-                remote: "http://localhost:8080/sigspatial2013/rpc"
-            }
-        };
-
-        InstallFunction(server, 'point');
-        server.point(0, 501, function(d){
-            console.log(d);
-        });
-
     });
 
 }(jQuery, d3));

@@ -1,9 +1,8 @@
 safe: true
 auto: true
 server: true
-baseurl: sigspatial2013
+baseurl: /sigspatial2013
 
-pygments: true
 pygments: true
 
 exclude: ["gh-pages", "Makefile"]
