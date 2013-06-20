@@ -1,0 +1,99 @@
+\hypertarget{within_8cpp}{\section{within.\-cpp File Reference}
+\label{within_8cpp}\index{within.\-cpp@{within.\-cpp}}
+}
+
+
+Code for W\-I\-T\-H\-I\-N\-\_\-n predicate checking.  
+
+
+{\ttfamily \#include \char`\"{}common.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$tbb/concurrent\-\_\-vector.\-h$>$}\\*
+{\ttfamily \#include $<$tbb/parallel\-\_\-for.\-h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structSigSpatial2013_1_1within__n}{Sig\-Spatial2013\-::within\-\_\-n}
+\begin{DoxyCompactList}\small\item\em Functor for W\-I\-T\-H\-I\-N\-\_\-n predicate checking. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{within_8cpp_a38284ccda0e86da0987327f3562aab82}{within} (double n, const std\-::string \&fpt, const std\-::string \&fpoly, const std\-::string \&o)
+\begin{DoxyCompactList}\small\item\em W\-I\-T\-H\-I\-N\-\_\-n predicate checking. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Zhitao Gong \href{mailto:me@gongzhitaao.org}{\tt me@gongzhitaao.\-org} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Mon Jun 3 17\-:53\-:10 2013 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{within_8cpp_source}{within.\-cpp}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{within_8cpp_a38284ccda0e86da0987327f3562aab82}{\index{within.\-cpp@{within.\-cpp}!within@{within}}
+\index{within@{within}!within.cpp@{within.\-cpp}}
+\subsubsection[{within}]{\setlength{\rightskip}{0pt plus 5cm}void within (
+\begin{DoxyParamCaption}
+\item[{double}]{n, }
+\item[{const std\-::string \&}]{fpt, }
+\item[{const std\-::string \&}]{fpoly, }
+\item[{const std\-::string \&}]{fo}
+\end{DoxyParamCaption}
+)}}\label{within_8cpp_a38284ccda0e86da0987327f3562aab82}
+
+\begin{DoxyParams}{Parameters}
+{\em n} & distance \\
+\hline
+{\em fpt} & input point file \\
+\hline
+{\em fpoly} & input polygon file \\
+\hline
+{\em fo} & output file \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 189 of file within.\-cpp.
+
+
+\begin{DoxyCode}
+193 \{
+194     \textcolor{keyword}{using namespace }SigSpatial2013;
+195 
+196     std::vector<PolygonSeq> polys;
+197 
+198     read\_polygon(fpoly, polys);
+199 
+200     std::ofstream(o, std::ios::out);
+201     std::ofstream fo(o, std::ios::app);
+202 
+203     std::ifstream fin\_point(fpt);
+204     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{bool} b = \textcolor{keyword}{true}; b; ) \{
+205 
+206         std::vector<Key> v;
+207         b = read\_point(fin\_point, v);
+208 
+209         Range\_tree\_2\_type tree(v.begin(), v.end());
+210 
+211         tbb::concurrent\_vector<Result> results;
+212         tbb::parallel\_for((\textcolor{keywordtype}{size\_t})0, polys.size(), (size\_t)1, \hyperlink{structSigSpatial2013_1_1within__n}{within\_n}(tree, polys, results, n));
+213 
+214         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < results.size(); ++i) \{
+215             Result &r = results[i];
+216             fo << r.first.first << \textcolor{charliteral}{':'} << r.first.second << \textcolor{charliteral}{':'}
+217                << r.second.first << \textcolor{charliteral}{':'} << r.second.second << std::endl;
+218         \}
+219 
+220     \}
+221     fin\_point.close();
+222     fo.close();
+223 \}
+\end{DoxyCode}

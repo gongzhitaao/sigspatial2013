@@ -1,0 +1,69 @@
+\hypertarget{structSigSpatial2013_1_1pip}{\section{Sig\-Spatial2013\-:\-:pip Struct Reference}
+\label{structSigSpatial2013_1_1pip}\index{Sig\-Spatial2013\-::pip@{Sig\-Spatial2013\-::pip}}
+}
+
+
+Functor for point in polygon (pip) detection.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structSigSpatial2013_1_1pip_a2617c5b63b0f13a36ed7bc322965f08c}{pip} (Range\-\_\-tree\-\_\-2\-\_\-type \&t, std\-::vector$<$ \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} $>$ \&v, tbb\-::concurrent\-\_\-vector$<$ Result $>$ \&r)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{structSigSpatial2013_1_1pip_a7311b3164f231c9e5bac2f125eddbf41}{void {\bfseries operator()} (size\-\_\-t i) const }\label{structSigSpatial2013_1_1pip_a7311b3164f231c9e5bac2f125eddbf41}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structSigSpatial2013_1_1pip_a3d863aeb56cae4b40fcae0a938a7eda5}{Range\-\_\-tree\-\_\-2\-\_\-type \& \hyperlink{structSigSpatial2013_1_1pip_a3d863aeb56cae4b40fcae0a938a7eda5}{t\-\_\-}}\label{structSigSpatial2013_1_1pip_a3d863aeb56cae4b40fcae0a938a7eda5}
+
+\begin{DoxyCompactList}\small\item\em range tree containing point to test \end{DoxyCompactList}\item 
+\hypertarget{structSigSpatial2013_1_1pip_a847b2c5a84dd615e9ee3d8cd24766dc8}{std\-::vector$<$ \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} $>$ \& \hyperlink{structSigSpatial2013_1_1pip_a847b2c5a84dd615e9ee3d8cd24766dc8}{v\-\_\-}}\label{structSigSpatial2013_1_1pip_a847b2c5a84dd615e9ee3d8cd24766dc8}
+
+\begin{DoxyCompactList}\small\item\em polygons to test against \end{DoxyCompactList}\item 
+\hypertarget{structSigSpatial2013_1_1pip_a9621d020ff65f6310aae5cd68929e3c1}{tbb\-::concurrent\-\_\-vector$<$ Result $>$ \& \hyperlink{structSigSpatial2013_1_1pip_a9621d020ff65f6310aae5cd68929e3c1}{r\-\_\-}}\label{structSigSpatial2013_1_1pip_a9621d020ff65f6310aae5cd68929e3c1}
+
+\begin{DoxyCompactList}\small\item\em Contains all point and polygon pairs that satifies the I\-N\-S\-I\-D\-E predicate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 44 of file inside.\-cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structSigSpatial2013_1_1pip_a2617c5b63b0f13a36ed7bc322965f08c}{\index{Sig\-Spatial2013\-::pip@{Sig\-Spatial2013\-::pip}!pip@{pip}}
+\index{pip@{pip}!SigSpatial2013::pip@{Sig\-Spatial2013\-::pip}}
+\subsubsection[{pip}]{\setlength{\rightskip}{0pt plus 5cm}Sig\-Spatial2013\-::pip\-::pip (
+\begin{DoxyParamCaption}
+\item[{Range\-\_\-tree\-\_\-2\-\_\-type \&}]{t, }
+\item[{std\-::vector$<$ {\bf Polygon\-Seq} $>$ \&}]{v, }
+\item[{tbb\-::concurrent\-\_\-vector$<$ Result $>$ \&}]{r}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structSigSpatial2013_1_1pip_a2617c5b63b0f13a36ed7bc322965f08c}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & range tree \\
+\hline
+{\em v} & polygons \\
+\hline
+{\em r} & result \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 59 of file inside.\-cpp.
+
+
+\begin{DoxyCode}
+62             : \hyperlink{structSigSpatial2013_1_1pip_a3d863aeb56cae4b40fcae0a938a7eda5}{t\_}(t), \hyperlink{structSigSpatial2013_1_1pip_a847b2c5a84dd615e9ee3d8cd24766dc8}{v\_}(v), \hyperlink{structSigSpatial2013_1_1pip_a9621d020ff65f6310aae5cd68929e3c1}{r\_}(r) \{ \}
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{inside_8cpp}{inside.\-cpp}\end{DoxyCompactItemize}

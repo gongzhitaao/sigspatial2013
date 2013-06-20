@@ -1,0 +1,90 @@
+\hypertarget{structSigSpatial2013_1_1within__n}{\section{Sig\-Spatial2013\-:\-:within\-\_\-n Struct Reference}
+\label{structSigSpatial2013_1_1within__n}\index{Sig\-Spatial2013\-::within\-\_\-n@{Sig\-Spatial2013\-::within\-\_\-n}}
+}
+
+
+Functor for W\-I\-T\-H\-I\-N\-\_\-n predicate checking.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structSigSpatial2013_1_1within__n_ad11ca1ba7328173d83ffe4fb6264e6ef}{{\bfseries within\-\_\-n} (Range\-\_\-tree\-\_\-2\-\_\-type \&t, std\-::vector$<$ \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} $>$ \&v, tbb\-::concurrent\-\_\-vector$<$ Result $>$ \&r, double n)}\label{structSigSpatial2013_1_1within__n_ad11ca1ba7328173d83ffe4fb6264e6ef}
+
+\item 
+bool \hyperlink{structSigSpatial2013_1_1within__n_a9ddb1790f7e5549a46926caaf3d25ed0}{within\-\_\-n\-\_\-of\-\_\-boundary} (const Point\-\_\-2 \&p, const std\-::vector$<$ Point\-\_\-2 $>$ \&v, double d2) const 
+\begin{DoxyCompactList}\small\item\em Return true when the point \#p is within n units of distance of the polygon represented by its bounding vertices. \end{DoxyCompactList}\item 
+\hypertarget{structSigSpatial2013_1_1within__n_acdd3583e4b798bed14929fb40746d4a5}{void {\bfseries operator()} (size\-\_\-t i) const }\label{structSigSpatial2013_1_1within__n_acdd3583e4b798bed14929fb40746d4a5}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structSigSpatial2013_1_1within__n_a233b38ad524ac2e88ca3c7af8bbb6ee7}{Range\-\_\-tree\-\_\-2\-\_\-type \& \hyperlink{structSigSpatial2013_1_1within__n_a233b38ad524ac2e88ca3c7af8bbb6ee7}{t\-\_\-}}\label{structSigSpatial2013_1_1within__n_a233b38ad524ac2e88ca3c7af8bbb6ee7}
+
+\begin{DoxyCompactList}\small\item\em range tree constructed on \-::\-P\-O\-I\-N\-T\-\_\-\-S\-I\-Z\-E point \end{DoxyCompactList}\item 
+\hypertarget{structSigSpatial2013_1_1within__n_a6f04a4fd6f5a228294cb213668ec4f6d}{std\-::vector$<$ \hyperlink{structSigSpatial2013_1_1PolygonSeq}{Polygon\-Seq} $>$ \& \hyperlink{structSigSpatial2013_1_1within__n_a6f04a4fd6f5a228294cb213668ec4f6d}{v\-\_\-}}\label{structSigSpatial2013_1_1within__n_a6f04a4fd6f5a228294cb213668ec4f6d}
+
+\begin{DoxyCompactList}\small\item\em polygons with the same id but different sequence number \end{DoxyCompactList}\item 
+\hypertarget{structSigSpatial2013_1_1within__n_a7f5003bec01e527b3e76291a98fe3919}{tbb\-::concurrent\-\_\-vector$<$ Result $>$ \& \hyperlink{structSigSpatial2013_1_1within__n_a7f5003bec01e527b3e76291a98fe3919}{r\-\_\-}}\label{structSigSpatial2013_1_1within__n_a7f5003bec01e527b3e76291a98fe3919}
+
+\begin{DoxyCompactList}\small\item\em result \end{DoxyCompactList}\item 
+\hypertarget{structSigSpatial2013_1_1within__n_aba7117da29bbd059bd15eebee8fdddb8}{double \hyperlink{structSigSpatial2013_1_1within__n_aba7117da29bbd059bd15eebee8fdddb8}{n\-\_\-}}\label{structSigSpatial2013_1_1within__n_aba7117da29bbd059bd15eebee8fdddb8}
+
+\begin{DoxyCompactList}\small\item\em distance \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 21 of file within.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structSigSpatial2013_1_1within__n_a9ddb1790f7e5549a46926caaf3d25ed0}{\index{Sig\-Spatial2013\-::within\-\_\-n@{Sig\-Spatial2013\-::within\-\_\-n}!within\-\_\-n\-\_\-of\-\_\-boundary@{within\-\_\-n\-\_\-of\-\_\-boundary}}
+\index{within\-\_\-n\-\_\-of\-\_\-boundary@{within\-\_\-n\-\_\-of\-\_\-boundary}!SigSpatial2013::within_n@{Sig\-Spatial2013\-::within\-\_\-n}}
+\subsubsection[{within\-\_\-n\-\_\-of\-\_\-boundary}]{\setlength{\rightskip}{0pt plus 5cm}bool Sig\-Spatial2013\-::within\-\_\-n\-::within\-\_\-n\-\_\-of\-\_\-boundary (
+\begin{DoxyParamCaption}
+\item[{const Point\-\_\-2 \&}]{p, }
+\item[{const std\-::vector$<$ Point\-\_\-2 $>$ \&}]{v, }
+\item[{double}]{d2}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structSigSpatial2013_1_1within__n_a9ddb1790f7e5549a46926caaf3d25ed0}
+Loop through all the vertices, return true immediately once a distance is smaller than \#d2. Note that the ponit could be inside or outside the polygon. This function only determines wethers it's within n units distance of the boundary.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & point to test \\
+\hline
+{\em v} & vectors of the boundary vertices \\
+\hline
+{\em d2} & squared distance \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if point \#p is within \#n units distance of boundary. 
+\end{DoxyReturn}
+
+
+Definition at line 57 of file within.\-cpp.
+
+
+\begin{DoxyCode}
+60         \{
+61 
+62             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 1; i < v.size(); ++i) \{
+63                 \textcolor{keywordflow}{if} (CGAL::squared\_distance(p, K::Segment\_2(v[i-1], v[i])) < d2) \{
+64                     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+65                 \}
+66             \}
+67 
+68             \textcolor{keywordflow}{return} CGAL::squared\_distance(p, K::Segment\_2(v[0], v.back())) < d2;
+69 
+70         \}
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{within_8cpp}{within.\-cpp}\end{DoxyCompactItemize}
