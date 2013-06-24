@@ -10,6 +10,8 @@ Thumbs.db
 *_p.c
 *.ncb
 *.sdf
+*.suo
+*.v11*
 *.opensdf
 *.txt
 *.tlb

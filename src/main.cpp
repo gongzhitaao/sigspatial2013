@@ -9,8 +9,8 @@ int main(int argc, char *argv[])
     int i = 1;
     double n;
     bool b = true;
-    if (!strncmp(argv[i], "\"inside\"", 8)) {
-    } else if (!strncmp(argv[i], "\"within", 6)) {
+    if (!strncmp(argv[i], "\"INSIDE\"", 8)) {
+    } else if (!strncmp(argv[i], "\"WITHIN", 6)) {
         n = atof(argv[++i]);
         ++i; // skip `"'
         b = false;
