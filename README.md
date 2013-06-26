@@ -19,18 +19,20 @@ points will be no more than 1 Million.  The objective is to match each
 of these points with one or more of the polygons from the input based
 on a spatial predicate.  We have two spatial predicates, explained as
 follows:
-    - INSIDE: which evaluates to TRUE if a point is inside the
-      polygon.  Notice that the point can be associated with one or
-      more polygons (i.e., two overlapping polygons can contain the
-      same point).  A point can be INSIDE any polygon with a sequence
-      number (i.e., timestamp) less than the sequence number of the
-      point where only the latest position of each polygon (up to that
-      sequence number) is considered.
-    - WITHIN n (e.g., WITHIN a distance of 1000 units): which
-      evaluates to true if the point is at less than 1000 units
-      distance from the polygon.  Notice that each point may be
-      associated with one or more of the polygons, as the same point
-      can be within 1000 units distance from several polygons.
+
+- INSIDE: which evaluates to TRUE if a point is inside the polygon.
+  Notice that the point can be associated with one or more polygons
+  (i.e., two overlapping polygons can contain the same point).  A
+  point can be INSIDE any polygon with a sequence number (i.e.,
+  timestamp) less than the sequence number of the point where only the
+  latest position of each polygon (up to that sequence number) is
+  considered.
+
+- WITHIN n (e.g., WITHIN a distance of 1000 units): which evaluates to
+  true if the point is at less than 1000 units distance from the
+  polygon.  Notice that each point may be associated with one or more
+  of the polygons, as the same point can be within 1000 units distance
+  from several polygons.
 
 
 for details, refer to this year's

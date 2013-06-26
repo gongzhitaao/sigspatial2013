@@ -19,6 +19,8 @@
 #include <CGAL/Range_segment_tree_traits.h>
 #include <CGAL/Range_tree_k.h>
 
+#include <test/testclock.h>
+
 namespace SigSpatial2013 {
 
     typedef CGAL::Cartesian<double> K; //!< CGAL Kernel
