@@ -19,8 +19,6 @@
 #include <CGAL/Range_segment_tree_traits.h>
 #include <CGAL/Range_tree_k.h>
 
-#include <test/testclock.h>
-
 namespace SigSpatial2013 {
 
     typedef CGAL::Cartesian<double> K; //!< CGAL Kernel
@@ -114,8 +112,8 @@ namespace SigSpatial2013 {
     */
     const size_t POINT_SIZE = 1e4;
 
-    /*! \brief Read from point file into vector of ::Key used to
-      construct the range tree.
+    /*! \brief Read from point file into vector of SigSpatial2013::Key
+      used to construct the range tree.
     */
     bool read_point(std::ifstream &f, std::vector<Key> &v);
 

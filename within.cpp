@@ -20,8 +20,9 @@ namespace SigSpatial2013 {
      */
     struct within_n
     {
-        /*! \brief range tree constructed on ::POINT_SIZE point
-         */
+        /*! \brief range tree constructed on
+            SigSpatial2013::POINT_SIZE point
+        */
         Range_tree_2_type &t_;
 
         /*! \brief polygons with the same id but different sequence
@@ -33,6 +34,8 @@ namespace SigSpatial2013 {
 
         double n_;              //!< distance
 
+        /*! \brief Constructor.  Preserve some states.
+         */
         within_n(Range_tree_2_type &t,
                  std::vector<PolygonSeq> &v,
                  tbb::concurrent_vector<Result> &r,
@@ -52,7 +55,7 @@ namespace SigSpatial2013 {
           \param p point to test
           \param v vectors of the boundary vertices
           \param d2 squared distance
-          \return true if point #p is within #n units distance of boundary.
+          \return true if point #p is within within_n::n_ units distance of boundary.
         */
         bool within_n_of_boundary(const Point_2 &p,
                                   const std::vector<Point_2> &v,
