@@ -69,9 +69,8 @@ namespace SigSpatial2013 {
             for (size_t j = 0; j < ps.seq.size(); ++j) {
 
                 Polygon &p = ps.polys[j];
-                Ring &outer = p.outer_ring;
-                Interval win(Interval(K::Point_2(outer.xa, outer.xb),
-                                      K::Point_2(outer.ya, outer.yb)));
+                Interval win(K::Point_2(p.xa, p.ya),
+                             K::Point_2(p.xb, p.yb));
 
                 std::vector<Key> res;
                 t_.window_query(win, std::back_inserter(res));
@@ -83,44 +82,43 @@ namespace SigSpatial2013 {
                     if (most_recent_polygon(ps, key.second.second) != j)
                         continue;
 
-                    if (CGAL::ON_BOUNDED_SIDE ==
-                        CGAL::bounded_side_2(p.outer_ring.ring.begin(),
-                                             p.outer_ring.ring.end(),
-                                             key.first, K())) {
+                    bool outside = false;
 
-                        /* Now the point is INSIDE the outer boundary.
-                         */
+                    for (size_t m = 0; m < p.outer_rings.size(); ++m) {
 
-                        bool f = true;
-                        for (size_t m = 0; m < p.inner_rings.size(); ++m) {
+                        Ring &outer = p.outer_rings[m];
 
-                            Ring &inner = p.inner_rings[m];
-
-                            if (!(CGAL::ON_UNBOUNDED_SIDE ==
-                                  CGAL::bounded_side_2(inner.ring.begin(),
-                                                       inner.ring.end(),
-                                                       key.first, K()))) {
-
-                                /* Now the point is INSIDE a hole!!,
-                                   i.e., outside the polygon.
-                                */
-                                f = false;
-                                break;
-                            }
-                        }
-
-                        /* f is true iff the point is INSIDE the outer
-                           boundary but NOT inside or on the bounary
-                           of any holes, i.e., inside the polygon.
-                        */
-
-                        if (f) {
-                            ID a = std::make_pair(key.second.first,
-                                                  key.second.second);
-                            ID b = std::make_pair(i+1, ps.seq[j]);
-                            r_.push_back(std::make_pair(a, b));
+                        if (CGAL::ON_UNBOUNDED_SIDE !=
+                            CGAL::bounded_side_2(outer.ring.begin(),
+                                                 outer.ring.end(),
+                                                 key.first, K())) {
+                            outside = true;
+                            break;
                         }
                     }
+
+                    if (outside) continue;
+
+                    for (size_t m = 0; m < p.inner_rings.size(); ++m) {
+
+                        Ring &inner = p.inner_rings[m];
+
+                        if (CGAL::ON_UNBOUNDED_SIDE !=
+                            CGAL::bounded_side_2(inner.ring.begin(),
+                                                 inner.ring.end(),
+                                                 key.first, K())) {
+                            outside = true;
+                            break;
+                        }
+                    }
+
+                    if (outside) continue;
+
+                    ID a = std::make_pair(key.second.first,
+                                          key.second.second);
+                    ID b = std::make_pair(i+1, ps.seq[j]);
+                    r_.push_back(std::make_pair(a, b));
+
                 }
             }
         }

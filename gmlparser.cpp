@@ -31,10 +31,11 @@ namespace SigSpatial2013 {
         return !_context.errorCode;
     }
 
-    bool GMLParser::polygon(const char *s,
-                            Ring &outer_ring,
-                            std::vector<Ring> &inner_rings)
+    bool GMLParser::polygon(const char *s, Polygon &poly)
     {
+        std::vector<Ring> &outer_rings = poly.outer_rings;
+        std::vector<Ring> &inner_rings = poly.inner_rings;
+
         AXElement *_gmlpoly = ax_parse(&_context, s, _polyClass, 1);
 
         AXAttribute *attr =
@@ -44,19 +45,69 @@ namespace SigSpatial2013 {
         char *e = const_cast<char *>(attr->limit);
         trim_right(e);
 
-        outer_ring.xa = outer_ring.xb = strtod(p, &p);
-        outer_ring.ya = outer_ring.yb = strtod(++p, &p);
+        Ring rings;
+
+        rings.xa = rings.xb = strtod(p, &p);
+        rings.ya = rings.yb = strtod(++p, &p);
+
+        int beg = 0;
 
         while (p != e) {
             double x = strtod(p, &p);
             double y = strtod(++p, &p);
 
-            if (x < outer_ring.xa) outer_ring.xa = x;
-            if (x > outer_ring.xb) outer_ring.xb = x;
-            if (y < outer_ring.ya) outer_ring.ya = y;
-            if (y > outer_ring.yb) outer_ring.yb = y;
+            if (x < rings.xa) rings.xa = x;
+            if (x > rings.xb) rings.xb = x;
+            if (y < rings.ya) rings.ya = y;
+            if (y > rings.yb) rings.yb = y, beg = rings.ring.size();
 
-            outer_ring.ring.push_back(Point_2(x, y));
+            rings.ring.push_back(Point_2(x, y));
+        }
+
+        poly.xa = rings.xa;
+        poly.xb = rings.xb;
+        poly.ya = rings.ya;
+        poly.yb = rings.yb;
+
+        int sz = rings.ring.size();
+
+        double bounds[4] = {rings.yb, rings.xa, rings.ya, rings.xb};
+        double coords[2];
+
+        for (int i = beg, f = 0; i < beg+sz;) {
+
+            int ind = i % sz;
+
+            Ring ring;
+
+            ring.ring.push_back(rings.ring[ind]);
+
+            int offset = 0;
+            bool turn = false;
+
+            for (int j = (ind+1) % sz; true; j = (j+1) % sz) {
+
+                Point_2 &p = rings.ring[j];
+                ring.ring.push_back(p);
+
+                coords[(f+1)%2] = p.x();
+                coords[f%2] = p.y();
+
+                if (fuzzy_eq(coords[0], bounds[f])) {
+                    turn = fuzzy_eq(coords[1], bounds[(f+1)%4]);
+                    break;
+                } else if (fuzzy_eq(coords[1], bounds[(f+1)%4])) {
+                    offset = 1;
+                    if (1 == f%2) ring.ring.push_back(Point_2(bounds[f], bounds[(f+1)%4]));
+                    else ring.ring.push_back(Point_2(bounds[(f+1)%4], bounds[f]));
+                    turn = true;
+                    break;
+                }
+            }
+
+            if (turn) ++f;
+            if (ring.ring.size() > 2) outer_rings.push_back(ring);
+            i += ring.ring.size() - 1 - offset;
         }
 
         AXElement *_rings = ax_getElement(_gmlpoly, 1);

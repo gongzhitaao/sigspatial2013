@@ -35,12 +35,13 @@ namespace SigSpatial2013 {
         while (fin_poly >> ch) {
             Polygon poly;
 
+            poly.ring.ring.clear();
+
             while (':' != ch) fin_poly >> ch;
             fin_poly >> id >> ch >> seq >> ch;
 
             getline(fin_poly, xmlstr);
-            gnp.polygon(xmlstr.c_str(),
-                        poly.outer_ring, poly.inner_rings);
+            gnp.polygon(xmlstr.c_str(), poly);
 
             if (id > v.size()) {
                 PolygonSeq ps;

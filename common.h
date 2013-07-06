@@ -39,18 +39,16 @@ namespace SigSpatial2013 {
     struct Ring
     {
         std::vector<Point_2> ring; //!< Boundary vertices
-        double xa,                 //!< min value along X axis
-            xb,                    //!< max value along X axis
-            ya,                    //!< min value along Y axis
-            yb;                    //!< max value along Y axis
+        double xa, xb, ya, yb;     //!< Minimum bounding box (MBR)
     };
 
     /*! \brief Polygons with or without holes.
      */
     struct Polygon
     {
-        Ring outer_ring;        //!< Outer boundary
+        std::vector<Ring> outer_rings; //!< Outer boundary
         std::vector<Ring> inner_rings; //!< Boundary for each holes
+        double xa, xb, ya, yb;
     };
 
     /*! \brief Polygons with the same id but different sequence numbers.
@@ -66,7 +64,7 @@ namespace SigSpatial2013 {
     };
 
     /*! \brief ID here means neither point id nor polygon id, but the
-      pair <ID,SEQ> that uniquely identifies a point or a polygon
+      pair <id,sequence> that uniquely identifies a point or a polygon
       which will be appear in the output.
     */
     typedef std::pair<int, int> ID;
@@ -116,6 +114,16 @@ namespace SigSpatial2013 {
       used to construct the range tree.
     */
     bool read_point(std::ifstream &f, std::vector<Key> &v);
+
+    /*! \brief According to the spec, "The resolution of the distance
+      is two digits after decimal.".
+    */
+    const double PRECISION = 1e-2;
+
+    /*! \brief a == b if abs(a-b) < PRECISION
+    */
+    inline bool fuzzy_eq(const double &a, const double &b)
+    { return (-PRECISION < a-b) && (a-b < PRECISION); }
 
 }
 

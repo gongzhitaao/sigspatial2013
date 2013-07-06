@@ -97,12 +97,12 @@ namespace SigSpatial2013 {
         /*! \brief Parse GML polygon syntax
 
           \param[in] s a valid GML polygon string
-          \param[out] outer_ring outer boundary of the polygon
+          \param[out] outer_rings outer boundary of the polygon
           \param[out] inner_rings boundaries for holes inside the polygon
 
           \return true if everything is OK.
         */
-        bool polygon(const char *s, Ring &outer_ring, std::vector<Ring> &inner_rings);
+        bool polygon(const char *s, Polygon &poly);
 
     private:
         /*! \brief Remove trailing spaces.

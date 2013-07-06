@@ -15,7 +15,7 @@ TEST(core, insidev2)
 {
     const int MAX_PATH = 128;
     const int POINTS = 1000;
-    const int POLYS = 10;
+    const int POLYS = 15;
 
     char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
         out0_file[MAX_PATH], out1_file[MAX_PATH];
@@ -54,5 +54,9 @@ TEST(core, insidev2)
             << "\nexpected size: " << s0.size()
             << "\nactual size: " << s1.size() << std::endl;
 
-    ASSERT_TRUE(s0.size() == s1.size()) << "\nsome points missing!";
+    ASSERT_TRUE(s0.size() == s1.size())
+        << "\nsome points missing!"
+        << "\nexpected size: " << s0.size()
+        << "\nactual size: " << s1.size() << std::endl;
+
 }
