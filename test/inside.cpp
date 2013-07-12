@@ -14,7 +14,7 @@
 TEST(core, insidev2)
 {
     const int MAX_PATH = 128;
-    const int POINTS = 1000;
+    const int POINTS = 500;
     const int POLYS = 15;
 
     char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
@@ -50,7 +50,7 @@ TEST(core, insidev2)
 
     for (std::set<std::string>::iterator i = s1.begin(); i != s1.end(); ++i)
         ASSERT_TRUE(s0.end() != s0.find(*i))
-            << '\n' << *i << ':'
+            << '\n' << *i
             << "\nexpected size: " << s0.size()
             << "\nactual size: " << s1.size() << std::endl;
 

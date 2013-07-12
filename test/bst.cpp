@@ -10,17 +10,16 @@ int bst(const std::vector<int> &a, int k)
 {
     int b = 0, m = 0, e = a.size()-1;
 
-    if (k >= a[e]) return e;
-    if (k <= a[0]) return -1;
+    if (k >= a[e]) return -1;
+    if (k <= a[0]) return 0;
 
     while (b < e) {
         m = (b+e)/2;
-        if (a[m] > k)
-            e = m;
+        if (a[m] > k) e = m;
         else b = m + 1;
     }
 
-    return b-1;
+    return b;
 }
 
 TEST(bst, random)
@@ -33,15 +32,17 @@ TEST(bst, random)
 
     std::uniform_int_distribution<int> dis(0, 100);
 
-    int cnt = 0;
     for (int i = 0; i < 100; ++i) {
         generate(a.begin(), a.end(), [&]{ return dis(eng); });
+
+        sort(a.begin(), a.end());
 
         int key = dis(eng);
         int j = bst(a, key);
 
-        EXPECT_TRUE(((j >= 0 && a[j] <= key) || 1) &&
-                    ((j < size-1 && a[j+1] >= key) || 1))
-            << "case " << i << ": " << (++cnt) << std::endl;
+        EXPECT_TRUE(j > 0 ? (a[j-1] <= key && key <= a[j])
+                    : 0 == j ? key <= a[j] : true)
+            << "case " << i << ": "
+            << key << ' ' << a[j] << std::endl;
     }
 }

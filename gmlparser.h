@@ -14,101 +14,48 @@
 
 #include "asm-xml.h"
 
-#include "common.h"
+#include "polygon.h"
 
 namespace SigSpatial2013 {
 
-    //! \name AsmXml Variables
-    //! Schemas used by AsmXml to parse the GML
-    //!@{
-
-    /*! \brief point schema with all fields and attributes ignored but
-      coordinates.
-    */
     const char PointSchema[] = "\
 <schema>\
   <document name=\"gml:Point\">\
-    <attribute name=\"srsName\" ignore=\"yes\"/>\
-    <attribute name=\"xmlns:gml\" ignore=\"yes\"/>\
     <element name=\"gml:coordinates\" type=\"text\">\
-      <attribute name=\"decimal\" ignore=\"yes\"/>\
-      <attribute name=\"cs\" ignore=\"yes\"/>\
-      <attribute name=\"ts\" ignore=\"yes\"/>\
     </element>\
   </document>\
 </schema>";
 
-    /*! \brief polygon schema with all fields and attributes ignored
-        but coordinates of inner and outer boundaries.
-     */
     const char PolygonSchema[] = "\
 <schema>\
   <document name=\"gml:Polygon\">\
-    <attribute name=\"srsName\" ignore=\"yes\"/>\
-    <attribute name=\"xmlns:gml\" ignore=\"yes\"/>\
     <element name=\"gml:outerBoundaryIs\">\
       <element name=\"gml:LinearRing\">\
         <element name=\"gml:coordinates\" type=\"text\">\
-          <attribute name=\"decimal\" ignore=\"yes\"/>\
-          <attribute name=\"cs\" ignore=\"yes\"/>\
-          <attribute name=\"ts\" ignore=\"yes\"/>\
         </element>\
       </element>\
     </element>\
-    <element name=\"gml:innerBoundaryIs\">\
-      <collection name=\"gml:LinearRing\">\
+    <collection name=\"gml:innerBoundaryIs\">\
+      <element name=\"gml:LinearRing\">\
         <element name=\"gml:coordinates\" type=\"text\">\
-          <attribute name=\"decimal\" ignore=\"yes\"/>\
-          <attribute name=\"cs\" ignore=\"yes\"/>\
-          <attribute name=\"ts\" ignore=\"yes\"/>\
         </element>\
-      </collection>\
-    </element>\
+      </element>\
+    </collection>\
   </document>\
 </schema>";
-    //!@}
 
-    /*! \brief Simple
-      [GML](http://www.opengeospatial.org/standards/gml) parser
-      based on [AsmXml](http://tibleiz.net/asm-xml/).
-    */
     class GMLParser
     {
     public:
-
-        /*! \brief ctor.  Initialize the AsmXml parser here.
-         */
         GMLParser(void);
-
-        /*! \brief dtor.  Free resources of AsmXml parser.
-         */
         ~GMLParser(void);
 
-        /*! \brief Parse GML point syntax.
-
-          \param[in] s a valid GML point string
-          \param[out] x x coordinate
-          \param[out] y y coordinate
-
-          \return true if everything is OK.
-        */
         bool point(const char *s, double &x, double &y);
-
-        /*! \brief Parse GML polygon syntax
-
-          \param[in] s a valid GML polygon string
-          \param[out] outer_rings outer boundary of the polygon
-          \param[out] inner_rings boundaries for holes inside the polygon
-
-          \return true if everything is OK.
-        */
-        bool polygon(const char *s, Polygon &poly);
+        bool polygon(const char *s, Polygon &poly, bool within);
 
     private:
-        /*! \brief Remove trailing spaces.
+        int _make_ring(Ring &r, const char *beg, const char *end);
 
-          \param e pointer to the last character in a string.
-        */
         void trim_right(char *&e)
         {
             --e;
@@ -117,18 +64,12 @@ namespace SigSpatial2013 {
         }
 
     private:
-        /*! \brief buffer size for AsmXml parser.
-         */
         enum { ChunkSize = 64 * 1024 * 1024 };
 
-        //! \name AsmXml Variables
-        //! Internal variables used by AsmXml parser
-        //!@{
         AXParseContext _context;
         AXClassContext _classContext;
         AXElementClass *_pointClass;
         AXElementClass *_polyClass;
-        //!@}
     };
 
 }

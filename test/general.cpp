@@ -3,24 +3,20 @@
 #include <string>
 #include <sstream>
 
-#include <boost/algorithm/string.hpp>
+struct Area
+{
+    double xa, xb, ya, yb;
+    int ind;
+};
+
+struct Boundary
+{
+    Area corners[4];
+    std::vector<Area> borders[4];
+};
+
 
 TEST(general, foo)
 {
-    char ch[] = "  12.,38 13,-39    ";
-    char *p = ch;
-
-    char *e = std::end(ch);
-    --e;
-    while (0 == (int)*e || isspace(*e)) {
-        std::cout << *e << ' '  << (int)*e << std::endl;;
-        --e;
-    }
-    ++e;
-
-    while (p != e) {
-        std::cout << strtod(p, &p) << std::endl;
-        std::cout << strtod(++p, &p) << std::endl;
-    }
-
+    std::cout << sizeof(Boundary) << std::endl;
 }
