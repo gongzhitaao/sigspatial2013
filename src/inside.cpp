@@ -18,6 +18,8 @@
 #include "common.h"
 #include "gmlparser.h"
 
+#include "test/testclock.h"
+
 // bool pip(double x, double y,
 //          const std::vector<double> &rx, const std::vector<double> &ry)
 // {
@@ -133,30 +135,55 @@ void inside(const std::string &fpt,
 {
     using namespace SigSpatial2013;
 
+    Clock c0;
+    Clock c1;
+
     std::vector<PolygonSeq> polys;
 
+    float readpoly = 0;
     read_polygon(fpoly, polys);
+    readpoly += c1.elapsed();
 
     std::ofstream(o, std::ios::out);
     std::ofstream fo(o, std::ios::app);
 
+    float readpt = 0;
+    float treebuild = 0;
+    float query = 0;
+    float output = 0;
     std::ifstream fin_point(fpt);
     for (bool b = true; b; ) {
+        Clock c2;
         std::vector<Key> v;
         b = read_point(fin_point, v);
+        readpt += c2.elapsed();
 
+        Clock c3;
         Range_tree_2_type tree(v.begin(), v.end());
+        treebuild += c3.elapsed();
 
+        Clock c4;
         concurrency::concurrent_vector<Result> results;
         concurrency::parallel_for((size_t)0, polys.size(), (size_t)1, pip(tree, polys, results));
+        query += c4.elapsed();
 
+        Clock c5;
         for (size_t i = 0; i < results.size(); ++i) {
             Result &r = results[i];
             fo << r.first.first << ':' << r.first.second << ':'
                << r.second.first << ':' << r.second.second << std::endl;
         }
+        output += c5.elapsed();
 
     }
     fin_point.close();
     fo.close();
+
+    float tot = c0.elapsed();
+
+    std::ofstream timeo("time.txt", std::ios::app);
+    timeo << readpoly << ' ' << readpt << ' '
+        << treebuild << ' ' << query << ' '
+        << output << ' ' << tot << std::endl;
+    timeo.close();
 }
