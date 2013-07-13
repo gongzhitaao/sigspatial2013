@@ -29,7 +29,9 @@ namespace SigSpatial2013 {
             if (p.y() <= mbr_[2]) return _within_n(p, d2, 2);
             if (p.x() >= mbr_[3]) return _within_n(p, d2, 3);
         }
-        return false;
+
+        // not reachable
+        return true;
     }
 
     void Polygon::push(const Ring &v, int beg, bool within)
@@ -38,8 +40,9 @@ namespace SigSpatial2013 {
         double coords[2];
 
         mbr(v.xa(), v.ya(), v.xb(), v.yb());
-        int f = 0;
 
+        int f = 0, offset = 0;
+        bool turn = false;
         double xa, ya, xb, yb;
 
         for (int i = beg; i < beg + sz; ) {
@@ -52,8 +55,13 @@ namespace SigSpatial2013 {
 
             rng.push(xa, ya);
 
-            int offset = 0;
-            bool turn = false;
+            if (turn && 0 == offset) {
+                if (0 == f % 2) b_[f].push_back(index_t(xa, -f));
+                else b_[f].push_back(index_t(ya, -f));
+            }
+
+            offset = 0;
+            turn = false;
 
             for (int j = (ind+1) % sz; true; j = (j+1) % sz) {
                 const point_t &p = v[j];
@@ -82,9 +90,12 @@ namespace SigSpatial2013 {
 
             if (within) {
                 int t = (f + offset) % 4;
-                int kk = (1 == offset || !turn) ? b_[t].size() : -f-1;
+                int kk = (1 == offset || !turn) ? outer_.size() : -f-1;
+
                 if (0 == t % 2) b_[t].push_back(index_t(rng[bak].x(), kk));
                 else b_[t].push_back(index_t(rng[bak].y(), kk));
+
+                if (1 == offset) rng.corner();
             }
 
             if (turn) f = (f+1) % 4;
@@ -94,7 +105,7 @@ namespace SigSpatial2013 {
             outer_.push_back(rng);
         }
 
-        _sort(f%4);
+        if (within) _sort(f%4);
     }
 
     int Polygon::_index(double d, int f) const
@@ -108,11 +119,10 @@ namespace SigSpatial2013 {
 
             while (b < e) {
                 m = (b + e) / 2;
-                if (b_[f][m].first < b) e = m;
+                if (b_[f][m].first < d) e = m;
                 else b = m + 1;
             }
 
-            --b;
         } else {
             // south, east
             if (d < b_[f][0].first) return b_[f][0].second;
@@ -123,6 +133,7 @@ namespace SigSpatial2013 {
                 if (b_[f][m].first > d) e = m;
                 else b = m + 1;
             }
+            --b;
         }
 
         return b_[f][b].second;

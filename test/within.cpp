@@ -13,7 +13,7 @@
 TEST(core, within)
 {
     const int MAX_PATH = 128;
-    const int POINTS = 1000;
+    const int POINTS = 500;
     const int POLYS = 15;
     const int DISTANCE = 1000;
 
@@ -55,8 +55,12 @@ TEST(core, within)
             << "\nexpected size: " << s0.size()
             << "\nactual size: " << s1.size() << std::endl;
 
-    ASSERT_TRUE(s0.size() == s1.size())
+    EXPECT_TRUE(s0.size() == s1.size())
         << "\nsome points missing!"
         << "\nexpected size: " << s0.size()
         << "\nactual size: " << s1.size() << std::endl;
+
+    for (std::set<std::string>::iterator i = s0.begin(); i != s0.end(); ++i)
+        ASSERT_FALSE(s1.end() == s1.find(*i))
+            << std::endl << *i << std::endl;
 }

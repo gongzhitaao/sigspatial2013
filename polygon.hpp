@@ -60,6 +60,9 @@ namespace SigSpatial2013 {
         return v_[i];
     }
 
+    inline OuterRing::OuterRing()
+        : Ring(), corner_(false)
+    { }
 
     inline bool OuterRing::within_n(const point_t &p, double d2) const
     {
@@ -69,6 +72,11 @@ namespace SigSpatial2013 {
                 return true;
         }
         return false;
+    }
+
+    inline void OuterRing::corner()
+    {
+        corner_ = true;
     }
 
     inline bool InnerRing::within_n(const point_t &p, double d2) const
@@ -95,7 +103,7 @@ namespace SigSpatial2013 {
 
     inline bool Polygon::_within_n(const point_t &p, double d2, int f) const
     {
-        double xy = (0 == f % 2) ? p.y() : p.x();
+        double xy = (0 == f % 2) ? p.x() : p.y();
         int ind = _index(xy, f);
 
         if (ind < 0) return CGAL::squared_distance(p, corner_[-ind-1]) < d2;

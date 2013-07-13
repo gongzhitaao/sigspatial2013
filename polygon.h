@@ -40,13 +40,18 @@ namespace SigSpatial2013 {
     protected:
         std::vector<point_t> v_;
         double x_[2], y_[2];
-        bool corner_;
     };
 
     class OuterRing : public Ring
     {
     public:
+        OuterRing();
+
         bool within_n(const point_t &p, double d2) const;
+        void corner();
+
+    private:
+        bool corner_;
     };
 
     class InnerRing : public Ring
