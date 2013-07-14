@@ -15,10 +15,9 @@
 #include <ppl.h>
 #include <concurrent_vector.h>
 
-#include "common.h"
 #include "gmlparser.h"
-
-#include "test/testclock.h"
+#include "polygon.h"
+#include "utils.h"
 
 // bool pip(double x, double y,
 //          const std::vector<double> &rx, const std::vector<double> &ry)
@@ -45,12 +44,12 @@ namespace SigSpatial2013 {
      */
     struct pip
     {
-        Range_tree_2_type &t_;  //!< range tree containing point to test
+        range_tree_t &t_;  //!< range tree containing point to test
         std::vector<PolygonSeq> &v_; //!< polygons to test against
         /*! \brief Contains all point and polygon pairs that satifies
           the INSIDE predicate.
         */
-        concurrency::concurrent_vector<Result> &r_;
+        concurrency::concurrent_vector<result_t> &r_;
 
         /*! \brief Constructor.
 
@@ -58,70 +57,33 @@ namespace SigSpatial2013 {
           \param v polygons
           \param r result
         */
-        pip(Range_tree_2_type &t,
+        pip(range_tree_t &t,
             std::vector<PolygonSeq> &v,
-            concurrency::concurrent_vector<Result> &r)
+            concurrency::concurrent_vector<result_t> &r)
             : t_(t), v_(v), r_(r) { }
 
         void operator () (size_t i) const {
 
             PolygonSeq &ps = v_[i];
 
-            // for each polygon sequence of the same id
-            for (size_t j = 0; j < ps.seq.size(); ++j) {
+            for (size_t j = 0; j < ps.seq_.size(); ++j) {
 
-                Polygon &p = ps.polys[j];
-                Ring &outer = p.outer_ring;
-                Interval win(Interval(K::Point_2(outer.xa, outer.xb),
-                                      K::Point_2(outer.ya, outer.yb)));
+                Polygon &p = ps.v_[j];
 
-                std::vector<Key> res;
-                t_.window_query(win, std::back_inserter(res));
+                std::vector<node_t> res;
+                t_.window_query(p.mbr(), std::back_inserter(res));
 
                 for (size_t k = 0; k < res.size(); ++k) {
+                    node_t &nd = res[k];
 
-                    Key &key = res[k];
-
-                    if (most_recent_polygon(ps, key.second.second) != j)
+                    if (ps.most_recent_polygon(nd.second.second) != j)
                         continue;
 
-                    if (CGAL::ON_BOUNDED_SIDE ==
-                        CGAL::bounded_side_2(p.outer_ring.ring.begin(),
-                                             p.outer_ring.ring.end(),
-                                             key.first, K())) {
-
-                        /* Now the point is INSIDE the outer boundary.
-                         */
-
-                        bool f = true;
-                        for (size_t m = 0; m < p.inner_rings.size(); ++m) {
-
-                            Ring &inner = p.inner_rings[m];
-
-                            if (!(CGAL::ON_UNBOUNDED_SIDE ==
-                                  CGAL::bounded_side_2(inner.ring.begin(),
-                                                       inner.ring.end(),
-                                                       key.first, K()))) {
-
-                                /* Now the point is INSIDE a hole!!,
-                                   i.e., outside the polygon.
-                                */
-                                f = false;
-                                break;
-                            }
-                        }
-
-                        /* f is true iff the point is INSIDE the outer
-                           boundary but NOT inside or on the bounary
-                           of any holes, i.e., inside the polygon.
-                        */
-
-                        if (f) {
-                            ID a = std::make_pair(key.second.first,
-                                                  key.second.second);
-                            ID b = std::make_pair(i+1, ps.seq[j]);
-                            r_.push_back(std::make_pair(a, b));
-                        }
+                    if (p.contains(nd.first)) {
+                        id_t a = std::make_pair(nd.second.first,
+                                                nd.second.second);
+                        id_t b = std::make_pair(i+1, ps.seq_[j]);
+                        r_.push_back(std::make_pair(a, b));
                     }
                 }
             }
@@ -135,55 +97,32 @@ void inside(const std::string &fpt,
 {
     using namespace SigSpatial2013;
 
-    Clock c0;
-    Clock c1;
-
     std::vector<PolygonSeq> polys;
 
-    float readpoly = 0;
     read_polygon(fpoly, polys);
-    readpoly += c1.elapsed();
 
     std::ofstream(o, std::ios::out);
     std::ofstream fo(o, std::ios::app);
 
-    float readpt = 0;
-    float treebuild = 0;
-    float query = 0;
-    float output = 0;
     std::ifstream fin_point(fpt);
+
     for (bool b = true; b; ) {
-        Clock c2;
-        std::vector<Key> v;
+
+        std::vector<node_t> v;
         b = read_point(fin_point, v);
-        readpt += c2.elapsed();
 
-        Clock c3;
-        Range_tree_2_type tree(v.begin(), v.end());
-        treebuild += c3.elapsed();
+        range_tree_t tree(v.begin(), v.end());
 
-        Clock c4;
-        concurrency::concurrent_vector<Result> results;
+        concurrency::concurrent_vector<result_t> results;
         concurrency::parallel_for((size_t)0, polys.size(), (size_t)1, pip(tree, polys, results));
-        query += c4.elapsed();
 
-        Clock c5;
         for (size_t i = 0; i < results.size(); ++i) {
-            Result &r = results[i];
+            result_t &r = results[i];
             fo << r.first.first << ':' << r.first.second << ':'
                << r.second.first << ':' << r.second.second << std::endl;
         }
-        output += c5.elapsed();
 
     }
     fin_point.close();
     fo.close();
-
-    float tot = c0.elapsed();
-
-    std::ofstream timeo("time.txt", std::ios::app);
-    timeo << readpoly << ' ' << readpt << ' '
-        << treebuild << ' ' << query << ' '
-        << output << ' ' << tot << std::endl;
-    timeo.close();
 }

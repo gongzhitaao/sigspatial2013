@@ -5,8 +5,6 @@
 
   \brief  Code for WITHIN_n predicate checking.
 */
-#include "common.h"
-
 #include <fstream>
 #include <string>
 #include <vector>
@@ -14,60 +12,36 @@
 #include <ppl.h>
 #include <concurrent_vector.h>
 
+#include "polygon.h"
+#include "utils.h"
+
 namespace SigSpatial2013 {
 
     /*! \brief Functor for WITHIN_n predicate checking
      */
     struct within_n
     {
-        /*! \brief range tree constructed on ::POINT_SIZE point
-         */
-        Range_tree_2_type &t_;
+        /*! \brief range tree constructed on
+          SigSpatial2013::POINT_SIZE point
+        */
+        range_tree_t &t_;
 
         /*! \brief polygons with the same id but different sequence
           number
         */
         std::vector<PolygonSeq> &v_;
 
-        concurrency::concurrent_vector<Result> &r_; //!< result
+        concurrency::concurrent_vector<result_t> &r_; //!< result
 
         double n_;              //!< distance
 
-        within_n(Range_tree_2_type &t,
+        /*! \brief Constructor.  Preserve some states.
+         */
+        within_n(range_tree_t &t,
                  std::vector<PolygonSeq> &v,
-                 concurrency::concurrent_vector<Result> &r,
+                 concurrency::concurrent_vector<result_t> &r,
                  double n)
             : t_(t), v_(v), r_(r), n_(n) { }
-
-        /*! \brief Return true when the point #p is within n units of
-          distance of the polygon represented by its bounding
-          vertices.
-
-          \details Loop through all the vertices, return true
-          immediately once a distance is smaller than #d2.  Note that
-          the ponit could be inside or outside the polygon.  This
-          function only determines wethers it's within n units
-          distance of the boundary.
-
-          \param p point to test
-          \param v vectors of the boundary vertices
-          \param d2 squared distance
-          \return true if point #p is within #n units distance of boundary.
-        */
-        bool within_n_of_boundary(const Point_2 &p,
-                                  const std::vector<Point_2> &v,
-                                  double d2) const
-        {
-
-            for (size_t i = 1; i < v.size(); ++i) {
-                if (CGAL::squared_distance(p, K::Segment_2(v[i-1], v[i])) < d2) {
-                    return true;
-                }
-            }
-
-            return CGAL::squared_distance(p, K::Segment_2(v[0], v.back())) < d2;
-
-        }
 
         void operator () (size_t i) const
         {
@@ -78,106 +52,23 @@ namespace SigSpatial2013 {
 
             // Loop throught all polygons with the same id but
             // different sequence number
-            for (size_t j = 0; j < ps.seq.size(); ++j) {
+            for (size_t j = 0; j < ps.seq_.size(); ++j) {
 
-                Polygon &p = ps.polys[j];
-                Ring &outer = p.outer_ring;
+                Polygon &p = ps.v_[j];
 
-                // Construct a query window.  The query window here is
-                // just the mbr of the polygon extended by n units
-                // plus a small margin.  The margin, MARGIN, here is
-                // required to include those points on the boundary
-                // of the query windown.
-                Interval win(Interval(K::Point_2(outer.xa-n_, outer.xb+n_),
-                                      K::Point_2(outer.ya-n_, outer.yb+n_)));
+                std::vector<node_t> res;
+                t_.window_query(p.mbr(n_), std::back_inserter(res));
 
-                // The actual query is handled by the CGAL.
-                std::vector<Key> res;
-                t_.window_query(win, std::back_inserter(res));
-
-                // Sift through every possible results and filter out
-                // those unqualified.
                 for (size_t k = 0; k < res.size(); ++k) {
 
-                    Key &key = res[k];
+                    node_t &nd = res[k];
 
-                    // According to the spec, only the most recent
-                    // polygon is considered, i.e., polygon with the
-                    // maximum sequence number less than the point's
-                    // sequence number
-                    if (most_recent_polygon(ps, key.second.second) != j)
+                    if (ps.most_recent_polygon(nd.second.second) != j)
                         continue;
 
-                    Point_2 &pt = key.first;
-
-                    bool f = false;
-
-                    if (outer.xa < pt.x() && pt.x() < outer.xb &&
-                        outer.ya < pt.y() && pt.y() < outer.yb) {
-
-                        CGAL::Bounded_side bs = CGAL::bounded_side_2(outer.ring.begin(), outer.ring.end(), pt, K());
-
-                        switch (bs) {
-
-                        case CGAL::ON_BOUNDED_SIDE:
-                            {
-                                f = true;
-
-                                for (size_t m = 0; m < p.inner_rings.size(); ++m) {
-
-                                    Ring &inner = p.inner_rings[m];
-
-                                    CGAL::Bounded_side bs = CGAL::bounded_side_2(inner.ring.begin(), inner.ring.end(), pt, K());
-
-                                    bool br = false;
-
-                                    switch (bs) {
-
-                                    case CGAL::ON_BOUNDED_SIDE:
-
-                                        f = within_n_of_boundary(pt, inner.ring, d2);
-                                        br = true;
-
-                                        break;
-
-                                    case CGAL::ON_BOUNDARY:
-
-                                        br = true;
-                                        break;
-
-                                    default:
-
-                                        break;
-                                    }
-
-                                    if (br) break;
-
-                                }
-
-                            }
-
-                            break;
-
-                        case CGAL::ON_UNBOUNDED_SIDE:
-
-                            f = within_n_of_boundary(pt, outer.ring, d2);
-                            break;
-
-                        default:
-
-                            f = true;
-                            break;
-
-                        }
-
-                    } else {
-
-                        f = within_n_of_boundary(pt, outer.ring, d2);
-                    }
-
-                    if (f) {
-                        ID a = std::make_pair(key.second.first, key.second.second);
-                        ID b = std::make_pair(i+1, ps.seq[j]);
+                    if (p.within_n(nd.first, d2)) {
+                        id_t a = std::make_pair(nd.second.first, nd.second.second);
+                        id_t b = std::make_pair(i+1, ps.seq_[j]);
                         r_.push_back(std::make_pair(a, b));
                     }
                 }
@@ -195,7 +86,7 @@ void within(double n,
 
     std::vector<PolygonSeq> polys;
 
-    read_polygon(fpoly, polys);
+    read_polygon(fpoly, polys, true);
 
     std::ofstream(o, std::ios::out);
     std::ofstream fo(o, std::ios::app);
@@ -203,16 +94,16 @@ void within(double n,
     std::ifstream fin_point(fpt);
     for (bool b = true; b; ) {
 
-        std::vector<Key> v;
+        std::vector<node_t> v;
         b = read_point(fin_point, v);
 
-        Range_tree_2_type tree(v.begin(), v.end());
+        range_tree_t tree(v.begin(), v.end());
 
-        concurrency::concurrent_vector<Result> results;
+        concurrency::concurrent_vector<result_t> results;
         concurrency::parallel_for((size_t)0, polys.size(), (size_t)1, within_n(tree, polys, results, n));
 
         for (size_t i = 0; i < results.size(); ++i) {
-            Result &r = results[i];
+            result_t &r = results[i];
             fo << r.first.first << ':' << r.first.second << ':'
                << r.second.first << ':' << r.second.second << std::endl;
         }

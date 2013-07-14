@@ -1,5 +1,5 @@
 #include <cstring>
-#include <fstream>
+#include <cstdlib>
 #include <iostream>
 
 #include "core.h"
@@ -7,14 +7,14 @@
 int main(int argc, char *argv[])
 {
     int i = 1;
-    double n;
+    double n = 0;
     bool b = true;
-    if (!strncmp(argv[i], "\"INSIDE\"", 8)) {
-    } else if (!strncmp(argv[i], "\"WITHIN", 6)) {
+
+    if (0 == _strnicmp(argv[i], "within", 6)) {
         n = atof(argv[++i]);
-        ++i; // skip `"'
         b = false;
     }
+
     std::string point_file = argv[++i];
     std::string polygon_file = argv[++i];
     std::string output_file = argv[++i];

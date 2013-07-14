@@ -21,7 +21,7 @@ namespace SigSpatial2013 {
 
     bool GMLParser::point(const char *s, double &x, double &y)
     {
-        AXElement *_gmlpoint = ax_parse(&_context, s, _pointClass, 1);
+        AXElement *_gmlpoint = ax_parse(&_context, s, _pointClass, 0);
         AXAttribute *attr = &ax_getElement(_gmlpoint, 0)->attributes[0];
 
         char *p = const_cast<char *>(attr->begin);
@@ -31,68 +31,60 @@ namespace SigSpatial2013 {
         return !_context.errorCode;
     }
 
-    bool GMLParser::polygon(const char *s,
-                            Ring &outer_ring,
-                            std::vector<Ring> &inner_rings)
+    int GMLParser::_make_ring(Ring &r, const char *beg, const char *end)
     {
-        AXElement *_gmlpoly = ax_parse(&_context, s, _polyClass, 1);
-
-        AXAttribute *attr =
-            &ax_getElement(ax_getElement(ax_getElement(_gmlpoly, 0), 0), 0)->attributes[0];
-
-        char *p = const_cast<char *>(attr->begin);
-        char *e = const_cast<char *>(attr->limit);
+        char *p = const_cast<char *>(beg);
+        char *e = const_cast<char *>(end);
         trim_right(e);
 
-        outer_ring.xa = outer_ring.xb = strtod(p, &p);
-        outer_ring.ya = outer_ring.yb = strtod(++p, &p);
+        double xa, xb, ya, yb;
+
+        xa = xb = strtod(p, &p);
+        ya = yb = strtod(++p, &p);
+
+        int start = 0;
 
         while (p != e) {
             double x = strtod(p, &p);
             double y = strtod(++p, &p);
 
-            if (x < outer_ring.xa) outer_ring.xa = x;
-            if (x > outer_ring.xb) outer_ring.xb = x;
-            if (y < outer_ring.ya) outer_ring.ya = y;
-            if (y > outer_ring.yb) outer_ring.yb = y;
+            if (x < xa) xa = x;
+            if (x > xb) xb = x;
+            if (y < ya) ya = y;
+            if (y > yb) yb = y, start = r.size();
 
-            outer_ring.ring.push_back(Point_2(x, y));
+            r.push(x, y);
         }
 
-        AXElement *_rings = ax_getElement(_gmlpoly, 1);
-        if (!_rings) return !_context.errorCode;
+        r.mbr(xa, ya, xb, yb);
 
-        _rings = _rings->firstChild;
+        return start;
+    }
 
-        while (_rings) {
-            AXAttribute * attr = &ax_getElement(_rings, 0)->attributes[0];
-            char *p = const_cast<char *>(attr->begin);
-            char *e = const_cast<char *>(attr->limit);
-            trim_right(e);
+    bool GMLParser::polygon(const char *s, Polygon &poly, bool within = false)
+    {
+        AXElement *_gmlpoly = ax_parse(&_context, s, _polyClass, 0);
 
-            Ring ring;
+        AXAttribute *attr =
+            &ax_getElement(ax_getElement(ax_getElement(_gmlpoly, 0), 0), 0)->attributes[0];
 
-            ring.xa = ring.xb = strtod(p, &p);
-            ring.ya = ring.yb = strtod(++p, &p);
+        Ring r;
+        int beg = _make_ring(r, attr->begin, attr->limit);
 
-            while (p != e) {
-                double x = strtod(p, &p);
-                double y = strtod(++p, &p);
+        poly.push(r, beg, within);
 
-                if (x < ring.xa) ring.xa = x;
-                if (x > ring.xb) ring.xb = x;
-                if (y < ring.ya) ring.ya = y;
-                if (y > ring.yb) ring.yb = y;
+        AXElement *_inners = _gmlpoly->firstChild;
 
-                ring.ring.push_back(Point_2(x, y));
-            }
+        while (_inners) {
+            AXAttribute * attr = &ax_getElement(ax_getElement(_inners, 0), 0)->attributes[0];
 
-            inner_rings.push_back(ring);
+            InnerRing r;
+            _make_ring(r, attr->begin, attr->limit);
+            poly.push(r);
 
-            _rings = _rings->nextSibling;
+            _inners = _inners->nextSibling;
         }
 
         return !_context.errorCode;
     }
-
 }

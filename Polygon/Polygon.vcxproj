@@ -11,16 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\inside.cpp" />
-    <ClCompile Include="..\src\within.cpp" />
+    <ClInclude Include="..\src\defs.h" />
+    <ClInclude Include="..\src\polygon.h" />
+    <ClInclude Include="..\src\polygon.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\core.h" />
+    <ClCompile Include="..\src\polygon.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E6BAEF6D-9441-4F21-A820-81B02BB45BB3}</ProjectGuid>
+    <ProjectGuid>{0A37989E-71C9-42D0-A451-7936CF636596}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Core</RootNamespace>
+    <RootNamespace>Polygon</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -81,7 +82,11 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>C:\Program Files\CGAL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
