@@ -17,7 +17,7 @@ namespace SigSpatial2013 {
                       std::vector<PolygonSeq> &v,
                       bool within = false);
 
-    const size_t POINT_SIZE = 1e4;
+    const size_t POINT_SIZE = 100;
 
     bool read_point(std::ifstream &f, std::vector<node_t> &v);
 

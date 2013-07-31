@@ -19,13 +19,10 @@ namespace SigSpatial2013 {
     {
     public:
         bool contains(const point_t &p) const;
-
         virtual bool within_n(const point_t &p, double d2) const { return false; }
 
-        void push(double x, double y);
-
         size_t size() const;
-
+        void push(double x, double y);
         void mbr(double xa, double ya, double xb, double yb);
 
         double xa() const;
@@ -34,7 +31,6 @@ namespace SigSpatial2013 {
         double yb() const;
 
         point_t &operator[] (size_t i);
-
         const point_t &operator[] (size_t i) const;
 
     protected:
@@ -51,7 +47,7 @@ namespace SigSpatial2013 {
         void corner();
 
     private:
-        bool corner_;
+        int corner_;
     };
 
     class InnerRing : public Ring

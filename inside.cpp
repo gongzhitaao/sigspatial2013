@@ -19,44 +19,14 @@
 #include "polygon.h"
 #include "utils.h"
 
-// bool pip(double x, double y,
-//          const std::vector<double> &rx, const std::vector<double> &ry)
-// {
-//     int w = 0;
-//     for (size_t i = 0; i < rx.size() - 1; ++i) {
-//         double x0 = rx[i] - x, y0 = ry[i] - y;
-//         double x1 = rx[i+1] - x, y1 = ry[i+1] - y;
-//         if (y0 * y1 < 0) {
-//             if (x0 + y0*(x1-x0)/(y0-y1) > 0)
-//                 if (y0 < 0) w += 2; else w -= 2;
-//         } else if (FloatingPoint<double>(y0).AlmostEquals(FloatingPoint<double>(0)) && x0 >= 0) {
-//             if (y1 > 0) ++w; else if (y1 < 0) --w;
-//         } else if (FloatingPoint<double>(y1).AlmostEquals(FloatingPoint<double>(0)) && x1 >= 0) {
-//             if (y0 < 0) ++w; else if (y0 > 0)--w;
-//         }
-//     }
-//     return w;
-// }
-
 namespace SigSpatial2013 {
 
-    /*! \brief Functor for point in polygon (pip) detection.
-     */
     struct pip
     {
-        range_tree_t &t_;  //!< range tree containing point to test
-        std::vector<PolygonSeq> &v_; //!< polygons to test against
-        /*! \brief Contains all point and polygon pairs that satifies
-          the INSIDE predicate.
-        */
+        range_tree_t &t_;
+        std::vector<PolygonSeq> &v_;
         tbb::concurrent_vector<result_t> &r_;
 
-        /*! \brief Constructor.
-
-          \param t range tree
-          \param v polygons
-          \param r result
-        */
         pip(range_tree_t &t,
             std::vector<PolygonSeq> &v,
             tbb::concurrent_vector<result_t> &r)
@@ -114,12 +84,15 @@ void inside(const std::string &fpt,
         range_tree_t tree(v.begin(), v.end());
 
         tbb::concurrent_vector<result_t> results;
-        tbb::parallel_for((size_t)0, polys.size(), (size_t)1, pip(tree, polys, results));
+        tbb::parallel_for((size_t)0, polys.size(), (size_t)1,
+                          pip(tree, polys, results));
 
         for (size_t i = 0; i < results.size(); ++i) {
             result_t &r = results[i];
-            fo << r.first.first << ':' << r.first.second << ':'
-               << r.second.first << ':' << r.second.second << std::endl;
+            fo << r.first.first << ':' << r.first.second
+               << ':'
+               << r.second.first << ':' << r.second.second
+               << std::endl;
         }
 
     }

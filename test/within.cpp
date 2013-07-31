@@ -13,7 +13,7 @@
 TEST(core, within)
 {
     const int MAX_PATH = 128;
-    const int POINTS = 500;
+    const int POINTS = 1000;
     const int POLYS = 15;
     const int DISTANCE = 1000;
 

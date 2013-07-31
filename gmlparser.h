@@ -71,7 +71,6 @@ namespace SigSpatial2013 {
         AXElementClass *_pointClass;
         AXElementClass *_polyClass;
     };
-
 }
 
 #endif /* _SIG_GMLPARSER_H_ */

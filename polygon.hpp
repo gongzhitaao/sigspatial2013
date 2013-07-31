@@ -66,7 +66,7 @@ namespace SigSpatial2013 {
 
     inline bool OuterRing::within_n(const point_t &p, double d2) const
     {
-        size_t sz = corner_ ? v_.size() - 1 : v_.size();
+        size_t sz = v_.size() - corner_;
         for (size_t i = 1; i < sz; ++i) {
             if (CGAL::squared_distance(p, segment_t(v_[i-1], v_[i])) < d2)
                 return true;
@@ -76,7 +76,7 @@ namespace SigSpatial2013 {
 
     inline void OuterRing::corner()
     {
-        corner_ = true;
+        corner_ = 1;
     }
 
     inline bool InnerRing::within_n(const point_t &p, double d2) const
