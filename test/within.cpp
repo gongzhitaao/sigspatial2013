@@ -8,7 +8,7 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include "../core.h"
+#include "core.h"
 
 TEST(core, within)
 {
@@ -20,13 +20,13 @@ TEST(core, within)
     char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
         out0_file[MAX_PATH], out1_file[MAX_PATH];
 
-    snprintf(point_input_file, MAX_PATH, "../in/points%d.txt", POINTS);
-    snprintf(poly_input_file, MAX_PATH, "../in/poly%d.txt", POLYS);
+    snprintf(point_input_file, MAX_PATH, "../../../in/points%d.txt", POINTS);
+    snprintf(poly_input_file, MAX_PATH, "../../../in/poly%d.txt", POLYS);
     snprintf(out0_file, MAX_PATH,
-             "../in/polys%d_points%d_WITHIN_%d_out",
+             "../../../in/polys%d_points%d_WITHIN_%d_out",
              POLYS, POINTS, DISTANCE);
     snprintf(out1_file, MAX_PATH,
-             "../out/polys%d_points%d_WITHIN_%d_out",
+             "../../../out/polys%d_points%d_WITHIN_%d_out",
              POLYS, POINTS, DISTANCE);
 
     within(DISTANCE, point_input_file, poly_input_file, out1_file);

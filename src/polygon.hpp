@@ -88,17 +88,21 @@ namespace SigSpatial2013 {
         return CGAL::squared_distance(p, segment_t(v_[0], v_.back())) < d2;
     }
 
-
     inline bool Polygon::contains(const point_t &p) const
     {
-        for (size_t i = 0; i < outer_.size(); ++i)
-            if (outer_[i].size() > 2 &&
-                outer_[i].contains(p)) return false;
+        // switch (grid_.side(p)) {
+        // case CGAL::ON_BOUNDED_SIDE: return true;
+        // case CGAL::ON_UNBOUNDED_SIDE: return false;
+        // default:
+            for (size_t i = 0; i < outer_.size(); ++i)
+                if (outer_[i].size() > 2 &&
+                    outer_[i].contains(p)) return false;
 
-        for (size_t i = 0; i < inner_.size(); ++i)
-            if (inner_[i].contains(p)) return false;
+            for (size_t i = 0; i < inner_.size(); ++i)
+                if (inner_[i].contains(p)) return false;
 
-        return true;
+            return true;
+        // }
     }
 
     inline bool Polygon::_within_n(const point_t &p, double d2, int f) const

@@ -7,7 +7,8 @@
 */
 
 #include "polygon.h"
-#include "utils.h"
+
+#include "gmlparser.h"
 
 namespace SigSpatial2013 {
 
@@ -40,20 +41,24 @@ namespace SigSpatial2013 {
         double coords[2];
 
         mbr(v.xa(), v.ya(), v.xb(), v.yb());
+        grid_.bound(v.xa(), v.xb(), v.ya(), v.yb());
 
         int f = 0, offset = 0;
         bool turn = false;
         double xa, ya, xb, yb;
+
+        double x0 = v[sz-1].x(), y0 = v[sz-1].y(), x1, y1;
 
         for (int i = beg; i < beg + sz; ) {
 
             int ind = i % sz;
             OuterRing rng;
 
-            xa = xb = v[ind].x();
-            ya = yb = v[ind].y();
+            x1 = xa = xb = v[ind].x();
+            y1 = ya = yb = v[ind].y();
 
             rng.push(xa, ya);
+            grid_.draw(x0, y0, x1, y1);
 
             if (turn && 0 == offset) {
                 if (0 == f % 2) b_[f].push_back(index_t(xa, -f));
@@ -152,5 +157,58 @@ namespace SigSpatial2013 {
         }
 
         return b-1;
+    }
+
+    void read_polygon(const std::string &fpoly,
+                      std::vector<PolygonSeq> &v,
+                      bool within)
+    {
+        std::string xmlstr;
+        GMLParser gp;
+        char ch;
+        size_t id, seq;
+
+        std::ifstream fin_poly(fpoly);
+        while (fin_poly >> ch) {
+            Polygon poly;
+
+            while (':' != ch) fin_poly >> ch;
+            fin_poly >> id >> ch >> seq >> ch;
+
+            getline(fin_poly, xmlstr);
+            gp.polygon(xmlstr.c_str(), poly, within);
+
+            if (id > v.size()) {
+                PolygonSeq ps;
+                ps.seq_.push_back(seq);
+                ps.v_.push_back(poly);
+                v.push_back(ps);
+            } else {
+                PolygonSeq &ps = v[id-1];
+                ps.seq_.push_back(seq);
+                ps.v_.push_back(poly);
+            }
+        }
+        fin_poly.close();
+    }
+
+    bool read_point(std::ifstream &f, std::vector<node_t> &v)
+    {
+        std::string xmlstr;
+        GMLParser gnp;
+        char ch;
+        size_t id, seq;
+        double x, y;
+
+        size_t i;
+        for (i = 0; i < POINT_SIZE && f >> ch; ++i) {
+            while (':' != ch) f >> ch;
+            f >> id >> ch >> seq >> ch;
+            getline(f, xmlstr);
+            gnp.point(xmlstr.c_str(), x, y);
+            v.push_back(node_t(point_t(x, y), std::make_pair(id, seq)));
+        }
+
+        return i == POINT_SIZE;
     }
 }

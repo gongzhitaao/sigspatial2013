@@ -6,14 +6,13 @@
   \brief  Common declarations used internally.
 */
 
-#ifndef _SIG_DEFS_H_
-#define _SIG_DEFS_H_
+#ifndef _SIGSPATIAL2013_DEFS_H_
+#define _SIGSPATIAL2013_DEFS_H_
 
 #pragma once
 
 #include <vector>
 
-// CGAL for range tree
 #include <CGAL/Cartesian.h>
 #include <CGAL/Polygon_2_algorithms.h>
 #include <CGAL/Range_segment_tree_traits.h>
@@ -34,6 +33,11 @@ namespace SigSpatial2013 {
     typedef std::pair<int, int> id_t;
 
     typedef std::pair<id_t, id_t> result_t;
+
+    const double PRECISION = 1e-2;
+
+    inline bool fuzzy_eq(const double &a, const double &b)
+    { return (-PRECISION < a-b) && (a-b < PRECISION); }
 }
 
-#endif /* _SIG_DEFS_H_ */
+#endif /* _SIGSPATIAL2013_DEFS_H_ */

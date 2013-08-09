@@ -7,8 +7,8 @@
   [AsmXml](http://tibleiz.net/asm-xml/).
 */
 
-#ifndef _SIG_GMLPARSER_H_
-#define _SIG_GMLPARSER_H_
+#ifndef _SIGSPATIAL2013_GMLPARSER_H_
+#define _SIGSPATIAL2013_GMLPARSER_H_
 
 #include <vector>
 
@@ -73,4 +73,4 @@ namespace SigSpatial2013 {
     };
 }
 
-#endif /* _SIG_GMLPARSER_H_ */
+#endif /* _SIGSPATIAL2013_GMLPARSER_H_ */

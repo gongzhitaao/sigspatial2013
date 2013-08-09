@@ -11,7 +11,12 @@
 
 #pragma once
 
+#include <vector>
+#include <fstream>
+#include <string>
+
 #include "defs.h"
+#include "grid.h"
 
 namespace SigSpatial2013 {
 
@@ -81,6 +86,8 @@ namespace SigSpatial2013 {
         std::vector<OuterRing> outer_;
         std::vector<InnerRing> inner_;
 
+        Grid grid_;
+
         std::vector<index_t> b_[4];
         point_t corner_[4];
         double mbr_[4];
@@ -93,6 +100,13 @@ namespace SigSpatial2013 {
 
         size_t most_recent_polygon(int seq);
     };
+
+    void read_polygon(const std::string &fpoly,
+                      std::vector<PolygonSeq> &v,
+                      bool within = false);
+
+    const size_t POINT_SIZE = 100;
+    bool read_point(std::ifstream &f, std::vector<node_t> &v);
 }
 
 #include "polygon.hpp"

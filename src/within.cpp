@@ -5,6 +5,9 @@
 
   \brief  Code for WITHIN_n predicate checking.
 */
+
+#include "core.h"
+
 #include <fstream>
 #include <string>
 #include <vector>
@@ -13,7 +16,6 @@
 #include <tbb/parallel_for.h>
 
 #include "polygon.h"
-#include "utils.h"
 
 namespace SigSpatial2013 {
 

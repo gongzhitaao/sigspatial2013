@@ -5,19 +5,21 @@
 
   \brief  Code for INSIDE predicate checking.
 */
+
+#include "core.h"
+
 #include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <tbb/concurrent_vector.h>
 #include <tbb/parallel_for.h>
 
 #include "gmlparser.h"
 #include "polygon.h"
-#include "utils.h"
 
 namespace SigSpatial2013 {
 
