@@ -14,8 +14,8 @@
 TEST(core, insidev2)
 {
     const int MAX_PATH = 128;
-    const int POINTS = 1;
-    const int POLYS = 1;
+    const int POINTS = 1000;
+    const int POLYS = 15;
 
     char point_input_file[MAX_PATH], poly_input_file[MAX_PATH],
         out0_file[MAX_PATH], out1_file[MAX_PATH];

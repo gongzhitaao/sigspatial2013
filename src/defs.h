@@ -23,6 +23,7 @@ namespace SigSpatial2013 {
     typedef CGAL::Cartesian<double> K;
     typedef K::Point_2 point_t;
     typedef K::Segment_2 segment_t;
+    typedef K::Line_2 line_t;
 
     typedef CGAL::Range_tree_map_traits_2<K, std::pair<int,int> > Traits;
     typedef CGAL::Range_tree_2<Traits> range_tree_t;

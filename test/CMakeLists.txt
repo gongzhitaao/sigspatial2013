@@ -8,4 +8,4 @@ add_executable (within within.cpp)
 target_link_libraries (within core ${GTEST_BOTH_LIBRARIES})
 
 add_test (inside inside)
-add_test (within within)
+# add_test (within within)

@@ -47,18 +47,27 @@ namespace SigSpatial2013 {
         bool turn = false;
         double xa, ya, xb, yb;
 
-        double x0 = v[sz-1].x(), y0 = v[sz-1].y(), x1, y1;
+        double x0, y0;
+        if (beg > 0) {
+            x0 = v[beg-1].x();
+            y0 = v[beg-1].y();
+        } else {
+            x0 = v[sz-1].x();
+            y0 = v[sz-1].y();
+        }
 
         for (int i = beg; i < beg + sz; ) {
 
             int ind = i % sz;
             OuterRing rng;
 
-            x1 = xa = xb = v[ind].x();
-            y1 = ya = yb = v[ind].y();
+            xa = xb = v[ind].x();
+            ya = yb = v[ind].y();
 
             rng.push(xa, ya);
-            grid_.draw(x0, y0, x1, y1);
+
+            grid_.draw(x0, y0, xa, ya);
+            x0 = xa, y0 = ya;
 
             if (turn && 0 == offset) {
                 if (0 == f % 2) b_[f].push_back(index_t(xa, -f));
@@ -71,6 +80,9 @@ namespace SigSpatial2013 {
             for (int j = (ind+1) % sz; true; j = (j+1) % sz) {
                 const point_t &p = v[j];
                 rng.push(p.x(), p.y());
+
+                grid_.draw(x0, y0, p.x(), p.y());
+                x0 = p.x(), y0 = p.y();
 
                 if (p.x() < xa) xa = p.x();
                 if (p.x() > xb) xb = p.x();

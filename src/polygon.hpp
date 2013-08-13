@@ -90,10 +90,10 @@ namespace SigSpatial2013 {
 
     inline bool Polygon::contains(const point_t &p) const
     {
-        // switch (grid_.side(p)) {
-        // case CGAL::ON_BOUNDED_SIDE: return true;
-        // case CGAL::ON_UNBOUNDED_SIDE: return false;
-        // default:
+        switch (grid_.side(p)) {
+        case CGAL::ON_BOUNDED_SIDE: return true;
+        case CGAL::ON_UNBOUNDED_SIDE: return false;
+        default:
             for (size_t i = 0; i < outer_.size(); ++i)
                 if (outer_[i].size() > 2 &&
                     outer_[i].contains(p)) return false;
@@ -102,7 +102,7 @@ namespace SigSpatial2013 {
                 if (inner_[i].contains(p)) return false;
 
             return true;
-        // }
+        }
     }
 
     inline bool Polygon::_within_n(const point_t &p, double d2, int f) const

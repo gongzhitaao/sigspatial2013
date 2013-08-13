@@ -5,16 +5,35 @@ namespace SigSpatial2013 {
 
     void Grid::draw(double x0, double y0, double x1, double y1)
     {
-        A_ = y1 >= y0 ? y1 - y0 : y0 - y1;
-        B_ = x1 - x0;
-        C_ = x1 * y0 - x0 * y1;
+        double x[2], y[2];
 
-        if (abs(A_) <= abs(B_))
-            _draw_1(floor(x0), floor(y0), floor(x1), floor(y1),
-                    x1 >= x0 ? 1 : -1, y1 >= y0 ? 1 : -1);
+        if (x1 >= x0) {
+            x[0] = x0, y[0] = y0;
+            x[1] = x1, y[1] = y1;
+        } else {
+            x[0] = x1, y[0] = y1;
+            x[1] = x0, y[1] = y0;
+        }
+
+        int sy;
+        double a, b, c;
+        if (y[1] >= y[0]) {
+            a = y[1] - y[0];
+            b = x[1] - x[0];
+            c = x[1] * y[0] - x[0] * y[1];
+            sy = 1;
+        } else {
+            a = y[0] - y[1];
+            b = x[0] - x[1];
+            c = x[0] * y[1] - x[1] * y[0];
+            sy = -1;
+        }
+        line_ = line_t(a, -b, c);
+
+        if (a <= b)
+            _draw_1(_x(x[0]), _y(y[0]), _x(x[1]), _y(y[1]), sy);
         else
-            _draw_2(floor(x0), floor(y0), floor(x1), floor(y1),
-                    x1 >= x0 ? 1 : -1, y1 >= y0 ? 1 : -1);
+            _draw_2(_x(x[0]), _y(y[0]), _x(x[1]), _y(y[1]), sy);
     }
 
     void Grid::fill()

@@ -19,19 +19,23 @@ namespace SigSpatial2013 {
         CGAL::Bounded_side side(const point_t &p) const;
 
     private:
-        double _f(double x, double y);
+        double _f(double x, double y) const;
 
-        void _draw_1(int x0, int y0, int x1, int y1, int sx, int sy);
-        void _draw_2(int x0, int y0, int x1, int y1, int sx, int sy);
+        int _x(double x) const;
+        int _y(double y) const;
+
+        void _draw_1(int x0, int y0, int x1, int y1, int sy);
+        void _draw_2(int x0, int y0, int x1, int y1, int sy);
 
     private:
         enum { SZ = 100 };
 
         double deltax_, deltay_;
-        double A_, B_, C_;
+        double xa_, ya_;
+        line_t line_;
 
         CGAL::Bounded_side grid_[SZ+1][SZ+1];
-        std::vector<int> arr_[100];
+        std::vector<int> arr_[SZ+1];
     };
 }
 
