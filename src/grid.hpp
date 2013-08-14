@@ -7,7 +7,7 @@ namespace SigSpatial2013 {
         xa_ = xa, ya_ = ya;;
         deltax_ = (xb - xa) / SZ;
         deltay_ = (yb - ya) / SZ;
-        memset(grid_, CGAL::ON_UNBOUNDED_SIDE, sizeof grid_);
+        memset(val_, 2, sizeof val_);
     }
 
     inline int Grid::_x(double x) const
@@ -20,50 +20,42 @@ namespace SigSpatial2013 {
         return (int)floor((y - ya_) / deltay_);
     }
 
-    inline void Grid::_draw_1(int x0, int y0, int x1, int y1, int sy)
+    inline void Grid::_draw_1(int x0, int y0, int x1, int y1,
+                              int sy, int orient)
     {
         for (int x = x0, y = y0; x != x1; ++x) {
-            grid_[y][x] = CGAL::ON_BOUNDARY;
-            arr_[y].push_back(x);
+            if (2 == val_[y][x]) val_[y][x] = 0;
 
-            switch (line_.oriented_side(point_t((x+1) * deltax_,
-                                                (y+sy) * deltay_))) {
-            case CGAL::ON_NEGATIVE_SIDE:
+            if (CGAL::ON_POSITIVE_SIDE !=
+                line_.oriented_side(point_t((x+1) * deltax_,
+                                            (y+sy) * deltay_))) {
+                val_[y][x] += orient;
                 y += sy;
-                grid_[y][x] = CGAL::ON_BOUNDARY;
-                arr_[y].push_back(x);
-                break;
-            case CGAL::ON_ORIENTED_BOUNDARY:
-                y += sy;
-                break;
-            default: /* empty */;
+
+                if (2 == val_[y][x]) val_[y][x] = 0;
+                val_[y][x] += orient;
             }
         }
     }
 
-    inline void Grid::_draw_2(int x0, int y0, int x1, int y1, int sy)
+    inline void Grid::_draw_2(int x0, int y0, int x1, int y1,
+                              int sy, int orient)
     {
         for (int y = y0, x = x0; y != y1; y += sy) {
-            grid_[y][x] = CGAL::ON_BOUNDARY;
-            arr_[y].push_back(x);
 
-            switch (line_.oriented_side(point_t((x+1) * deltax_,
-                                                (y+sy) * deltay_))) {
-            case CGAL::ON_POSITIVE_SIDE:
+            if (2 == val_[y][x]) val_[y][x] = 0;
+            val_[y][x] += orient;
+
+            if (CGAL::ON_NEGATIVE_SIDE !=
+                line_.oriented_side(point_t((x+1) * deltax_,
+                                            (y+sy) * deltay_))) {
                 ++x;
-                grid_[y][x] = CGAL::ON_BOUNDARY;
-                arr_[y].push_back(x);
-                break;
-            case CGAL::ON_ORIENTED_BOUNDARY:
-                ++x;
-                break;
-            default: /* empty */;
             }
         }
     }
 
-    inline CGAL::Bounded_side Grid::side(const point_t &p) const
+    inline int Grid::side(const point_t &p) const
     {
-        return grid_[_y(p.y())][_x(p.x())];
+        return val_[_y(p.y())][_x(p.x())];
     }
 }

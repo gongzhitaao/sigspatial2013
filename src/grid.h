@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include <CGAL/enum.h>
-
 #include "defs.h"
 
 namespace SigSpatial2013 {
@@ -16,7 +14,7 @@ namespace SigSpatial2013 {
         void draw(double x0, double y0, double x1, double y1);
         void fill();
 
-        CGAL::Bounded_side side(const point_t &p) const;
+        int side(const point_t &p) const;
 
     private:
         double _f(double x, double y) const;
@@ -24,8 +22,8 @@ namespace SigSpatial2013 {
         int _x(double x) const;
         int _y(double y) const;
 
-        void _draw_1(int x0, int y0, int x1, int y1, int sy);
-        void _draw_2(int x0, int y0, int x1, int y1, int sy);
+        void _draw_1(int x0, int y0, int x1, int y1, int sy, int orient);
+        void _draw_2(int x0, int y0, int x1, int y1, int sy, int orient);
 
     private:
         enum { SZ = 100 };
@@ -34,8 +32,7 @@ namespace SigSpatial2013 {
         double xa_, ya_;
         line_t line_;
 
-        CGAL::Bounded_side grid_[SZ+1][SZ+1];
-        std::vector<int> arr_[SZ+1];
+        int val_[SZ+1][SZ+1];
     };
 }
 

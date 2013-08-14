@@ -7,12 +7,15 @@ namespace SigSpatial2013 {
     {
         double x[2], y[2];
 
+        int orient;
         if (x1 >= x0) {
             x[0] = x0, y[0] = y0;
             x[1] = x1, y[1] = y1;
+            orient = 1;
         } else {
             x[0] = x1, y[0] = y1;
             x[1] = x0, y[1] = y0;
+            orient = -1;
         }
 
         int sy;
@@ -31,19 +34,21 @@ namespace SigSpatial2013 {
         line_ = line_t(a, -b, c);
 
         if (a <= b)
-            _draw_1(_x(x[0]), _y(y[0]), _x(x[1]), _y(y[1]), sy);
+            _draw_1(_x(x[0]), _y(y[0]), _x(x[1]), _y(y[1]), sy, orient);
         else
-            _draw_2(_x(x[0]), _y(y[0]), _x(x[1]), _y(y[1]), sy);
+            _draw_2(_x(x[0]), _y(y[0]), _x(x[1]), _y(y[1]), sy, orient);
     }
 
     void Grid::fill()
     {
-        for (int r = 0; r < SZ; ++r) {
-            std::sort(arr_[r].begin(), arr_[r].end());
-            for (size_t i = 1; i < arr_[r].size(); i += 2) {
-                if (arr_[r][i] > arr_[r][i-1])
-                    memset(&grid_[r][arr_[r][i]], CGAL::ON_BOUNDED_SIDE,
-                           (arr_[r][i-1]-arr_[r][i]) * sizeof(CGAL::Bounded_side));
+        for (int y = 0; y < SZ; ++y) {
+            int v = -1;
+            for (int x = 0; x < SZ; ++x) {
+                if (2 == val_[y][x]) val_[y][x] = v;
+                else if (0 != val_[y][x]) {
+                    val_[y][x] = 0;
+                    v = -v;
+                }
             }
         }
     }

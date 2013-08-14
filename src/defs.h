@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <vector>
+#include <utility>
 
+#include <CGAL/enum.h>
 #include <CGAL/Cartesian.h>
 #include <CGAL/Polygon_2_algorithms.h>
 #include <CGAL/Range_segment_tree_traits.h>

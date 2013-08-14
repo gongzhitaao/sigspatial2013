@@ -122,6 +122,8 @@ namespace SigSpatial2013 {
             outer_.push_back(rng);
         }
 
+        grid_.fill();
+
         if (within) _sort(f%4);
     }
 
